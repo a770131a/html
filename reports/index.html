@@ -1,87 +1,78 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SIEM_2 V41 Product Loop Progress</title>
-  <style>
-    :root{--panel:#fff;--line:#e5e7eb;--text:#172033;--muted:#64748b;--blue:#185fa5;--blue2:#e6f1fb;--green:#1d9e75;--green2:#e8f6f1;--amber:#ba7517;--amber2:#fff4e3;--red:#e24b4a;--red2:#fcebeb;--purple:#7f77dd;--purple2:#f0efff;--slate:#334155;--slate2:#f1f5f9}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eef4fb 0,#f7f8fb 330px,#f5f7fb 100%);color:var(--text);font-family:system-ui,-apple-system,'Noto Sans TC','Segoe UI',sans-serif}.page{max-width:1280px;margin:auto;padding:30px 24px 44px}.hero{display:grid;grid-template-columns:1.65fr .95fr;gap:16px;align-items:start}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 10px 28px rgba(15,23,42,.06)}.eyebrow{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}h1{font-size:34px;margin:8px 0 12px;letter-spacing:-.02em}h2{font-size:21px;margin:30px 0 14px}h3{font-size:16px;margin:0 0 8px}.sub,p{color:var(--muted);line-height:1.75}.badge{display:inline-block;border-radius:6px;padding:4px 9px;font-size:12px;font-weight:800;margin:3px 5px 3px 0}.b-green{background:var(--green2);color:#13745a}.b-blue{background:var(--blue2);color:var(--blue)}.b-yellow{background:var(--amber2);color:#8a550e}.b-red{background:var(--red2);color:#a32d2d}.b-purple{background:var(--purple2);color:#5650b8}.b-slate{background:var(--slate2);color:var(--slate)}.grid{display:grid;gap:12px}.kpis{grid-template-columns:repeat(3,1fr);margin-top:18px}.four{grid-template-columns:repeat(4,1fr)}.five{grid-template-columns:repeat(5,1fr)}.kpi{font-size:30px;font-weight:850;margin:6px 0}.label{font-size:12px;color:var(--muted);margin-bottom:4px}.mini{font-size:12px;color:var(--muted);line-height:1.65}.progress{height:9px;border-radius:999px;background:#eef2f7;overflow:hidden;margin-top:11px}.bar{height:100%;border-radius:999px}.greenbar{background:var(--green)}.yellowbar{background:var(--amber)}.redbar{background:var(--red)}.purplebar{background:var(--purple)}.bluebar{background:var(--blue)}.slatebar{background:var(--slate)}.table{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--panel)}table{width:100%;border-collapse:collapse;min-width:1120px}th,td{padding:13px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:13px}th{background:#f8fafc;color:#475569;text-transform:uppercase;font-size:12px}tr:last-child td{border-bottom:0}.section-note{font-size:13px;color:var(--muted);margin-top:-6px;margin-bottom:12px}.loop-card{display:flex;flex-direction:column;min-height:218px}.top{display:flex;align-items:start;justify-content:space-between;gap:10px}.icon{width:38px;height:38px;border-radius:14px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:19px}.pct{font-size:30px;font-weight:850;margin:12px 0 4px}.gap-box{margin-top:auto;background:#f8fafc;border:1px solid #eef2f7;border-radius:13px;padding:10px}.metric{display:grid;grid-template-columns:1fr auto;gap:10px;border-top:1px solid #eef2f7;padding-top:11px;margin-top:11px}.small-title{font-weight:850}.footer{text-align:center;color:var(--muted);font-size:12px;margin:32px 0 0;line-height:1.7}@media(max-width:1180px){.kpis,.five,.four{grid-template-columns:repeat(2,1fr)}}@media(max-width:920px){.page{padding:18px}.hero,.kpis,.five,.four{grid-template-columns:1fr}h1{font-size:28px}table{min-width:980px}}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SIEM_2 V42 Product Loop Progress</title>
+<style>
+:root{--panel:#fff;--line:#e5e7eb;--text:#172033;--muted:#64748b;--blue:#185fa5;--blue2:#e6f1fb;--green:#1d9e75;--green2:#e8f6f1;--amber:#ba7517;--amber2:#fff4e3;--red:#e24b4a;--red2:#fcebeb;--purple:#7f77dd;--purple2:#f0efff;--slate:#334155;--slate2:#f1f5f9}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eef4fb 0,#f7f8fb 330px,#f5f7fb 100%);color:var(--text);font-family:system-ui,-apple-system,'Noto Sans TC','Segoe UI',sans-serif}.page{max-width:1280px;margin:auto;padding:30px 24px 44px}.hero{display:grid;grid-template-columns:1.6fr .9fr;gap:16px;align-items:start}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 10px 28px rgba(15,23,42,.06)}.notice{border-left:4px solid var(--blue);background:#f8fafc}.eyebrow{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}h1{font-size:34px;margin:8px 0 12px;letter-spacing:-.02em}h2{font-size:21px;margin:30px 0 14px}h3{font-size:16px;margin:0 0 8px}.sub,p{color:var(--muted);line-height:1.75}.badge{display:inline-block;border-radius:6px;padding:4px 9px;font-size:12px;font-weight:800;margin:3px 5px 3px 0}.b-green{background:var(--green2);color:#13745a}.b-blue{background:var(--blue2);color:var(--blue)}.b-yellow{background:var(--amber2);color:#8a550e}.b-red{background:var(--red2);color:#a32d2d}.b-purple{background:var(--purple2);color:#5650b8}.b-slate{background:var(--slate2);color:var(--slate)}.grid{display:grid;gap:12px}.kpis{grid-template-columns:repeat(4,1fr);margin-top:18px}.four{grid-template-columns:repeat(4,1fr)}.five{grid-template-columns:repeat(5,1fr)}.kpi{font-size:30px;font-weight:850;margin:6px 0}.label{font-size:12px;color:var(--muted);margin-bottom:4px}.mini{font-size:12px;color:var(--muted);line-height:1.65}.progress{height:9px;border-radius:999px;background:#eef2f7;overflow:hidden;margin-top:11px}.bar{height:100%;border-radius:999px}.greenbar{background:var(--green)}.yellowbar{background:var(--amber)}.redbar{background:var(--red)}.purplebar{background:var(--purple)}.bluebar{background:var(--blue)}.slatebar{background:var(--slate)}.table{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--panel)}table{width:100%;border-collapse:collapse;min-width:1120px}th,td{padding:13px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:13px}th{background:#f8fafc;color:#475569;text-transform:uppercase;font-size:12px}tr:last-child td{border-bottom:0}.section-note{font-size:13px;color:var(--muted);margin-top:-6px;margin-bottom:12px}.loop-card{display:flex;flex-direction:column;min-height:205px}.top{display:flex;align-items:start;justify-content:space-between;gap:10px}.icon{width:38px;height:38px;border-radius:14px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:19px}.pct{font-size:30px;font-weight:850;margin:12px 0 4px}.gap-box{margin-top:auto;background:#f8fafc;border:1px solid #eef2f7;border-radius:13px;padding:10px}.footer{text-align:center;color:var(--muted);font-size:12px;margin:32px 0 0;line-height:1.7}@media(max-width:1180px){.kpis,.five,.four{grid-template-columns:repeat(2,1fr)}}@media(max-width:920px){.page{padding:18px}.hero,.kpis,.five,.four{grid-template-columns:1fr}h1{font-size:28px}table{min-width:980px}}
+</style>
 </head>
 <body>
 <main class="page">
-  <section class="hero">
-    <div class="card">
-      <div class="eyebrow">SIEM_2 / DeepXDR V41 / Product Goal</div>
-      <h1>產品目標：企業資安治理流程平台</h1>
-      <p class="sub">SIEM_2 的目標不是只做 XDR、ITAM 或合規單點功能，而是把企業資產、端點、威脅、合規、AI 使用與稽核證據串成一套可執行的治理平台。</p>
-      <p class="sub">主頁依照產品閉環追蹤：區分本期必須完成、下一階段完成與未來 Roadmap；工程完成不等於 PMQA accepted，驗收工時會獨立顯示。</p>
-      <span class="badge b-blue">product-loop based</span><span class="badge b-green">effort display</span><span class="badge b-yellow">P0 / P1 / Future</span><span class="badge b-purple">PMQA separated</span>
-    </div>
-    <aside class="card">
-      <b>完成工時與預估工時</b>
-      <div id="effortSummary"></div>
-    </aside>
-  </section>
-
-  <h2>Roadmap 分層</h2>
-  <section class="grid four" id="roadmapSummary"></section>
-
-  <h2>產品大項完成度</h2>
-  <section class="grid kpis" id="loopCards"></section>
-
-  <h2>產品大項工時明細</h2>
-  <section class="table"><table><thead><tr><th>產品大項</th><th>優先級</th><th>完成度</th><th>規劃工時</th><th>完成工時</th><th>驗收工時</th><th>預估剩餘</th><th>驗收狀態</th><th>剩餘重點</th></tr></thead><tbody id="effortRows"></tbody></table></section>
-
-  <div id="closureRoot"></div>
-  <footer class="footer">Public report mirror · reports/index.html · cache bust v21 · 完成工時與預估工時為規劃估算，PMQA accepted 後才計入驗收工時。</footer>
+<section class="hero">
+<div class="card">
+<div class="eyebrow">SIEM_2 / DeepXDR V42 / Product Goal</div>
+<h1>產品目標：企業資安治理流程平台</h1>
+<p class="sub">本版依照 #8 重新計算：把原本「情資引擎閉環 + XDR 事件閉環 + 模型訓練閉環」重組為「XDR 核心引擎」與「XDR 事件營運閉環」。</p>
+<p class="sub">XDR Core Engine 代表會判斷；XDR Incident Operations 代表會處理。總工時不灌水，合計仍維持 v21 的總規劃與剩餘工時。</p>
+<span class="badge b-blue">v22 recalculated</span><span class="badge b-green">XDR core split</span><span class="badge b-yellow">PMQA separated</span><span class="badge b-purple">no double count</span>
+</div>
+<aside class="card"><b>完成工時與預估工時</b><p><b>完成工時：349h</b><br>各產品大項實際已完成工時加總。</p><p><b>驗收工時：0h</b><br>已通過 PMQA / UAT / evidence 的工時加總。</p><p><b>預估工時：292–434h</b><br>各產品大項預估剩餘工時加總。</p><p><b>規劃總工時：783h</b><br>v22 重算後維持 v21 總量，不重複計入 XDR 相關工時。</p></aside>
+</section>
+<h2>重算原則</h2>
+<section class="grid four">
+<div class="card notice"><b>XDR Core Engine</b><p class="mini">L1 AST/IR、L2/L3/L4、L5 RCA、Policy Gate、Coverage / Replay / Training Lab。</p></div>
+<div class="card notice"><b>XDR Incident Operations</b><p class="mini">Incident Workflow、Timeline、Response Approval、Human Review、Action Audit、Case Management。</p></div>
+<div class="card notice"><b>Platform Core</b><p class="mini">tenant/company、RBAC、Agent token、App Shell、共用 API、平台級 audit log。</p></div>
+<div class="card notice"><b>Reports</b><p class="mini">#1 / #2 保留為 reports/index.html 展示與工時計算規格，不併入 XDR Core。</p></div>
+</section>
+<h2>Roadmap 分層</h2>
+<section class="grid four">
+<div class="card"><span class="badge b-blue">P0 / 本期必須完成</span><div class="kpi" style="color:var(--blue)">6</div><div class="mini">影響主線、展示、PoC、GA Gate 或資料正確性的閉環。</div></div>
+<div class="card"><span class="badge b-yellow">P1 / 下一階段完成</span><div class="kpi" style="color:var(--amber)">2</div><div class="mini">已在 Roadmap 內，但不直接卡住本期主頁與主線展示。</div></div>
+<div class="card"><span class="badge b-green">XDR 已拆分</span><div class="kpi" style="color:var(--green)">2</div><div class="mini">XDR Core Engine 與 XDR Incident Operations 分開計算完成度。</div></div>
+<div class="card"><span class="badge b-purple">PMQA Accepted</span><div class="kpi" style="color:var(--purple)">0</div><div class="mini">只有 evidence / replay / screenshot / UAT 通過才列入驗收工時。</div></div>
+</section>
+<h2>產品大項完成度</h2>
+<section class="grid kpis">
+<div class="card"><div class="label">ITAM 角色閉環</div><span class="badge b-blue">P0 / 本期必須完成</span><span class="badge b-yellow">implemented_pending_pmqa</span><div class="kpi" style="color:var(--amber)">45%</div><div class="mini">完成工時：42h<br>驗收工時：0h<br>預估剩餘：42–56h<br>資產、軟體與 Agent 回報已有基礎；Task、HR、Finance、部門流程仍需補齊。</div><div class="progress"><div class="bar yellowbar" style="width:45%"></div></div></div>
+<div class="card"><div class="label">XDR 核心引擎</div><span class="badge b-blue">P0 / 本期必須完成</span><span class="badge b-green">implemented_pending_pmqa</span><div class="kpi" style="color:var(--green)">64%</div><div class="mini">完成工時：132h<br>驗收工時：0h<br>預估剩餘：48–73h<br>L1 AST/IR、L2/L3/L4、RCA / Policy Gate 已具核心能力；L4 Audit、Tenant Evidence、PMQA Replay 尚未完整。</div><div class="progress"><div class="bar greenbar" style="width:64%"></div></div></div>
+<div class="card"><div class="label">XDR 事件營運閉環</div><span class="badge b-blue">P0 / 本期必須完成</span><span class="badge b-yellow">implemented_pending_pmqa</span><div class="kpi" style="color:var(--amber)">42%</div><div class="mini">完成工時：45h<br>驗收工時：0h<br>預估剩餘：40–63h<br>Incident Workflow、Response Approval、Human Review、Audit Trail、Timeline、Case Management 與 SLA 待補齊。</div><div class="progress"><div class="bar yellowbar" style="width:42%"></div></div></div>
+<div class="card"><div class="label">合規稽核閉環</div><span class="badge b-blue">P0 / 本期必須完成</span><span class="badge b-yellow">implemented_pending_pmqa</span><div class="kpi" style="color:var(--amber)">45%</div><div class="mini">完成工時：42h<br>驗收工時：0h<br>預估剩餘：32–48h<br>Compliance、GCB、VANS 有基礎；Evidence Center 與 Gap Workflow 未完整。</div><div class="progress"><div class="bar yellowbar" style="width:45%"></div></div></div>
+<div class="card"><div class="label">AI 治理閉環</div><span class="badge b-blue">P0 / 本期必須完成</span><span class="badge b-red">in_progress</span><div class="kpi" style="color:var(--red)">30%</div><div class="mini">完成工時：22h<br>驗收工時：0h<br>預估剩餘：36–52h<br>AI policy / data risk 概念已有；Exception 與 ISO 42001 evidence 仍需產品化。</div><div class="progress"><div class="bar redbar" style="width:30%"></div></div></div>
+<div class="card"><div class="label">平台營運閉環</div><span class="badge b-blue">P0 / 本期必須完成</span><span class="badge b-yellow">implemented_pending_pmqa</span><div class="kpi" style="color:var(--amber)">40%</div><div class="mini">完成工時：28h<br>驗收工時：0h<br>預估剩餘：34–52h<br>tenant/company、RBAC、Agent token、App Shell 與部分後端 API 已有基礎。</div><div class="progress"><div class="bar yellowbar" style="width:40%"></div></div></div>
+<div class="card"><div class="label">Dify 外殼閉環</div><span class="badge b-yellow">P1 / 下一階段完成</span><span class="badge b-blue">in_progress</span><div class="kpi" style="color:var(--blue)">35%</div><div class="mini">完成工時：18h<br>驗收工時：0h<br>預估剩餘：28–42h<br>Dify workflow 包裝、知識庫/工具調用、權限控管與產品 UI 串接待補強。</div><div class="progress"><div class="bar bluebar" style="width:35%"></div></div></div>
+<div class="card"><div class="label">AI 助理閉環</div><span class="badge b-yellow">P1 / 下一階段完成</span><span class="badge b-blue">in_progress</span><div class="kpi" style="color:var(--blue)">32%</div><div class="mini">完成工時：20h<br>驗收工時：0h<br>預估剩餘：32–48h<br>SOC、ITAM、合規助理角色已成形；上下文注入、回答邊界與操作留痕需補齊。</div><div class="progress"><div class="bar bluebar" style="width:32%"></div></div></div>
+</section>
+<h2>產品大項工時明細</h2>
+<section class="table"><table><thead><tr><th>產品大項</th><th>優先級</th><th>完成度</th><th>規劃工時</th><th>完成工時</th><th>驗收工時</th><th>預估剩餘</th><th>驗收狀態</th><th>剩餘重點</th></tr></thead><tbody>
+<tr><td><b>ITAM 角色閉環</b></td><td>P0</td><td>45%</td><td>98h</td><td>42h</td><td>0h</td><td>42–56h</td><td>implemented_pending_pmqa</td><td>Task Center、ITAM Workbench、HR/Finance/部門視角、派工與驗收。</td></tr>
+<tr><td><b>XDR 核心引擎</b></td><td>P0</td><td>64%</td><td>205h</td><td>132h</td><td>0h</td><td>48–73h</td><td>implemented_pending_pmqa</td><td>L1 schema、L2/L5 RCA、L3 Policy Gate、L4 explainability、L5 coverage。</td></tr>
+<tr><td><b>XDR 事件營運閉環</b></td><td>P0</td><td>42%</td><td>108h</td><td>45h</td><td>0h</td><td>40–63h</td><td>implemented_pending_pmqa</td><td>Incident Workflow、Response Approval、Action Audit、Timeline、Case Management、SLA。</td></tr>
+<tr><td><b>合規稽核閉環</b></td><td>P0</td><td>45%</td><td>90h</td><td>42h</td><td>0h</td><td>32–48h</td><td>implemented_pending_pmqa</td><td>Evidence Center、Gap Workflow、改善任務、稽核匯出。</td></tr>
+<tr><td><b>AI 治理閉環</b></td><td>P0</td><td>30%</td><td>74h</td><td>22h</td><td>0h</td><td>36–52h</td><td>in_progress</td><td>AI Policy Center、Sensitive Data Decision、Exception Workflow、ISO 42001 Evidence。</td></tr>
+<tr><td><b>平台營運閉環</b></td><td>P0</td><td>40%</td><td>80h</td><td>28h</td><td>0h</td><td>34–52h</td><td>implemented_pending_pmqa</td><td>租戶管理、方案/訂閱、平台健康、支援模式、平台級 Audit Log。</td></tr>
+<tr><td><b>Dify 外殼閉環</b></td><td>P1</td><td>35%</td><td>60h</td><td>18h</td><td>0h</td><td>28–42h</td><td>in_progress</td><td>Dify workflow 包裝、知識庫/工具調用、權限控管、審計紀錄、產品 UI 串接。</td></tr>
+<tr><td><b>AI 助理閉環</b></td><td>P1</td><td>32%</td><td>68h</td><td>20h</td><td>0h</td><td>32–48h</td><td>in_progress</td><td>SOC/ITAM/合規助理角色、上下文注入、回答邊界、審批提示與操作留痕。</td></tr>
+</tbody></table></section>
+<h2>XDR 核心引擎進度</h2><p class="section-note"><span class="badge b-blue">P0</span>從資料正規化、L2/L3/L4/L5 推理、Policy Gate 到覆蓋率補強。</p>
+<section class="grid five">
+<div class="card loop-card"><div class="top"><div class="icon">🧬</div><span class="badge b-yellow">Completion Audit</span></div><h3>L1 AST / IR</h3><div class="pct" style="color:var(--amber)">48%</div><p class="mini">#7 已建立 L1 completion audit；目標 >= 80 分。</p><div class="progress"><div class="bar yellowbar" style="width:48%"></div></div><div class="gap-box"><div class="label">目前估分</div><b>48/100</b></div></div>
+<div class="card loop-card"><div class="top"><div class="icon">🧠</div><span class="badge b-purple">Spec Ready</span></div><h3>L2 / L5 RCA</h3><div class="pct" style="color:var(--purple)">38%</div><p class="mini">#5 已有 RCA Impact-Dimension 題庫，待 dataset / replay。</p><div class="progress"><div class="bar purplebar" style="width:38%"></div></div><div class="gap-box"><div class="label">關聯 Issue</div><b>#5</b></div></div>
+<div class="card loop-card"><div class="top"><div class="icon">🚦</div><span class="badge b-green">Shadow-ready</span></div><h3>L3 Policy Gate</h3><div class="pct" style="color:var(--green)">72%</div><p class="mini">#3/#4 已有 BND Shadow / Impact Gate 基礎，待 PMQA。</p><div class="progress"><div class="bar greenbar" style="width:72%"></div></div><div class="gap-box"><div class="label">關聯 Issue</div><b>#3 #4</b></div></div>
+<div class="card loop-card"><div class="top"><div class="icon">📜</div><span class="badge b-red">缺獨立 Issue</span></div><h3>L4 Explainability</h3><div class="pct" style="color:var(--red)">20%</div><p class="mini">Trace / Evidence Chain / Audit Trail 還未獨立 completion audit。</p><div class="progress"><div class="bar redbar" style="width:20%"></div></div><div class="gap-box"><div class="label">缺口</div><b>新 Issue</b></div></div>
+<div class="card loop-card"><div class="top"><div class="icon">🧪</div><span class="badge b-purple">進行中</span></div><h3>L5 Coverage / Training</h3><div class="pct" style="color:var(--purple)">35%</div><p class="mini">Web Observe Probe、SNR Mixed Traffic、Safety Catch 已在 #6。</p><div class="progress"><div class="bar purplebar" style="width:35%"></div></div><div class="gap-box"><div class="label">關聯 Issue</div><b>#6</b></div></div>
+</section>
+<h2>XDR 事件營運閉環進度</h2><p class="section-note"><span class="badge b-blue">P0</span>引擎判斷之後，事件如何建立、處理、審批、稽核與結案。</p>
+<section class="grid five">
+<div class="card loop-card"><div class="top"><div class="icon">🚨</div><span class="badge b-yellow">需產品化</span></div><h3>Incident Workflow</h3><div class="pct" style="color:var(--amber)">45%</div><p class="mini">事件狀態、指派、調查筆記與工作流。</p><div class="progress"><div class="bar yellowbar" style="width:45%"></div></div><div class="gap-box"><div class="label">缺口</div><b>Case Flow</b></div></div>
+<div class="card loop-card"><div class="top"><div class="icon">🧯</div><span class="badge b-red">未閉環</span></div><h3>Response Approval</h3><div class="pct" style="color:var(--red)">32%</div><p class="mini">高風險建議需 human approval，不自動執行。</p><div class="progress"><div class="bar redbar" style="width:32%"></div></div><div class="gap-box"><div class="label">安全邊界</div><b>待補強</b></div></div>
+<div class="card loop-card"><div class="top"><div class="icon">🧾</div><span class="badge b-red">缺獨立 Issue</span></div><h3>Action Audit Trail</h3><div class="pct" style="color:var(--red)">28%</div><p class="mini">每個處置、審批、override 都需留痕可稽核。</p><div class="progress"><div class="bar redbar" style="width:28%"></div></div><div class="gap-box"><div class="label">缺口</div><b>XDR-OPS</b></div></div>
+<div class="card loop-card"><div class="top"><div class="icon">📈</div><span class="badge b-slate">初始階段</span></div><h3>SLA / MTTR</h3><div class="pct" style="color:var(--slate)">25%</div><p class="mini">MTTD、MTTR、SLA 與復盤報告尚未產品化。</p><div class="progress"><div class="bar slatebar" style="width:25%"></div></div><div class="gap-box"><div class="label">Roadmap</div><b>P0/P1</b></div></div>
+<div class="card loop-card"><div class="top"><div class="icon">📄</div><span class="badge b-yellow">建置中</span></div><h3>Timeline / Report</h3><div class="pct" style="color:var(--amber)">40%</div><p class="mini">Incident timeline、RCA report、evidence attachment 待整合。</p><div class="progress"><div class="bar yellowbar" style="width:40%"></div></div><div class="gap-box"><div class="label">輸出</div><b>待補強</b></div></div>
+</section>
+<footer class="footer">Public report mirror · reports/index.html · cache bust v22 · 完成工時與預估工時為規劃估算，PMQA accepted 後才計入驗收工時。</footer>
 </main>
-<script>
-const loops=[
- {id:'itam_role_loop',title:'ITAM 角色閉環',pct:45,color:'amber',priority:'P0',label:'本期必須完成',planned:98,actual:42,accepted:0,min:42,max:56,status:'implemented_pending_pmqa',summary:'資產、軟體與 Agent 回報已有基礎；Task、HR、Finance、部門流程仍需補齊。',focus:'Task Center、ITAM Workbench、HR/Finance/部門視角、派工與驗收。'},
- {id:'intel_engine_loop',title:'情資引擎閉環',pct:80,color:'green',priority:'P0',label:'本期必須完成',planned:115,actual:93,accepted:0,min:14,max:22,status:'implemented_pending_pmqa',summary:'規則解析、IR/AST、L2/L3/L4 編譯與 OpenSearch 匯出已具核心能力。',focus:'Feed 自動更新、版本治理、品質監控、Golden Replay 報告、產品化 UI。'},
- {id:'xdr_incident_loop',title:'XDR 事件閉環',pct:60,color:'green',priority:'P0',label:'本期必須完成',planned:102,actual:56,accepted:0,min:32,max:46,status:'implemented_pending_pmqa',summary:'L2/L3/L4 較強；Incident Workflow、Response Approval 與 Audit Trail 未完整。',focus:'Incident Workflow、調查筆記、事件指派、Response Approval、Audit Trail。'},
- {id:'compliance_audit_loop',title:'合規稽核閉環',pct:45,color:'amber',priority:'P0',label:'本期必須完成',planned:90,actual:42,accepted:0,min:32,max:48,status:'implemented_pending_pmqa',summary:'Compliance、GCB、VANS 有基礎；Evidence Center 與 Gap Workflow 未完整。',focus:'Evidence Center、Gap Workflow、改善任務、稽核匯出。'},
- {id:'ai_governance_loop',title:'AI 治理閉環',pct:30,color:'red',priority:'P0',label:'本期必須完成',planned:74,actual:22,accepted:0,min:36,max:52,status:'in_progress',summary:'AI policy / data risk 概念已有；Exception 與 ISO 42001 evidence 仍需產品化。',focus:'AI Policy Center、Sensitive Data Decision、Exception Workflow、ISO 42001 Evidence。'},
- {id:'model_training_loop',title:'模型訓練閉環',pct:23,color:'purple',priority:'P0',label:'本期必須完成',planned:96,actual:28,accepted:0,min:42,max:68,status:'implemented_pending_pmqa',summary:'BND 邊界判斷已完成第一階段；紅隊出題、法官評分與 Champion Gate 未閉環。',focus:'紅隊出題、藍隊批次作答、法官評分、錯題訓練、Champion Gate。'},
- {id:'platform_ops_loop',title:'平台營運閉環',pct:40,color:'amber',priority:'P0',label:'本期必須完成',planned:80,actual:28,accepted:0,min:34,max:52,status:'implemented_pending_pmqa',summary:'tenant/company、RBAC、Agent token、App Shell 與部分後端 API 已有基礎。',focus:'租戶管理、方案/訂閱、平台健康、支援模式、平台級 Audit Log。'},
- {id:'dify_shell_loop',title:'Dify 外殼閉環',pct:35,color:'blue',priority:'P1',label:'下一階段完成',planned:60,actual:18,accepted:0,min:28,max:42,status:'in_progress',summary:'Dify workflow 包裝、知識庫/工具調用、權限控管與產品 UI 串接待補強。',focus:'Dify workflow 包裝、知識庫/工具調用、權限控管、審計紀錄、產品 UI 串接。'},
- {id:'ai_assistant_loop',title:'AI 助理閉環',pct:32,color:'blue',priority:'P1',label:'下一階段完成',planned:68,actual:20,accepted:0,min:32,max:48,status:'in_progress',summary:'SOC、ITAM、合規助理角色已成形；上下文注入、回答邊界與操作留痕需補齊。',focus:'SOC/ITAM/合規助理角色、上下文注入、回答邊界、審批提示與操作留痕。'}
-];
-const closureSections=[
- {title:'ITAM 平台閉環進度',note:'從資產盤點、保管歸屬、軟體治理、弱點合規到處置稽核。',priority:'P0',cards:[
-  ['💻','資產盤點',82,'green','進行中','裝置、軟體、Agent 回報與未知資產收斂度。','缺口數量','36'],['👤','保管人歸屬',68,'amber','需補強','每台設備是否綁定人員、部門與成本中心。','缺口數量','52'],['📦','軟體治理',45,'amber','建置中','授權、付費軟體、未授權軟體、黑名單與使用率。','缺口數量','91'],['🛡️','弱點與組態',37,'red','需補強','CVE、GCB、VANS、組態基準與資產重要性關聯。','缺口數量','128'],['✅','處置閉環',24,'slate','初始階段','任務派送、審批、修復驗收、稽核紀錄與報表。','待審批任務','18']]},
- {title:'情資引擎閉環進度',note:'情資引擎是 XDR、合規、弱點治理與模型訓練共同使用的底層知識編譯器。',priority:'P0',cards:[
-  ['📥','規則匯入',90,'green','已具基礎','Sigma / Elastic / Wazuh / YARA / JSON playbook 匯入與解析。','解析成功率','高'],['🧬','IR / AST 正規化',85,'green','已具基礎','跨查詢語言轉成統一中介表示，降低轉換失真。','正規化狀態','穩定'],['🧠','L2 / L3 / L4 編譯',82,'green','進行中','Signal、Behavior、Storyline 與 correlation 產出。','故事線能力','可展示'],['🌐','情資強化',65,'amber','需補強','MITRE、CVE、KEV、EPSS、CVSS、VANS enrichment。','剩餘重點','自動更新'],['📤','匯出與品質回放',70,'amber','建置中','Endpoint / Server / Cloud / OpenSearch 匯出、Replay、Quality Gate。','QA 重點','Golden Replay']]},
- {title:'XDR 事件閉環進度',note:'從訊號偵測、行為關聯、事件成案、處置審批到復盤報告。',priority:'P0',cards:[
-  ['📡','訊號偵測',78,'green','已具基礎','L2 Signal、Agent Event、IDS、Defender 與 OpenSearch 來源正規化。','主線狀態','可展示'],['🔗','行為關聯',70,'green','進行中','L3 Behavior、Entity Risk、process tree、host/user/time-window 關聯。','關聯能力','進行中'],['🚨','事件成案',55,'amber','需產品化','L4 Storyline、incident timeline、severity、explainability。','缺口','Workbench'],['🧯','處置審批',32,'red','未閉環','SOAR 建議、Response Safety Gate、Approval、Audit Trail。','安全邊界','顯示不自動'],['📄','復盤報告',40,'amber','建置中','Post-incident report、Golden Replay、false positive 標記與知識回寫。','報告能力','待補強']]},
- {title:'合規稽核閉環進度',note:'從控制項對應、證據收集、缺口判斷、改善任務到稽核匯出。',priority:'P0',cards:[
-  ['📚','控制項對應',65,'green','已有基礎','ISO / CNS / GCB / VANS crosswalk 與資產、弱點、政策對應。','主線狀態','進行中'],['🗂️','證據收集',48,'amber','建置中','Agent、API、稽核紀錄、政策決策與報表證據包。','缺口','Evidence Center'],['🧩','缺口判斷',45,'amber','需補強','GCB baseline gap、VANS 資產驗證與風險排序。','缺口','排序規則'],['🛠️','改善任務',30,'red','未閉環','Remediation task、owner、SLA、審批、驗收與例外管理。','缺口','Task Flow'],['📤','稽核匯出',38,'amber','建置中','Auditor read-only、PDF/Excel、控制項證據包與稽核追蹤。','輸出','待產品化']]},
- {title:'AI 治理閉環進度',note:'從 AI 使用盤點、資料風險判斷、政策決策、例外審批到 ISO 42001 證據。',priority:'P0',cards:[
-  ['🤖','AI 使用盤點',45,'amber','建置中','AI 網域、Browser / Extension、AI desktop client 與員工使用情境。','盤點','進行中'],['🔍','資料風險判斷',35,'amber','需補強','CSV / Excel / screenshot / sensitive data metadata、hash 與分類。','風險分類','待補強'],['🚦','政策決策',30,'red','未閉環','allow / warn / block / require approval，managed browser fail-closed。','決策','待產品化'],['📝','例外審批',20,'red','初始階段','員工申請、主管核准、期限、用途、資料範圍與撤銷。','缺口','Exception Flow'],['📑','治理證據',28,'amber','規劃中','ISO 42001 evidence、政策版本、阻擋紀錄、例外紀錄與稽核匯出。','證據','待補強']]},
- {title:'模型訓練閉環進度',note:'BND 需放在模型訓練閉環下的藍隊作答階段，不可被錯放成產品大項。',priority:'P0',cards:[
-  ['🧨','紅隊出題',18,'red','未閉環','生成攻擊案例、變體題庫、場景標籤與安全約束。','Roadmap','P0'],['🛡️','藍隊作答',35,'purple','進行中','BND 邊界判斷已可限制 unsafe L5 action，仍需 replay evidence。','BND 狀態','待 PMQA'],['⚖️','法官評分',22,'purple','初始階段','Judge / Matrix 安全邊界、錯誤分類、準度與校準紀錄。','缺口','評分報告'],['📚','錯題訓練',15,'red','未閉環','把錯題轉成訓練樣本、回放資料與版本差異。','缺口','Dataset'],['🏁','Champion Gate',8,'slate','Future','模型版本晉級、回歸測試、PoV 準度門檻與 rollback。','Roadmap','Future']]},
- {title:'平台營運閉環進度',note:'把多租戶、帳號、Token、RBAC、平台健康與支援流程串成可營運平台。',priority:'P0',cards:[
-  ['🏢','租戶管理',45,'amber','進行中','company_id / tenant isolation / 初始化資料與租戶切換。','缺口','Tenant UI'],['🔐','Token 與註冊',42,'amber','需補強','部署 token、Agent enroll、token rotation 與撤銷紀錄。','缺口','生命週期'],['👥','RBAC 權限',55,'amber','建置中','平台管理員、IT、SOC、HR、Finance、稽核者權限分層。','缺口','權限矩陣'],['📈','平台健康',28,'red','未閉環','API、DB、OpenSearch、Agent ingestion、queue 與前端監控。','缺口','Monitoring'],['🧾','營運審計',30,'red','初始階段','登入、設定、審批、資料匯出、支援操作與平台級 audit log。','缺口','Audit Log']]},
- {title:'Dify 外殼閉環進度',note:'Dify 作為工作流外殼，負責把內部工具、知識庫與審批流程包成可用 AI 工作台。',priority:'P1',cards:[
-  ['🧩','Workflow 包裝',40,'blue','建置中','把 ITAM / XDR / 合規流程包成可被助理調用的工作流。','階段','P1'],['📚','知識庫串接',35,'blue','建置中','政策、報告、控制項、情資與操作手冊的檢索接入。','缺口','RAG 管理'],['🛠️','工具調用',32,'amber','需補強','API tool allowlist、權限檢查、dry-run 與操作摘要。','缺口','Tool Gate'],['✅','審批治理',22,'red','未閉環','高風險動作需審批、留痕、可回放，不直接自動執行。','安全邊界','待補強'],['🧾','操作留痕',28,'amber','規劃中','每次 AI 建議、查詢、工具調用與使用者決策留存。','缺口','Audit Trail']]},
- {title:'AI 助理閉環進度',note:'用企業角色角度呈現：XDR 分析師、ITAM 管理員、自然合規顧問、稽核員與營運助理。',priority:'P1',cards:[
-  ['🕵️','XDR 分析師',42,'blue','建置中','整理事件故事線、風險原因、建議處置與審批提示。','角色','SOC'],['💻','ITAM 管理員',35,'blue','建置中','協助資產、軟體、授權、使用率與保管人問題收斂。','角色','ITAM'],['📘','合規顧問',32,'amber','需補強','把 GCB、VANS、ISO 42001 與缺口改善轉成可執行任務。','角色','Compliance'],['🔎','稽核員',28,'amber','規劃中','檢查證據完整性、例外紀錄、審批軌跡與報表輸出。','角色','Auditor'],['🧭','營運助理',22,'slate','Future','彙整平台健康、租戶狀態、方案限制與支援操作。','Roadmap','Future']]}
-];
-const colorClass={green:'b-green',amber:'b-yellow',red:'b-red',purple:'b-purple',blue:'b-blue',slate:'b-slate'};
-const barClass={green:'greenbar',amber:'yellowbar',red:'redbar',purple:'purplebar',blue:'bluebar',slate:'slatebar'};
-const totals=loops.reduce((a,x)=>({planned:a.planned+x.planned,actual:a.actual+x.actual,accepted:a.accepted+x.accepted,min:a.min+x.min,max:a.max+x.max}),{planned:0,actual:0,accepted:0,min:0,max:0});
-document.getElementById('effortSummary').innerHTML=`<p><b>完成工時：${totals.actual}h</b><br>各產品大項實際已完成工時加總。</p><p><b>驗收工時：${totals.accepted}h</b><br>已通過 PMQA / UAT / evidence 的工時加總。</p><p><b>預估工時：${totals.min}–${totals.max}h</b><br>各產品大項預估剩餘工時加總。</p><p><b>規劃總工時：${totals.planned}h</b><br>從目前狀態走到完整閉環的規劃值。</p>`;
-const buckets=[
- {title:'P0 / 本期必須完成',count:loops.filter(x=>x.priority==='P0').length,desc:'影響主線、展示、PoC、GA Gate 或資料正確性的閉環。',color:'blue'},
- {title:'P1 / 下一階段完成',count:loops.filter(x=>x.priority==='P1').length,desc:'已在 Roadmap 內，但不直接卡住本期主頁與主線展示。',color:'amber'},
- {title:'Future / 未來 Roadmap',count:closureSections.flatMap(s=>s.cards).filter(c=>String(c[4]).includes('Future')||String(c[7]).includes('Future')).length,desc:'方向正確，但不列入本期或下一階段承諾。',color:'slate'},
- {title:'PMQA Accepted',count:loops.filter(x=>x.accepted>0).length,desc:'只有 evidence / replay / screenshot / UAT 通過才列入驗收工時。',color:'purple'}
-];
-document.getElementById('roadmapSummary').innerHTML=buckets.map(b=>`<div class="card"><span class="badge ${colorClass[b.color]}">${b.title}</span><div class="kpi" style="color:var(--${b.color})">${b.count}</div><div class="mini">${b.desc}</div></div>`).join('');
-document.getElementById('loopCards').innerHTML=loops.map(x=>`<div class="card"><div class="top"><div><div class="label">${x.title}</div><span class="badge ${x.priority==='P0'?'b-blue':x.priority==='P1'?'b-yellow':'b-slate'}">${x.priority} / ${x.label}</span></div><span class="badge ${colorClass[x.color]}">${x.status}</span></div><div class="kpi" style="color:var(--${x.color})">${x.pct}%</div><div class="mini">完成工時：${x.actual}h<br>驗收工時：${x.accepted}h<br>預估剩餘：${x.min}–${x.max}h<br>${x.summary}</div><div class="progress"><div class="bar ${barClass[x.color]}" style="width:${x.pct}%"></div></div></div>`).join('');
-document.getElementById('effortRows').innerHTML=loops.map(x=>`<tr><td><b>${x.title}</b></td><td><span class="badge ${x.priority==='P0'?'b-blue':x.priority==='P1'?'b-yellow':'b-slate'}">${x.priority}</span><br>${x.label}</td><td>${x.pct}%</td><td>${x.planned}h</td><td>${x.actual}h</td><td>${x.accepted}h</td><td>${x.min}–${x.max}h</td><td>${x.status}</td><td>${x.focus}</td></tr>`).join('');
-document.getElementById('closureRoot').innerHTML=closureSections.map(section=>`<h2>${section.title}</h2><p class="section-note"><span class="badge ${section.priority==='P0'?'b-blue':section.priority==='P1'?'b-yellow':'b-slate'}">${section.priority}</span>${section.note}</p><section class="grid five">${section.cards.map(c=>`<div class="card loop-card"><div class="top"><div class="icon">${c[0]}</div><span class="badge ${colorClass[c[3]]}">${c[4]}</span></div><h3>${c[1]}</h3><div class="pct" style="color:var(--${c[3]})">${c[2]}%</div><p class="mini">${c[5]}</p><div class="progress"><div class="bar ${barClass[c[3]]}" style="width:${c[2]}%"></div></div><div class="gap-box"><div class="label">${c[6]}</div><b>${c[7]}</b></div></div>`).join('')}</section>`).join('');
-</script>
 </body>
 </html>
