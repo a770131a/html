@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SIEM 舊 index 與新 SIEM 交接紀錄</title>
+<style>
+:root{--bg:#f5f7fa;--panel:#fff;--panel2:#f9fbfd;--line:#d9e2ec;--text:#142033;--muted:#627187;--blue:#1f5f9e;--blue2:#e7f0fb;--green:#118466;--green2:#e6f6f1;--amber:#a76516;--amber2:#fff2dc;--red:#b83b48;--red2:#fde8eb;--violet:#6754bd;--violet2:#efecff;--slate:#46566d;--slate2:#eef3f8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;line-height:1.62;overflow-x:hidden}
+a{color:var(--blue);font-weight:760;text-decoration:none}
+a:hover{text-decoration:underline}
+a,b,h1,h2,h3,p,span,td,th{overflow-wrap:anywhere}
+.page{width:100%;max-width:1240px;margin:0 auto;padding:24px 20px 44px;overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}
+.brand{font-size:13px;color:var(--muted);font-weight:850}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{height:34px;display:inline-flex;align-items:center;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--slate);font-size:13px}
+.panel{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;box-shadow:0 8px 24px rgba(21,32,51,.05)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:14px;align-items:stretch}
+.eyebrow{color:var(--blue);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:36px;line-height:1.15;margin:8px 0 12px}
+h2{font-size:22px;margin:28px 0 12px}
+h3{font-size:16px;margin-bottom:8px;line-height:1.35}
+.lead{font-size:16px;color:#40516a;max-width:820px;margin-bottom:14px}
+.small{font-size:13px;color:var(--muted)}
+.tiny{font-size:12px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;min-height:26px;padding:3px 9px;border-radius:8px;font-size:12px;font-weight:850;margin:2px 4px 2px 0;white-space:nowrap}
+.blue{background:var(--blue2);color:var(--blue)}
+.green{background:var(--green2);color:var(--green)}
+.amber{background:var(--amber2);color:var(--amber)}
+.red{background:var(--red2);color:var(--red)}
+.violet{background:var(--violet2);color:var(--violet)}
+.slate{background:var(--slate2);color:var(--slate)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px}
+.kpi{min-width:0;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:13px}
+.kpi strong{display:block;font-size:30px;line-height:1.1;margin:3px 0;color:var(--text)}
+.green-text{color:var(--green)!important}.amber-text{color:var(--amber)!important}.red-text{color:var(--red)!important}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.grid-2>*,.grid-3>*{min-width:0}
+.table-wrap{width:100%;max-width:100%;min-width:0;overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:1080px}
+th,td{padding:12px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:13px}
+th{background:#f3f7fb;color:#44546b;font-size:12px;text-transform:uppercase}
+tr:last-child td{border-bottom:0}
+.num{font-weight:850;white-space:nowrap}
+.state{font-weight:850;color:var(--amber)}
+.issue-row{display:grid;grid-template-columns:54px minmax(0,1fr);gap:9px;align-items:start;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);margin-top:8px}
+.issue-no{font-weight:900;color:var(--blue);font-size:13px}
+.callout{border-left:5px solid var(--amber);background:#fffaf1}
+.footer{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
+@media(max-width:1040px){.hero,.grid-2,.grid-3{grid-template-columns:1fr}}
+@media(max-width:780px){.page{padding:16px 12px 32px}.topbar{align-items:flex-start;flex-direction:column}.nav{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.nav a{justify-content:center;padding:0 8px}h1{font-size:30px}.kpis{grid-template-columns:1fr}table{min-width:960px}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="topbar">
+    <div class="brand">SIEM / 舊完成紀錄交接</div>
+    <nav class="nav" aria-label="record navigation">
+      <a href="index.html?v=23">工時首頁</a>
+      <a href="#old-index">舊 index</a>
+      <a href="#new-siem">新 SIEM</a>
+      <a href="#mapping">對照表</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="panel">
+      <div class="eyebrow">交接目的</div>
+      <h1>舊 index 完成紀錄 + 新 SIEM Issue 對照</h1>
+      <p class="lead">這張紀錄用來保存舊 `reports/index.html` 裡已投入/已完成的工時口徑，並對上現在統一到 `a770131a/SIEM` 的新 issue。之後新開發追 SIEM issue，舊完成紀錄追這張表，避免把歷史工時和新待辦混在一起。</p>
+      <span class="badge blue">舊來源: a770131a/html reports/index.html</span>
+      <span class="badge green">新來源: a770131a/SIEM issues</span>
+      <span class="badge amber">完成工時需等 PMQA 才能轉驗收工時</span>
+      <div class="kpis">
+        <div class="kpi"><span class="tiny">舊 index 規劃總工時</span><strong>783h</strong><span class="tiny">八個大項合計</span></div>
+        <div class="kpi"><span class="tiny">舊 index 摘要完成</span><strong class="green-text">367h</strong><span class="tiny">含 4h 待歸屬</span></div>
+        <div class="kpi"><span class="tiny">舊主表完成合計</span><strong class="amber-text">363h</strong><span class="tiny">八個大項列帳</span></div>
+        <div class="kpi"><span class="tiny">已驗收工時</span><strong class="red-text">0h</strong><span class="tiny">PMQA 尚未計入</span></div>
+      </div>
+    </div>
+    <aside class="panel callout">
+      <div class="eyebrow">口徑說明</div>
+      <h3>這張表不是新待辦，是歷史工時 ledger</h3>
+      <p class="small">舊 index 裡「完成」代表工程已投入或規格已整理，不代表 PMQA/UAT 已驗收。新 SIEM issue 用來追後續補證據、補前後台功能、補 replay 與 close 條件。</p>
+      <p class="small">差異 `367h - 363h = 4h` 暫列為「待歸屬跨項工時」，不要硬塞進任何大項。</p>
+    </aside>
+  </section>
+
+  <section id="old-index">
+    <h2>舊 index 工時紀錄</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>舊產品大項</th>
+            <th>規劃工時</th>
+            <th>舊完成工時</th>
+            <th>舊驗收工時</th>
+            <th>舊剩餘估算</th>
+            <th>舊完成度</th>
+            <th>交接判斷</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><b>XDR 核心引擎</b></td><td class="num">205h</td><td class="num">140h</td><td class="num">0h</td><td class="num">40-65h</td><td class="num">68%</td><td class="state">保留為後台核心完成紀錄，需接 SIEM #24/#22/#15 補驗收</td></tr>
+          <tr><td><b>XDR 事件營運閉環</b></td><td class="num">108h</td><td class="num">45h</td><td class="num">0h</td><td class="num">40-63h</td><td class="num">42%</td><td class="state">保留為前台/事件營運紀錄，需接 SIEM #20/#21/#23</td></tr>
+          <tr><td><b>ITAM 角色閉環</b></td><td class="num">98h</td><td class="num">42h</td><td class="num">0h</td><td class="num">42-56h</td><td class="num">45%</td><td class="state">保留為後台資產與角色流程紀錄，後續需另建或併入 SIEM 大項</td></tr>
+          <tr><td><b>合規稽核閉環</b></td><td class="num">90h</td><td class="num">42h</td><td class="num">0h</td><td class="num">32-48h</td><td class="num">45%</td><td class="state">保留為 evidence/gap workflow 紀錄，後續接 PMQA evidence package</td></tr>
+          <tr><td><b>平台營運閉環</b></td><td class="num">80h</td><td class="num">34h</td><td class="num">0h</td><td class="num">28-46h</td><td class="num">43%</td><td class="state">保留為 tenant/RBAC/audit/report governance 紀錄</td></tr>
+          <tr><td><b>AI 治理閉環</b></td><td class="num">74h</td><td class="num">22h</td><td class="num">0h</td><td class="num">36-52h</td><td class="num">30%</td><td class="state">完成度最低，保留但不當作已驗收</td></tr>
+          <tr><td><b>Dify 外殼閉環</b></td><td class="num">60h</td><td class="num">18h</td><td class="num">0h</td><td class="num">28-42h</td><td class="num">35%</td><td class="state">接 SIEM #3/#4 作角色與 UI 整合</td></tr>
+          <tr><td><b>AI 助理閉環</b></td><td class="num">68h</td><td class="num">20h</td><td class="num">0h</td><td class="num">32-48h</td><td class="num">32%</td><td class="state">接 SIEM #3/#4/#7 作角色、邊界與操作留痕</td></tr>
+          <tr><td><b>待歸屬跨項工時</b></td><td class="num">-</td><td class="num">4h</td><td class="num">0h</td><td class="num">-</td><td class="num">-</td><td class="state">舊摘要與主表差額，暫不歸入產品大項</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="new-siem">
+    <h2>新 SIEM 追蹤口徑</h2>
+    <div class="grid-3">
+      <article class="panel">
+        <span class="badge blue">前台</span>
+        <h3>Console / Drawer / Evidence View</h3>
+        <p class="small">用來把舊 XDR 事件營運與部分 AI 助理工時轉成可看的畫面與截圖 evidence。</p>
+        <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/20">#20</a><span class="small">Decision Rationale Drawer</span></div>
+        <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/21">#21</a><span class="small">Notification baseline</span></div>
+        <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/23">#23</a><span class="small">GA-XDR PMQA Gates</span></div>
+      </article>
+      <article class="panel">
+        <span class="badge green">後台</span>
+        <h3>IR / Runtime / Context / Safety</h3>
+        <p class="small">用來把舊 XDR 核心、平台營運、資料治理與 response safety 轉成可 replay 的後台閉環。</p>
+        <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/24">#24</a><span class="small">Detection IR v1.1 + L5 Context Backbone</span></div>
+        <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/22">#22</a><span class="small">ClamAV + Entity Context + Response Audit</span></div>
+        <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/19">#19</a><span class="small">UEBA + Entity Graph</span></div>
+      </article>
+      <article class="panel">
+        <span class="badge violet">訓練 / PMQA</span>
+        <h3>Replay / Exam / Evidence Package</h3>
+        <p class="small">用來把舊完成工時真正轉成驗收工時。沒有 replay、scorecard、screenshot，就不算驗收。</p>
+        <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/8">#8</a><span class="small">L2-L5 Gate 與五大推理考試</span></div>
+        <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/14">#14</a><span class="small">Golden Replay 100 E2E Gate</span></div>
+        <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/23">#23</a><span class="small">GA Scorecard / PMQA Evidence Package</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="mapping">
+    <h2>舊大項到新 SIEM 對照</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>舊 index 大項</th>
+            <th>新 SIEM 對應</th>
+            <th>要補成驗收的東西</th>
+            <th>是否應 transfer 更多 SIEM_2 issue</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><b>XDR 核心引擎</b></td><td><a href="https://github.com/a770131a/SIEM/issues/24">#24</a>, <a href="https://github.com/a770131a/SIEM/issues/22">#22</a>, <a href="https://github.com/a770131a/SIEM/issues/15">#15</a></td><td>schema report、translator fixtures、L2-L5 replay report</td><td>只搬仍有效的 IR / runtime / replay issue</td></tr>
+          <tr><td><b>XDR 事件營運閉環</b></td><td><a href="https://github.com/a770131a/SIEM/issues/20">#20</a>, <a href="https://github.com/a770131a/SIEM/issues/21">#21</a>, <a href="https://github.com/a770131a/SIEM/issues/23">#23</a></td><td>UI screenshot、API sample、action audit trail</td><td>搬 response approval / incident workflow 仍未完成者</td></tr>
+          <tr><td><b>ITAM / 合規 / 平台營運</b></td><td>目前部分落在後台與 PMQA，尚未完整拆 issue</td><td>asset report、gap workflow、tenant/RBAC/audit evidence</td><td>先盤點 SIEM_2 剩餘 open issue，再決定 transfer 或重整成新 epic</td></tr>
+          <tr><td><b>AI 治理 / Dify / AI 助理</b></td><td><a href="https://github.com/a770131a/SIEM/issues/3">#3</a>, <a href="https://github.com/a770131a/SIEM/issues/4">#4</a>, <a href="https://github.com/a770131a/SIEM/issues/7">#7</a></td><td>role workflow、answer boundary、tool audit、PMQA screenshots</td><td>只搬仍要做的角色整合 issue，舊討論留在 SIEM_2</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="footer">
+    Record created 2026-05-14 Asia/Taipei · Old effort ledger preserved from reports/index.html history · New work tracked in <a href="https://github.com/a770131a/SIEM">a770131a/SIEM</a>
+  </footer>
+</main>
+</body>
+</html>
