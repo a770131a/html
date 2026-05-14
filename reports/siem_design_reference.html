@@ -60,7 +60,7 @@ pre{margin:0;background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;ove
   <header class="topbar">
     <div class="brand">SIEM / 設計查閱</div>
     <nav class="nav" aria-label="design navigation">
-      <a href="index.html?v=26">工時首頁</a>
+      <a href="index.html?v=27">工時首頁</a>
       <a href="#flow">資料流程</a>
       <a href="#glossary">名詞速查</a>
       <a href="#ir">IR 整併</a>
@@ -111,7 +111,15 @@ pre{margin:0;background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;ove
         <tbody>
           <tr><td><b>Raw Event</b></td><td>來源系統送進來的原始事件，例如 syscall、EDR alert、AV scan log、vendor JSON。</td><td>最前端來源資料，只保留 raw_ref / evidence_refs 供追溯。</td><td>不要放在第一眼摘要；只在 Raw Event tab 顯示。</td></tr>
           <tr><td><b>Canonical Event</b></td><td>把不同來源資料整理成同一種事件格式，統一 actor、target、time、quality、raw_ref。</td><td>Adapter 之後、Detection IR 之前。</td><td>前台通常不直接顯示，只用它產出的主機、使用者、程序、目標。</td></tr>
+          <tr><td><b>正規化資料模型</b></td><td>把不同來源的 log、alert、finding、context 轉成穩定欄位與 typed entity refs 的資料契約。</td><td>Canonical Event、Detection IR、Evidence Pack、OpenSearch mirror 都要遵守。</td><td>前台不顯示模型名，效果是同一台主機、同一個使用者、同一個程序能被穩定合併。</td></tr>
           <tr><td><b>Detection IR v1.1</b></td><td>偵測主幹的標準中介格式，只收 normalized behavior，不收雜亂 raw log。</td><td>Canonical Event 通過 mapper 和 Schema Gate 後產生。</td><td>顯示為事件類型、攻擊語意、L2/L3/L4 狀態。</td></tr>
+          <tr><td><b>AI Detection</b></td><td>AI 輔助判讀偵測語意、缺少證據、正常情境假說或 rule gap，不是直接取代 deterministic detection。</td><td>Frozen AI Evidence Pack 之後，AI Assessment / Validator / Comparison 流程中。</td><td>顯示「AI 輔助判讀」，不能說 AI 已覆蓋 L5 或已確認入侵。</td></tr>
+          <tr><td><b>UEBA Baseline</b></td><td>使用者、主機、程序或帳號的正常行為基準，用來判斷是否偏離平常模式。</td><td>Entity context / baseline store，作為 context_multiplier 或 baseline_deviation。</td><td>顯示「相較平常行為偏高 / 輕微偏離 / baseline noise」，避免把所有偏離都說成攻擊。</td></tr>
+          <tr><td><b>Graph Correlation</b></td><td>用 entity graph 把 host、user、process、file、network、IOC、asset 關聯起來。</td><td>Correlation engine / Entity graph / Cross-asset context。</td><td>顯示「同使用者、同程序鏈、同 IOC、跨設備相似 pattern」，不是顯示整張 graph。</td></tr>
+          <tr><td><b>Kill Chain Mapping</b></td><td>把事件對應到攻擊階段，例如 execution、credential_access、persistence、command_and_control。</td><td>Detection IR 後的語意標註，輔助 L3/L4 storyline 與 Attack Stage Distribution。</td><td>顯示攻擊階段分布；未分類或 L2 單點訊號是正常狀態，不代表資料錯。</td></tr>
+          <tr><td><b>Case Grouping</b></td><td>把同一主機、同一 correlation_key、同一攻擊鏈或同一調查目標的事件合併成 case。</td><td>Incident / Case service，使用 dedupe_key、correlation_key、asset_id、storyline id。</td><td>顯示「建立 Case / 加入既有 Case」，避免同一設備出現多張重複卡。</td></tr>
+          <tr><td><b>AI-assisted Investigation</b></td><td>AI 幫分析師整理證據、提出假說、指出缺少資料與下一步 hunt action。</td><td>AI Assessment、AI vs L5、Investigation Drawer。</td><td>顯示「建議先查 command line / network / persistence」，不是自動結案或自動處置。</td></tr>
+          <tr><td><b>Guided / Automated Response</b></td><td>Guided 是引導人做下一步；Automated 只能做安全非破壞性動作，高風險阻斷仍需 approval。</td><td>Response / Approval、L5 Safety Gate、Audit Trail。</td><td>顯示「可建立工單、附加證據、收集 telemetry」；隔離、kill、block、delete 要顯示需人工審批。</td></tr>
           <tr><td><b>Investigation Evidence Pack</b></td><td>調查證據包，補上 process tree、command line、network、file、user、timeline、cross-asset context。</td><td>Detection IR / L5 之後，由 slow-path enrichment 產生。</td><td>顯示在 Investigation / Evidence tab，回答「誰啟動了什麼、還缺什麼證據」。</td></tr>
           <tr><td><b>Frozen AI Evidence Pack</b></td><td>給 AI 的凍結版卷宗，從 Investigation Pack 摘要、去敏、截斷並加 hash。</td><td>Stateful L5 Final Decision 之後，AI Assessment 之前。</td><td>不直接顯示完整內容；前台顯示 AI 用了哪些證據與缺少哪些證據。</td></tr>
           <tr><td><b>DB Source of Truth</b></td><td>完整事實與稽核來源，保存 evidence、L5 decision、AI assessment、comparison、routing、audit。</td><td>主資料層。</td><td>前台不講 DB，只用它保證「這次判斷可追溯」。</td></tr>
