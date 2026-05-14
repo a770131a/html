@@ -60,8 +60,9 @@ pre{margin:0;background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;ove
   <header class="topbar">
     <div class="brand">SIEM / 設計查閱</div>
     <nav class="nav" aria-label="design navigation">
-      <a href="index.html?v=24">工時首頁</a>
+      <a href="index.html?v=26">工時首頁</a>
       <a href="#flow">資料流程</a>
+      <a href="#glossary">名詞速查</a>
       <a href="#ir">IR 整併</a>
       <a href="#opensearch">OpenSearch</a>
       <a href="#weighting">#28 加權</a>
@@ -73,12 +74,13 @@ pre{margin:0;background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;ove
     <div class="panel">
       <div class="eyebrow">快速查閱</div>
       <h1>V41 / Detection IR / L5 Safety Gate 設計索引</h1>
-      <p class="lead">這頁用來查「資料怎麼進來、怎麼被整理成 IR、怎麼合併上下文、最後怎麼用 #28 的 Hybrid Risk Weighting Engine 做風險加權與 L5 Safety Gate」。它是設計索引，不是工時頁。</p>
+      <p class="lead">這頁用來查「資料怎麼進來、怎麼被整理成 IR、怎麼合併上下文、最後怎麼用 #28 的 Hybrid Risk Weighting Engine 做風險加權與 L5 Safety Gate」。它是設計索引，不是工時頁，也補上常見專有名詞解釋。</p>
       <span class="badge blue">#25 Detection IR Schema Gate</span>
       <span class="badge green">#26 Canonical Event Contract</span>
       <span class="badge amber">#27 Kernel-derived Event Backbone</span>
       <span class="badge violet">#28 Hybrid Risk Weighting</span>
       <span class="badge slate">OpenSearch 查詢 / Evidence Storage</span>
+      <span class="badge blue">Glossary 名詞速查</span>
     </div>
     <aside class="panel callout">
       <div class="eyebrow">核心原則</div>
@@ -97,6 +99,38 @@ pre{margin:0;background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;ove
       <div class="node"><span class="badge violet">4</span><h3>Detection IR v1.1</h3><p class="tiny">只收 normalized behavior entities，通過 12 類 category 與條件式欄位驗證。</p></div>
       <div class="node"><span class="badge red">5</span><h3>OpenSearch / Evidence Store</h3><p class="tiny">索引 normalized evidence、incident timeline、scoring breakdown；raw log 只短期或冷存。</p></div>
       <div class="node"><span class="badge slate">6</span><h3>Scoring / L5 Gate</h3><p class="tiny">#28 加權後輸出 observe / review / approve / escalate；阻斷性 response 永遠需要 approval。</p></div>
+    </div>
+  </section>
+
+  <section id="glossary">
+    <h2>專有名詞速查</h2>
+    <p class="small">這裡用產品與工程都看得懂的方式解釋名詞。原則是：資料層講來源與責任，決策層講安全邊界，前台只顯示分析師下一步需要知道的摘要。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名詞</th><th>一句話解釋</th><th>在流程裡的位置</th><th>前台怎麼說</th></tr></thead>
+        <tbody>
+          <tr><td><b>Raw Event</b></td><td>來源系統送進來的原始事件，例如 syscall、EDR alert、AV scan log、vendor JSON。</td><td>最前端來源資料，只保留 raw_ref / evidence_refs 供追溯。</td><td>不要放在第一眼摘要；只在 Raw Event tab 顯示。</td></tr>
+          <tr><td><b>Canonical Event</b></td><td>把不同來源資料整理成同一種事件格式，統一 actor、target、time、quality、raw_ref。</td><td>Adapter 之後、Detection IR 之前。</td><td>前台通常不直接顯示，只用它產出的主機、使用者、程序、目標。</td></tr>
+          <tr><td><b>Detection IR v1.1</b></td><td>偵測主幹的標準中介格式，只收 normalized behavior，不收雜亂 raw log。</td><td>Canonical Event 通過 mapper 和 Schema Gate 後產生。</td><td>顯示為事件類型、攻擊語意、L2/L3/L4 狀態。</td></tr>
+          <tr><td><b>Investigation Evidence Pack</b></td><td>調查證據包，補上 process tree、command line、network、file、user、timeline、cross-asset context。</td><td>Detection IR / L5 之後，由 slow-path enrichment 產生。</td><td>顯示在 Investigation / Evidence tab，回答「誰啟動了什麼、還缺什麼證據」。</td></tr>
+          <tr><td><b>Frozen AI Evidence Pack</b></td><td>給 AI 的凍結版卷宗，從 Investigation Pack 摘要、去敏、截斷並加 hash。</td><td>Stateful L5 Final Decision 之後，AI Assessment 之前。</td><td>不直接顯示完整內容；前台顯示 AI 用了哪些證據與缺少哪些證據。</td></tr>
+          <tr><td><b>DB Source of Truth</b></td><td>完整事實與稽核來源，保存 evidence、L5 decision、AI assessment、comparison、routing、audit。</td><td>主資料層。</td><td>前台不講 DB，只用它保證「這次判斷可追溯」。</td></tr>
+          <tr><td><b>OpenSearch Compact Mirror</b></td><td>查詢與 timeline 鏡像，不是完整調查包，也不是 AI 直接資料來源。</td><td>DB outbox 之後，用於列表、搜尋、聚合、PMQA replay。</td><td>說成查詢層 / timeline / evidence index，不說成最終判斷來源。</td></tr>
+          <tr><td><b>L2 / L3 / L4</b></td><td>L2 是單點訊號，L3 是多訊號候選鏈，L4 是已形成攻擊故事線。</td><td>Detection IR 後的攻擊語意層。</td><td>明確顯示「L2 only / L3 candidate / L4 storyline」，避免單點事件看起來像完整入侵。</td></tr>
+          <tr><td><b>L5 Safety Gate</b></td><td>Server 端安全邊界，決定 gate、審批、可安全自動動作、阻斷性動作封鎖。</td><td>Risk scoring 後；Fast preliminary 與 Stateful final 都會產生 L5 decision。</td><td>說「待確認高風險 / 需審批 / 自動處置已阻擋」，不說 AI 已確認入侵。</td></tr>
+          <tr><td><b>AI Reconciliation Layer</b></td><td>AI 第二分析師與 Server L5 的比對層，一致提高信心，不一致進人工複核。</td><td>AI Assessment 之後，Final Review Routing 之前。</td><td>顯示「AI 是否同意 L5、分歧原因、下一步查證」。</td></tr>
+          <tr><td><b>Comparison Engine</b></td><td>把 L5 gate 與 AI assessment 做一致 / 分歧 / rule gap / stale / unsafe action 判斷。</td><td>AI Output Validator 之後。</td><td>顯示 agreement_high_risk、disagreement_review、rule_gap_candidate 等狀態摘要。</td></tr>
+          <tr><td><b>Human Arbitration</b></td><td>人類分析師或 SOC Lead 的最終仲裁，不讓 AI 覆蓋 L5 或直接處置。</td><td>Final Review Routing 之後。</td><td>顯示核准、拒絕、要求更多證據、標記誤報、加入備註。</td></tr>
+          <tr><td><b>tenant_id</b></td><td>租戶 / 公司隔離 ID，例如 11111111，不是設備 ID。</td><td>所有資料分區、查詢、dedupe、correlation 都會帶。</td><td>預設不要顯示；主畫面顯示主機 / asset / agent，不顯示 11111111。</td></tr>
+          <tr><td><b>entity_refs</b></td><td>標準化的 typed refs，例如 asset:xxx、agent:xxx、host:xxx、user:xxx、process:xxx。</td><td>Detection IR、Evidence Pack、Correlation 使用。</td><td>前台只顯示可讀名稱；raw refs 放進階區。</td></tr>
+          <tr><td><b>correlation_key / dedupe_key</b></td><td>correlation_key 用來關聯同一組事件，dedupe_key 用來去重同類訊號。</td><td>事件聚合、跨設備、timeline、避免重複卡片。</td><td>主畫面不顯示；進階調查或 debug 才顯示。</td></tr>
+          <tr><td><b>safe_auto_action_allowed</b></td><td>只代表可做非破壞性自動動作，例如 create_ticket、attach_evidence、collect_more_telemetry。</td><td>L5 Safety Boundary。</td><td>說「可建立工單 / 附加證據」，不能說可以自動隔離或 kill。</td></tr>
+          <tr><td><b>disruptive action</b></td><td>會中斷服務或改變環境的動作，例如 isolate、kill、block、delete、disable。</td><td>L5 hard boundary 與 Approval Queue。</td><td>永遠顯示為需要人工審批，MVP 不自動執行。</td></tr>
+          <tr><td><b>scoring_breakdown</b></td><td>風險分數拆解，例如 behavior_risk、intel_context_score、context_multiplier、confidence_multiplier。</td><td>#28 Hybrid Risk Weighting Engine。</td><td>用來解釋為什麼是這個分數；Risk Score 不等於攻擊機率。</td></tr>
+          <tr><td><b>partial_timeout</b></td><td>Slow-path enrichment 超時或部分資料缺失，例如 process tree 沒拿到。</td><td>Enrichment Worker / Investigation Evidence Pack。</td><td>顯示保守研判 banner，不因缺資料自動降級。</td></tr>
+          <tr><td><b>rule_gap_candidate</b></td><td>AI 認為風險較高但 L5 較低時，建立規則缺口候選，不直接升級處置。</td><td>L5 / AI Comparison。</td><td>顯示為規則缺口審查，而不是立即判定入侵。</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
