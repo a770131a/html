@@ -63,6 +63,7 @@ pre{margin:0;background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;ove
       <a href="index.html?v=24">工時首頁</a>
       <a href="#flow">資料流程</a>
       <a href="#ir">IR 整併</a>
+      <a href="#opensearch">OpenSearch</a>
       <a href="#weighting">#28 加權</a>
       <a href="#safety">Safety Gate</a>
     </nav>
@@ -77,6 +78,7 @@ pre{margin:0;background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;ove
       <span class="badge green">#26 Canonical Event Contract</span>
       <span class="badge amber">#27 Kernel-derived Event Backbone</span>
       <span class="badge violet">#28 Hybrid Risk Weighting</span>
+      <span class="badge slate">OpenSearch 查詢 / Evidence Storage</span>
     </div>
     <aside class="panel callout">
       <div class="eyebrow">核心原則</div>
@@ -93,8 +95,8 @@ pre{margin:0;background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;ove
       <div class="node"><span class="badge green">2</span><h3>Adapter</h3><p class="tiny">source-specific event 轉成 canonical；raw id、syscall、vendor fields 只保留 raw_ref/source_details。</p></div>
       <div class="node"><span class="badge amber">3</span><h3>Canonical Event</h3><p class="tiny">統一 actor、target、quality、raw_ref、evidence_refs。</p></div>
       <div class="node"><span class="badge violet">4</span><h3>Detection IR v1.1</h3><p class="tiny">只收 normalized behavior entities，通過 12 類 category 與條件式欄位驗證。</p></div>
-      <div class="node"><span class="badge red">5</span><h3>Scoring / L2-L5</h3><p class="tiny">behavior base、intel 五維度、context multipliers、confidence、override rules。</p></div>
-      <div class="node"><span class="badge slate">6</span><h3>L5 Safety Gate</h3><p class="tiny">observe / review / approve / escalate；阻斷性 response 永遠需要 approval。</p></div>
+      <div class="node"><span class="badge red">5</span><h3>OpenSearch / Evidence Store</h3><p class="tiny">索引 normalized evidence、incident timeline、scoring breakdown；raw log 只短期或冷存。</p></div>
+      <div class="node"><span class="badge slate">6</span><h3>Scoring / L5 Gate</h3><p class="tiny">#28 加權後輸出 observe / review / approve / escalate；阻斷性 response 永遠需要 approval。</p></div>
     </div>
   </section>
 
@@ -112,6 +114,7 @@ pre{margin:0;background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;ove
           <tr><td><b>GCB / compliance</b></td><td>configuration risk context</td><td>configuration_risk / gcb_context</td><td>gcb score、治理風險、稽核 evidence</td><td>合規 fail 是風險加權，不是攻擊行為本身</td></tr>
           <tr><td><b>Asset / UEBA / Entity Graph</b></td><td>context snapshot</td><td>context refs / multipliers</td><td>asset criticality、exposure、baseline deviation</td><td>完整 context 放 graph/store，IR 只帶 ref + summary</td></tr>
           <tr><td><b>Threat Intel / IOC / KEV / EPSS</b></td><td>intel context</td><td>vuln / ioc / ttp dimensions</td><td>intel_context_score、force escalate 條件</td><td>IOC 無本機命中必須降權</td></tr>
+          <tr><td><b>OpenSearch</b></td><td>storage / query index</td><td>不產生 Detection IR，本身是查詢與證據儲存層</td><td>incident search、evidence timeline、PMQA replay 查詢、dashboard</td><td>不可把 OpenSearch 當 raw log dump；主幹仍以 normalized IR 為準</td></tr>
         </tbody>
       </table>
     </div>
@@ -156,6 +159,42 @@ pre{margin:0;background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;ove
       <span class="badge slate">PASS_CONTEXT -> context stores</span>
       <span class="badge slate">PASS_EVIDENCE_ONLY -> cold/raw store</span>
       <span class="badge red">REJECT_QUARANTINE -> dead_letter_events</span>
+    </div>
+  </section>
+
+  <section id="opensearch">
+    <h2>OpenSearch 放在哪裡</h2>
+    <div class="grid-2">
+      <article class="panel">
+        <span class="badge slate">Storage / Search</span>
+        <h3>OpenSearch 是查詢層，不是判斷主幹</h3>
+        <p class="small">Detection IR、Canonical Event、L2/L3/L4/L5 判斷仍由 schema、mapper、scoring engine 與 safety gate 控制。OpenSearch 負責索引、查詢、timeline、dashboard、PMQA replay evidence，不負責決定事件是否升級。</p>
+        <pre>Source Event
+  -> Adapter
+  -> Canonical Endpoint Event
+  -> Detection IR v1.1 Schema Gate
+  -> normalized evidence index in OpenSearch
+  -> Scoring / L2-L5 / Safety Gate</pre>
+      </article>
+      <article class="panel">
+        <span class="badge amber">Data Governance</span>
+        <h3>不要把 raw log volume 當產品價值</h3>
+        <p class="small">V41.1 的資料量治理原則仍適用：raw event 短期保存或冷存，normalized evidence 長期保存，dedup_hash 去重，entity_key 聚合，evidence pack snapshot 用於 PMQA/UAT。</p>
+        <p class="small">OpenSearch 主要查 normalized IR 與 evidence pack，不應永久塞滿全量 ClamAV scan log、raw syscall、heartbeat、inventory dump。</p>
+      </article>
+    </div>
+    <div class="table-wrap" style="margin-top:14px">
+      <table>
+        <thead><tr><th>Index / Store</th><th>內容</th><th>保存策略</th><th>用途</th><th>禁止事項</th></tr></thead>
+        <tbody>
+          <tr><td><b>detection_ir_events</b></td><td>通過 Schema Gate 的 normalized behavior events</td><td>hot/warm，依 severity 與 tenant policy</td><td>事件查詢、L2-L5 分析、timeline</td><td>raw log 不可直接寫入</td></tr>
+          <tr><td><b>canonical_events</b></td><td>adapter 後的 canonical endpoint event</td><td>短中期，支援 mapper/debug</td><td>回查 adapter 轉換品質</td><td>不可繞過 mapper 直接當 Detection IR</td></tr>
+          <tr><td><b>raw_event_store / cold storage</b></td><td>原始 vendor log、syscall、scan raw output</td><td>短 TTL 或 cold storage</td><td>稽核、debug、raw_ref 回查</td><td>不可當產品 dashboard 主資料</td></tr>
+          <tr><td><b>entity_context_snapshots</b></td><td>asset/user/vuln/intel/compliance context snapshot</td><td>版本化保存</td><td>risk multiplier、storyline context</td><td>不可單獨確認 compromise</td></tr>
+          <tr><td><b>incident_timeline</b></td><td>事件排序後的 evidence chain、scoring breakdown、decision trace</td><td>長期保存</td><td>SOC 調查、PMQA screenshot、客戶稽核</td><td>不可缺 evidence_refs</td></tr>
+          <tr><td><b>pmqa_replay_reports</b></td><td>Golden replay、schema validation、safety gate test output</td><td>長期保存</td><td>驗收工時計算與 GA scorecard</td><td>不可只有人工文字結論</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
