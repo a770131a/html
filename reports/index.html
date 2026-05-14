@@ -3,114 +3,486 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SIEM_2 V42 Product Loop Progress</title>
+<title>SIEM / DeepXDR Product Closure Report</title>
 <style>
-:root{--panel:#fff;--line:#e5e7eb;--text:#172033;--muted:#64748b;--blue:#185fa5;--blue2:#e6f1fb;--green:#1d9e75;--green2:#e8f6f1;--amber:#ba7517;--amber2:#fff4e3;--red:#e24b4a;--red2:#fcebeb;--purple:#7f77dd;--purple2:#f0efff;--slate:#334155;--slate2:#f1f5f9}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eef4fb 0,#f7f8fb 330px,#f5f7fb 100%);color:var(--text);font-family:system-ui,-apple-system,'Noto Sans TC','Segoe UI',sans-serif}.page{max-width:1280px;margin:auto;padding:30px 24px 44px}.hero{display:grid;grid-template-columns:1.6fr .9fr;gap:16px;align-items:start}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 10px 28px rgba(15,23,42,.06)}.notice{border-left:4px solid var(--blue);background:#f8fafc}.eyebrow{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}h1{font-size:34px;margin:8px 0 12px;letter-spacing:-.02em}h2{font-size:21px;margin:30px 0 14px}h3{font-size:16px;margin:0 0 8px}.sub,p{color:var(--muted);line-height:1.75}.badge{display:inline-block;border-radius:6px;padding:4px 9px;font-size:12px;font-weight:800;margin:3px 5px 3px 0}.b-green{background:var(--green2);color:#13745a}.b-blue{background:var(--blue2);color:var(--blue)}.b-yellow{background:var(--amber2);color:#8a550e}.b-red{background:var(--red2);color:#a32d2d}.b-purple{background:var(--purple2);color:#5650b8}.b-slate{background:var(--slate2);color:var(--slate)}.grid{display:grid;gap:12px}.kpis{grid-template-columns:repeat(4,1fr);margin-top:18px}.four{grid-template-columns:repeat(4,1fr)}.three{grid-template-columns:repeat(3,1fr)}.two{grid-template-columns:repeat(2,1fr)}.five{grid-template-columns:repeat(5,1fr)}.flow{grid-template-columns:repeat(7,1fr)}.kpi{font-size:30px;font-weight:850;margin:6px 0}.label{font-size:12px;color:var(--muted);margin-bottom:4px}.mini{font-size:12px;color:var(--muted);line-height:1.65}.progress{height:9px;border-radius:999px;background:#eef2f7;overflow:hidden;margin-top:11px}.bar{height:100%;border-radius:999px}.greenbar{background:var(--green)}.yellowbar{background:var(--amber)}.redbar{background:var(--red)}.purplebar{background:var(--purple)}.bluebar{background:var(--blue)}.slatebar{background:var(--slate)}.table{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--panel)}table{width:100%;border-collapse:collapse;min-width:1120px}th,td{padding:13px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:13px}th{background:#f8fafc;color:#475569;text-transform:uppercase;font-size:12px}tr:last-child td{border-bottom:0}.section-note{font-size:13px;color:var(--muted);margin-top:-6px;margin-bottom:12px}.loop-card{display:flex;flex-direction:column;min-height:190px}.top{display:flex;align-items:start;justify-content:space-between;gap:10px}.icon{width:38px;height:38px;border-radius:14px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:19px}.pct{font-size:30px;font-weight:850;margin:12px 0 4px}.gap-box{margin-top:auto;background:#f8fafc;border:1px solid #eef2f7;border-radius:13px;padding:10px}.flow-step,.daily-item{background:#fbfdff;border:1px solid #eef2f7;border-radius:14px;padding:14px}.flow-step{min-height:94px}.daily-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.meta div{background:#f8fafc;border-radius:10px;padding:8px}.link{color:var(--blue);font-weight:800;text-decoration:none}.footer{text-align:center;color:var(--muted);font-size:12px;margin:32px 0 0;line-height:1.7}@media(max-width:1180px){.kpis,.five,.four,.flow{grid-template-columns:repeat(2,1fr)}.three,.two{grid-template-columns:1fr}.meta{grid-template-columns:repeat(2,1fr)}}@media(max-width:920px){.page{padding:18px}.hero,.kpis,.five,.four,.three,.two,.flow{grid-template-columns:1fr}h1{font-size:28px}table{min-width:980px}.meta{grid-template-columns:1fr}}
+:root{
+  --bg:#f6f8fb;
+  --surface:#ffffff;
+  --surface-2:#f9fbfd;
+  --line:#d9e2ec;
+  --text:#152033;
+  --muted:#607089;
+  --blue:#1f5f9e;
+  --blue-soft:#e7f0fb;
+  --green:#128466;
+  --green-soft:#e6f6f1;
+  --amber:#a76516;
+  --amber-soft:#fff2dc;
+  --violet:#6754bd;
+  --violet-soft:#efecff;
+  --red:#b83b48;
+  --red-soft:#fde8eb;
+  --slate:#46566d;
+  --slate-soft:#eef3f8;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;
+  line-height:1.65;
+  overflow-x:hidden;
+}
+a,b,h1,h2,h3,p,span,td,th{overflow-wrap:anywhere}
+a{color:var(--blue);font-weight:750;text-decoration:none}
+a:hover{text-decoration:underline}
+.page{max-width:1240px;margin:0 auto;padding:24px 20px 44px}
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:16px;
+}
+.brand{font-size:13px;color:var(--muted);font-weight:800;letter-spacing:.03em}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{
+  display:inline-flex;
+  align-items:center;
+  height:34px;
+  padding:0 12px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--surface);
+  color:var(--slate);
+  font-size:13px;
+}
+.hero{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);
+  gap:14px;
+  align-items:stretch;
+}
+.panel{
+  min-width:0;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:18px;
+  box-shadow:0 8px 24px rgba(21,32,51,.05);
+}
+.hero-main{
+  min-height:320px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,300px);
+  gap:18px;
+  overflow:hidden;
+}
+.eyebrow{
+  color:var(--blue);
+  font-size:12px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:38px;line-height:1.12;margin:8px 0 14px;letter-spacing:0}
+h2{font-size:22px;margin:28px 0 12px}
+h3{font-size:16px;line-height:1.35;margin-bottom:8px}
+.lead{font-size:16px;color:#40516a;max-width:760px;margin-bottom:16px}
+.muted{color:var(--muted)}
+.small{font-size:13px;color:var(--muted)}
+.tiny{font-size:12px;color:var(--muted)}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  min-height:26px;
+  padding:3px 9px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:850;
+  margin:2px 4px 2px 0;
+  white-space:nowrap;
+}
+.blue{background:var(--blue-soft);color:var(--blue)}
+.green{background:var(--green-soft);color:var(--green)}
+.amber{background:var(--amber-soft);color:var(--amber)}
+.violet{background:var(--violet-soft);color:var(--violet)}
+.red{background:var(--red-soft);color:var(--red)}
+.slate{background:var(--slate-soft);color:var(--slate)}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.kpi{min-width:0;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:13px}
+.kpi strong{display:block;font-size:28px;line-height:1.1;margin:4px 0;color:var(--text)}
+.engine{
+  min-width:0;
+  background:#f8fbff;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.engine-diagram{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  margin-top:8px;
+}
+.node{
+  min-width:0;
+  border:1px solid var(--line);
+  border-left:5px solid var(--blue);
+  background:#fff;
+  border-radius:8px;
+  padding:10px;
+}
+.node:nth-child(2){border-left-color:var(--green)}
+.node:nth-child(3){border-left-color:var(--amber)}
+.node:nth-child(4){border-left-color:var(--violet)}
+.issue-pill{
+  display:inline-block;
+  font-size:12px;
+  line-height:1;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:6px 8px;
+  color:var(--slate);
+  background:#fff;
+  margin:2px 3px 2px 0;
+}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.section-head p{margin-bottom:0}
+.rail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.rail{
+  min-height:330px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.rail-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid var(--line);
+  padding-bottom:10px;
+}
+.step{
+  display:grid;
+  grid-template-columns:112px minmax(0,1fr);
+  gap:12px;
+  align-items:start;
+  padding:11px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--surface-2);
+}
+.step b{display:block;margin-bottom:3px}
+.progress-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:8px;
+}
+.bar-bg{height:8px;flex:1;border-radius:99px;background:#e8eef5;overflow:hidden}
+.bar{height:100%;border-radius:99px;background:var(--blue)}
+.bar.green{background:var(--green)}
+.bar.amber{background:var(--amber)}
+.bar.violet{background:var(--violet)}
+.bar.red{background:var(--red)}
+.work-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.work-card{display:flex;flex-direction:column;gap:12px}
+.work-card .summary{display:flex;gap:8px;flex-wrap:wrap}
+.issue-list{display:flex;flex-direction:column;gap:8px}
+.issue-row{
+  min-width:0;
+  display:grid;
+  grid-template-columns:52px minmax(0,1fr);
+  gap:9px;
+  align-items:start;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--surface-2);
+}
+.issue-no{
+  font-weight:900;
+  color:var(--blue);
+  font-size:13px;
+}
+.matrix{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{width:100%;border-collapse:collapse;min-width:980px}
+th,td{padding:12px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:13px}
+th{background:#f3f7fb;color:#44546b;font-size:12px;text-transform:uppercase}
+tr:last-child td{border-bottom:0}
+.state{font-weight:850}
+.state.pending{color:var(--amber)}
+.state.open{color:var(--red)}
+.state.ready{color:var(--green)}
+.callout{
+  border-left:5px solid var(--green);
+  background:#f8fcfb;
+}
+.footer{
+  margin-top:26px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:12px;
+  text-align:center;
+}
+@media(max-width:1040px){
+  .hero,.hero-main,.rail-grid,.work-grid{grid-template-columns:1fr}
+  .engine{min-height:0}
+}
+@media(max-width:780px){
+  .page{padding:16px 12px 32px}
+  .topbar{align-items:flex-start;flex-direction:column}
+  h1{font-size:30px}
+  .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .step{grid-template-columns:1fr}
+  table{min-width:880px}
+}
 </style>
 </head>
 <body>
 <main class="page">
-<section class="hero">
-<div class="card">
-<div class="eyebrow">SIEM_2 / DeepXDR V42 / Product Goal</div>
-<h1>產品目標：企業資安治理流程平台</h1>
-<p class="sub">v23 新增「DeepXDR 行為化學引擎」產品敘事與「每日完成明細」。本頁保留產品閉環、工時計算、XDR Core / XDR Operations 拆分，並補上 2026-05-12 今日完成工項。</p>
-<p class="sub">今日重點：定義 Agentless-first、Agent-enhanced、Hybrid-best，讓 Microsoft Defender 告警與 DeepXDR Agent runtime evidence 可以合成更完整的 L3/L4/L5 分析。</p>
-<span class="badge b-blue">v23 daily log</span><span class="badge b-green">Behavioral Chemistry Engine</span><span class="badge b-yellow">Hybrid XDR</span><span class="badge b-purple">PMQA separated</span>
-</div>
-<aside class="card"><b>完成工時與預估工時</b><p><b>完成工時：367h</b><br>各產品大項實際已完成工時加總，含 2026-05-12 今日完成 18h。</p><p><b>驗收工時：0h</b><br>已通過 PMQA / UAT / evidence 的工時加總。今日項目尚未 PMQA accepted。</p><p><b>預估工時：274–416h</b><br>各產品大項預估剩餘工時加總。</p><p><b>規劃總工時：783h</b><br>維持原總量，不把工程完成等同驗收完成。</p></aside>
-</section>
-<h2>產品敘事：DeepXDR 行為化學引擎</h2>
-<section class="card notice">
-<div class="eyebrow">Behavioral Chemistry Engine</div>
-<h3>把外部告警與本機證據，轉成可解釋、可審批、可治理的攻擊故事</h3>
-<p class="sub">DeepXDR 將 Defender、SIEM、Wazuh、Agent runtime evidence 與情資規則轉換成「行為原子」，再透過「分子引擎」關聯成攻擊鏈，最後由「AI 合成器」產生危害分析報告與 Ground Rules 安全響應邊界。</p>
-<section class="grid flow">
-<div class="flow-step"><b>行為原子</b><p class="mini">最小 TTP 行為單元</p></div>
-<div class="flow-step"><b>原子萃取器</b><p class="mini">Defender / Agent / SIEM 正規化</p></div>
-<div class="flow-step"><b>原子週期表</b><p class="mini">MITRE ATT&CK 映射矩陣</p></div>
-<div class="flow-step"><b>分子引擎</b><p class="mini">主機、使用者、程序樹與時間窗關聯</p></div>
-<div class="flow-step"><b>異常化合物</b><p class="mini">結構化證據包與影響範圍</p></div>
-<div class="flow-step"><b>AI 合成器</b><p class="mini">RCA、戰術意圖與治理建議</p></div>
-<div class="flow-step"><b>核心準則</b><p class="mini">審批、安全邊界與自動化限制</p></div>
-</section>
-</section>
-<h2>雙軌分析架構</h2>
-<section class="grid three">
-<div class="card"><span class="badge b-blue">Agentless Mode</span><h3>外部產品告警接入</h3><p class="mini">Microsoft Defender、CrowdStrike、SentinelOne、Wazuh、SIEM、Cloud、CTI 先進來，降低 PoC 與導入門檻。</p></div>
-<div class="card"><span class="badge b-green">Agent Mode</span><h3>DeepXDR Agent runtime evidence</h3><p class="mini">收 process tree、command line、file write、network connection、user session、offline spool 與 response control。</p></div>
-<div class="card"><span class="badge b-purple">Hybrid Mode</span><h3>Defender alert + Agent evidence</h3><p class="mini">Defender 告訴你它覺得可疑；DeepXDR Agent 補齊本機發生了什麼；Judge 再判斷是否形成 L3/L4/L5 攻擊鏈。</p></div>
-</section>
-<h2>Roadmap 分層</h2>
-<section class="grid four">
-<div class="card"><span class="badge b-blue">P0 / 本期必須完成</span><div class="kpi" style="color:var(--blue)">6</div><div class="mini">影響主線、展示、PoC、GA Gate 或資料正確性的閉環。</div></div>
-<div class="card"><span class="badge b-yellow">P1 / 下一階段完成</span><div class="kpi" style="color:var(--amber)">2</div><div class="mini">已在 Roadmap 內，但不直接卡住本期主頁與主線展示。</div></div>
-<div class="card"><span class="badge b-green">今日完成</span><div class="kpi" style="color:var(--green)">6</div><div class="mini">2026-05-12 完成產品定位、雙軌架構、Defender 接入規格與首頁每日明細。</div></div>
-<div class="card"><span class="badge b-purple">PMQA Accepted</span><div class="kpi" style="color:var(--purple)">0</div><div class="mini">只有 evidence / replay / screenshot / UAT 通過才列入驗收工時。</div></div>
-</section>
-<h2>產品大項完成度</h2>
-<section class="grid kpis">
-<div class="card"><div class="label">ITAM 角色閉環</div><span class="badge b-blue">P0</span><span class="badge b-yellow">implemented_pending_pmqa</span><div class="kpi" style="color:var(--amber)">45%</div><div class="mini">完成工時：42h<br>驗收工時：0h<br>預估剩餘：42–56h<br>資產、軟體與 Agent 回報已有基礎；Task、HR、Finance、部門流程仍需補齊。</div><div class="progress"><div class="bar yellowbar" style="width:45%"></div></div></div>
-<div class="card"><div class="label">XDR 核心引擎</div><span class="badge b-blue">P0</span><span class="badge b-green">implemented_pending_pmqa</span><div class="kpi" style="color:var(--green)">68%</div><div class="mini">完成工時：140h<br>驗收工時：0h<br>預估剩餘：40–65h<br>今日補上 Defender hybrid、雙軌接入與行為化學引擎產品規格。</div><div class="progress"><div class="bar greenbar" style="width:68%"></div></div></div>
-<div class="card"><div class="label">XDR 事件營運閉環</div><span class="badge b-blue">P0</span><span class="badge b-yellow">implemented_pending_pmqa</span><div class="kpi" style="color:var(--amber)">42%</div><div class="mini">完成工時：45h<br>驗收工時：0h<br>預估剩餘：40–63h<br>Incident Workflow、Response Approval、Action Audit、Timeline、Case Management 與 SLA 待補齊。</div><div class="progress"><div class="bar yellowbar" style="width:42%"></div></div></div>
-<div class="card"><div class="label">合規稽核閉環</div><span class="badge b-blue">P0</span><span class="badge b-yellow">implemented_pending_pmqa</span><div class="kpi" style="color:var(--amber)">45%</div><div class="mini">完成工時：42h<br>驗收工時：0h<br>預估剩餘：32–48h<br>Compliance、GCB、VANS 有基礎；Evidence Center 與 Gap Workflow 未完整。</div><div class="progress"><div class="bar yellowbar" style="width:45%"></div></div></div>
-<div class="card"><div class="label">AI 治理閉環</div><span class="badge b-blue">P0</span><span class="badge b-red">in_progress</span><div class="kpi" style="color:var(--red)">30%</div><div class="mini">完成工時：22h<br>驗收工時：0h<br>預估剩餘：36–52h<br>AI policy / data risk 概念已有；Exception 與 ISO 42001 evidence 仍需產品化。</div><div class="progress"><div class="bar redbar" style="width:30%"></div></div></div>
-<div class="card"><div class="label">平台營運閉環</div><span class="badge b-blue">P0</span><span class="badge b-yellow">implemented_pending_pmqa</span><div class="kpi" style="color:var(--amber)">43%</div><div class="mini">完成工時：34h<br>驗收工時：0h<br>預估剩餘：28–46h<br>tenant、RBAC、Agent token、App Shell、主頁治理與每日完成明細已有基礎。</div><div class="progress"><div class="bar yellowbar" style="width:43%"></div></div></div>
-<div class="card"><div class="label">Dify 外殼閉環</div><span class="badge b-yellow">P1</span><span class="badge b-blue">in_progress</span><div class="kpi" style="color:var(--blue)">35%</div><div class="mini">完成工時：18h<br>驗收工時：0h<br>預估剩餘：28–42h<br>Dify workflow 包裝、知識庫/工具調用、權限控管與產品 UI 串接待補強。</div><div class="progress"><div class="bar bluebar" style="width:35%"></div></div></div>
-<div class="card"><div class="label">AI 助理閉環</div><span class="badge b-yellow">P1</span><span class="badge b-blue">in_progress</span><div class="kpi" style="color:var(--blue)">32%</div><div class="mini">完成工時：20h<br>驗收工時：0h<br>預估剩餘：32–48h<br>SOC、ITAM、合規助理角色已成形；上下文注入、回答邊界與操作留痕需補齊。</div><div class="progress"><div class="bar bluebar" style="width:32%"></div></div></div>
-</section>
-<h2>每日完成明細</h2>
-<section class="card">
-<div class="daily-head"><div><div class="eyebrow">Daily Completion Log</div><h3>2026-05-12 今日完成工項</h3><p class="mini">今日完成 6 項｜工程完成 18h｜驗收完成 0h｜狀態：implemented_pending_pmqa</p></div><span class="badge b-yellow">待 PMQA / UAT / evidence</span></div>
-<div class="grid two">
-<div class="daily-item"><span class="badge b-blue">P0</span><h3>DeepXDR 雙軌架構產品定位</h3><p class="mini">定義 Agentless Mode、Agent Mode、Hybrid Mode，確認 Agent 不再是導入門檻，但仍是高價值 runtime evidence layer。</p><div class="meta"><div><b>所屬產品</b><br><span class="mini">XDR 事件閉環</span></div><div><b>閉環階段</b><br><span class="mini">威脅分析與事件關聯</span></div><div><b>完成工時</b><br><span class="mini">3h</span></div><div><b>驗收工時</b><br><span class="mini">0h</span></div></div></div>
-<div class="daily-item"><span class="badge b-blue">P0</span><h3>Defender Alert + DeepXDR Agent Evidence 混合分析模式</h3><p class="mini">Defender 作為 external alert opinion，DeepXDR Agent 作為 local runtime truth，兩者合成 L3/L4/L5 分析。</p><div class="meta"><div><b>所屬產品</b><br><span class="mini">XDR 事件閉環</span></div><div><b>閉環階段</b><br><span class="mini">外部產品告警接入</span></div><div><b>完成工時</b><br><span class="mini">3h</span></div><div><b>驗收工時</b><br><span class="mini">0h</span></div></div></div>
-<div class="daily-item"><span class="badge b-blue">P0</span><h3>Microsoft Defender Alert Receiver to DeepXDR Security IR</h3><p class="mini">規劃 /api/v1/external/defender/alerts、source token 驗證、Defender translator、external_product_alert_ir、DB 與 UI 串接。</p><div class="meta"><div><b>所屬產品</b><br><span class="mini">XDR 事件閉環</span></div><div><b>閉環階段</b><br><span class="mini">外部產品告警接入</span></div><div><b>完成工時</b><br><span class="mini">2h</span></div><div><b>驗收工時</b><br><span class="mini">0h</span></div></div></div>
-<div class="daily-item"><span class="badge b-blue">P0</span><h3>DeepXDR 行為化學引擎產品語言</h3><p class="mini">建立行為原子、原子週期表、原子萃取器、分子引擎、AI 合成器、異常化合物、危害分析報告與核心準則的產品語言對標。</p><div class="meta"><div><b>所屬產品</b><br><span class="mini">XDR 事件閉環</span></div><div><b>閉環階段</b><br><span class="mini">產品敘事與攻擊解釋</span></div><div><b>完成工時</b><br><span class="mini">4h</span></div><div><b>Evidence</b><br><a class="link" href="https://github.com/a770131a/html/issues/1#issuecomment-4428684732">Issue comment</a></div></div></div>
-<div class="daily-item"><span class="badge b-blue">P0</span><h3>index.html 產品敘事區塊規格</h3><p class="mini">補充 product_narrative YAML，讓首頁可呈現 DeepXDR 行為化學引擎與 Hybrid threat analysis 的產品定位。</p><div class="meta"><div><b>所屬產品</b><br><span class="mini">平台營運閉環</span></div><div><b>閉環階段</b><br><span class="mini">reports/index.html 主頁治理</span></div><div><b>完成工時</b><br><span class="mini">3h</span></div><div><b>Evidence</b><br><a class="link" href="https://github.com/a770131a/html/issues/1#issuecomment-4428684732">Issue comment</a></div></div></div>
-<div class="daily-item"><span class="badge b-blue">P0</span><h3>index.html 每日完成明細區塊</h3><p class="mini">新增每日完成明細資料格式、畫面顯示規格與驗收標準，讓今天完成的多個工項能在首頁形成日期軌跡。</p><div class="meta"><div><b>所屬產品</b><br><span class="mini">平台營運閉環</span></div><div><b>閉環階段</b><br><span class="mini">reports/index.html 主頁治理</span></div><div><b>完成工時</b><br><span class="mini">3h</span></div><div><b>Evidence</b><br><a class="link" href="https://github.com/a770131a/html/issues/1#issuecomment-4428787814">Issue comment</a></div></div></div>
-</div>
-</section>
-<h2>產品大項工時明細</h2>
-<section class="table"><table><thead><tr><th>產品大項</th><th>優先級</th><th>完成度</th><th>規劃工時</th><th>完成工時</th><th>驗收工時</th><th>預估剩餘</th><th>驗收狀態</th><th>剩餘重點</th></tr></thead><tbody>
-<tr><td><b>ITAM 角色閉環</b></td><td>P0</td><td>45%</td><td>98h</td><td>42h</td><td>0h</td><td>42–56h</td><td>implemented_pending_pmqa</td><td>Task Center、ITAM Workbench、HR/Finance/部門視角、派工與驗收。</td></tr>
-<tr><td><b>XDR 核心引擎</b></td><td>P0</td><td>68%</td><td>205h</td><td>140h</td><td>0h</td><td>40–65h</td><td>implemented_pending_pmqa</td><td>L1 schema、L2/L5 RCA、L3 Policy Gate、L4 explainability、Defender hybrid receiver 規格。</td></tr>
-<tr><td><b>XDR 事件營運閉環</b></td><td>P0</td><td>42%</td><td>108h</td><td>45h</td><td>0h</td><td>40–63h</td><td>implemented_pending_pmqa</td><td>Incident Workflow、Response Approval、Action Audit、Timeline、Case Management、SLA。</td></tr>
-<tr><td><b>合規稽核閉環</b></td><td>P0</td><td>45%</td><td>90h</td><td>42h</td><td>0h</td><td>32–48h</td><td>implemented_pending_pmqa</td><td>Evidence Center、Gap Workflow、改善任務、稽核匯出。</td></tr>
-<tr><td><b>AI 治理閉環</b></td><td>P0</td><td>30%</td><td>74h</td><td>22h</td><td>0h</td><td>36–52h</td><td>in_progress</td><td>AI Policy Center、Sensitive Data Decision、Exception Workflow、ISO 42001 Evidence。</td></tr>
-<tr><td><b>平台營運閉環</b></td><td>P0</td><td>43%</td><td>80h</td><td>34h</td><td>0h</td><td>28–46h</td><td>implemented_pending_pmqa</td><td>租戶管理、方案/訂閱、平台健康、主頁治理、每日完成明細、平台級 Audit Log。</td></tr>
-<tr><td><b>Dify 外殼閉環</b></td><td>P1</td><td>35%</td><td>60h</td><td>18h</td><td>0h</td><td>28–42h</td><td>in_progress</td><td>Dify workflow 包裝、知識庫/工具調用、權限控管、審計紀錄、產品 UI 串接。</td></tr>
-<tr><td><b>AI 助理閉環</b></td><td>P1</td><td>32%</td><td>68h</td><td>20h</td><td>0h</td><td>32–48h</td><td>in_progress</td><td>SOC/ITAM/合規助理角色、上下文注入、回答邊界、審批提示與操作留痕。</td></tr>
-</tbody></table></section>
-<h2>XDR 核心引擎進度</h2><p class="section-note"><span class="badge b-blue">P0</span>從資料正規化、L2/L3/L4/L5 推理、Policy Gate 到外部告警接入。</p>
-<section class="grid five">
-<div class="card loop-card"><div class="top"><div class="icon">🧬</div><span class="badge b-yellow">Completion Audit</span></div><h3>L1 AST / IR</h3><div class="pct" style="color:var(--amber)">48%</div><p class="mini">L1 completion audit 已有基礎；目標 >= 80 分。</p><div class="progress"><div class="bar yellowbar" style="width:48%"></div></div><div class="gap-box"><div class="label">目前估分</div><b>48/100</b></div></div>
-<div class="card loop-card"><div class="top"><div class="icon">🧠</div><span class="badge b-purple">Spec Ready</span></div><h3>L2 / L5 RCA</h3><div class="pct" style="color:var(--purple)">38%</div><p class="mini">RCA Impact-Dimension 題庫已有方向，待 dataset / replay。</p><div class="progress"><div class="bar purplebar" style="width:38%"></div></div><div class="gap-box"><div class="label">狀態</div><b>PMQA 待補</b></div></div>
-<div class="card loop-card"><div class="top"><div class="icon">🚦</div><span class="badge b-green">Shadow-ready</span></div><h3>L3 Policy Gate</h3><div class="pct" style="color:var(--green)">72%</div><p class="mini">BND Shadow / Impact Gate 基礎已形成，待 PMQA。</p><div class="progress"><div class="bar greenbar" style="width:72%"></div></div><div class="gap-box"><div class="label">安全邊界</div><b>Shadow Mode</b></div></div>
-<div class="card loop-card"><div class="top"><div class="icon">📜</div><span class="badge b-red">缺獨立 Issue</span></div><h3>L4 Explainability</h3><div class="pct" style="color:var(--red)">20%</div><p class="mini">Trace / Evidence Chain / Audit Trail 還未獨立 completion audit。</p><div class="progress"><div class="bar redbar" style="width:20%"></div></div><div class="gap-box"><div class="label">缺口</div><b>新 Issue</b></div></div>
-<div class="card loop-card"><div class="top"><div class="icon">🛡️</div><span class="badge b-green">新增規格</span></div><h3>External Defender Receiver</h3><div class="pct" style="color:var(--green)">35%</div><p class="mini">已定義 Defender alert receiver、external_product_alert_ir 與 Hybrid evidence 合成方向。</p><div class="progress"><div class="bar greenbar" style="width:35%"></div></div><div class="gap-box"><div class="label">下一步</div><b>Runtime API ingest</b></div></div>
-</section>
-<h2>XDR 事件營運閉環進度</h2><p class="section-note"><span class="badge b-blue">P0</span>引擎判斷之後，事件如何建立、處理、審批、稽核與結案。</p>
-<section class="grid five">
-<div class="card loop-card"><div class="top"><div class="icon">🚨</div><span class="badge b-yellow">需產品化</span></div><h3>Incident Workflow</h3><div class="pct" style="color:var(--amber)">45%</div><p class="mini">事件狀態、指派、調查筆記與工作流。</p><div class="progress"><div class="bar yellowbar" style="width:45%"></div></div><div class="gap-box"><div class="label">缺口</div><b>Case Flow</b></div></div>
-<div class="card loop-card"><div class="top"><div class="icon">🧯</div><span class="badge b-red">未閉環</span></div><h3>Response Approval</h3><div class="pct" style="color:var(--red)">32%</div><p class="mini">高風險建議需 human approval，不自動執行。</p><div class="progress"><div class="bar redbar" style="width:32%"></div></div><div class="gap-box"><div class="label">安全邊界</div><b>待補強</b></div></div>
-<div class="card loop-card"><div class="top"><div class="icon">🧾</div><span class="badge b-red">缺獨立 Issue</span></div><h3>Action Audit Trail</h3><div class="pct" style="color:var(--red)">28%</div><p class="mini">每個處置、審批、override 都需留痕可稽核。</p><div class="progress"><div class="bar redbar" style="width:28%"></div></div><div class="gap-box"><div class="label">缺口</div><b>XDR-OPS</b></div></div>
-<div class="card loop-card"><div class="top"><div class="icon">📈</div><span class="badge b-slate">初始階段</span></div><h3>SLA / MTTR</h3><div class="pct" style="color:var(--slate)">25%</div><p class="mini">MTTD、MTTR、SLA 與復盤報告尚未產品化。</p><div class="progress"><div class="bar slatebar" style="width:25%"></div></div><div class="gap-box"><div class="label">Roadmap</div><b>P0/P1</b></div></div>
-<div class="card loop-card"><div class="top"><div class="icon">📄</div><span class="badge b-yellow">建置中</span></div><h3>Timeline / Report</h3><div class="pct" style="color:var(--amber)">40%</div><p class="mini">Incident timeline、RCA report、evidence attachment 待整合。</p><div class="progress"><div class="bar yellowbar" style="width:40%"></div></div><div class="gap-box"><div class="label">輸出</div><b>待補強</b></div></div>
-</section>
-<h2>閉環小卡總覽</h2><p class="section-note">保留主頁產品閉環入口，避免每日明細取代產品閉環。</p>
-<section class="grid three">
-<div class="card"><b>ITAM 平台閉環進度</b><p class="mini">資產盤點、軟體使用、授權治理、部門視角與派工。</p></div>
-<div class="card"><b>情資引擎閉環進度</b><p class="mini">情資來源、規則轉換、MITRE 映射、IOC / CVE / KEV / EPSS 補強。</p></div>
-<div class="card"><b>XDR 事件閉環進度</b><p class="mini">L2/L3/L4/L5、事件分析、回應建議、審批與稽核。</p></div>
-<div class="card"><b>合規稽核閉環進度</b><p class="mini">GCB、VANS、Evidence Center、Gap Workflow 與稽核報表。</p></div>
-<div class="card"><b>AI 治理閉環進度</b><p class="mini">AI 使用政策、敏感資料上傳治理、例外審批與 ISO 42001 evidence。</p></div>
-<div class="card"><b>模型訓練閉環進度</b><p class="mini">Golden Dataset、Replay、Guard validation、RCA / BND / ROB / REM 題庫。</p></div>
-<div class="card"><b>平台營運閉環進度</b><p class="mini">Tenant、RBAC、方案、Audit Log、Health 與 reports/index.html 治理。</p></div>
-<div class="card"><b>Dify 外殼閉環進度</b><p class="mini">Workflow、知識庫、工具調用、權限與產品 UI 串接。</p></div>
-<div class="card"><b>AI 助理閉環進度</b><p class="mini">SOC、ITAM、合規、稽核、管理層助理角色與邊界控管。</p></div>
-</section>
-<footer class="footer">Public report mirror · reports/index.html · cache bust v23 · 完成工時與預估工時為規劃估算，PMQA accepted 後才計入驗收工時。</footer>
+  <header class="topbar">
+    <div class="brand">SIEM Product Report / DeepXDR Closure View</div>
+    <nav class="nav" aria-label="report navigation">
+      <a href="#architecture">雙軌架構</a>
+      <a href="#front-back">前後台進度</a>
+      <a href="#closures">功能閉環</a>
+      <a href="https://github.com/a770131a/SIEM/issues">SIEM Issues</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="panel hero-main">
+      <div>
+        <div class="eyebrow">產品敘事</div>
+        <h1>DeepXDR 行為化學引擎</h1>
+        <p class="lead">DeepXDR 把端點、SIEM、AV、ClamAV、SAST、情資與資產上下文視為「行為原料」；透過標準化 IR、Evidence Chain、Entity Context Graph 與 L2-L5 判讀，把零散告警轉成可解釋、可重放、可稽核、可安全處置的治理事件。</p>
+        <span class="badge blue">SIEM 為主 repo</span>
+        <span class="badge green">雙軌分析架構</span>
+        <span class="badge amber">前後台閉環進度</span>
+        <span class="badge violet">訓練 / PMQA / Golden Replay</span>
+        <div class="kpi-grid" aria-label="issue summary">
+          <div class="kpi"><span class="tiny">目前集中到 SIEM</span><strong>24</strong><span class="tiny">open issues</span></div>
+          <div class="kpi"><span class="tiny">前台工項</span><strong>4</strong><span class="tiny">console / drawer / PMQA UI</span></div>
+          <div class="kpi"><span class="tiny">後台工項</span><strong>11</strong><span class="tiny">IR / runtime / graph / safety</span></div>
+          <div class="kpi"><span class="tiny">訓練驗收</span><strong>11</strong><span class="tiny">exam / replay / evidence gates</span></div>
+        </div>
+      </div>
+      <aside class="engine">
+        <div>
+          <div class="eyebrow">核心公式</div>
+          <h3>Evidence + Context + Safety = Governed XDR Decision</h3>
+          <p class="small">這份頁面不做時程分層；只看大工項是否已集中、功能閉環是否具備、訓練與 PMQA 是否能證明產品可驗收。</p>
+        </div>
+        <div class="engine-diagram">
+          <div class="node"><b>行為原料</b><br><span class="tiny">agent / SIEM / AV / ClamAV / SAST / intel / asset context</span></div>
+          <div class="node"><b>化學反應</b><br><span class="tiny">normalized evidence + entity graph + correlation window</span></div>
+          <div class="node"><b>判讀產物</b><br><span class="tiny">L2 signal / L3 chain / L4 storyline / L5 governance decision</span></div>
+          <div class="node"><b>安全閉環</b><br><span class="tiny">recommendation / approval / audit / rollback / PMQA replay</span></div>
+        </div>
+      </aside>
+    </div>
+    <aside class="panel">
+      <div class="eyebrow">目前狀態</div>
+      <h3>需求已統一到 SIEM，閉環尚未驗收</h3>
+      <p class="small">`SIEM_2` 與 `html` 的今日主線需求已轉移到 `a770131a/SIEM`。目前所有主線 issue 仍為 open，所以這裡的進度重點是「工項盤點與閉環缺口」，不是宣告已完成。</p>
+      <div class="progress-row"><span class="tiny">Issue 集中</span><div class="bar-bg"><div class="bar green" style="width:100%"></div></div><span class="tiny">100%</span></div>
+      <div class="progress-row"><span class="tiny">實作閉環</span><div class="bar-bg"><div class="bar amber" style="width:0%"></div></div><span class="tiny">0/24 closed</span></div>
+      <div class="progress-row"><span class="tiny">PMQA 證據</span><div class="bar-bg"><div class="bar violet" style="width:0%"></div></div><span class="tiny">待產出</span></div>
+    </aside>
+  </section>
+
+  <section id="architecture">
+    <div class="section-head">
+      <div>
+        <h2>雙軌分析架構</h2>
+        <p class="small">一條軌道負責讓證據可信、可追溯；另一條軌道負責讓判斷可解釋、可授權、可驗收。</p>
+      </div>
+    </div>
+    <div class="rail-grid">
+      <article class="panel rail">
+        <div class="rail-title">
+          <div><span class="badge blue">Evidence Rail</span><h3>資料與證據軌</h3></div>
+          <span class="small">後台主責</span>
+        </div>
+        <div class="step"><span class="badge slate">Collect</span><div><b>智慧蒐集與資料治理</b><span class="small">控制 raw event 量，保留 normalized evidence、dedup_hash、entity_key 與 evidence snapshot。</span><br><a href="https://github.com/a770131a/SIEM/issues/17">#17</a></div></div>
+        <div class="step"><span class="badge green">Normalize</span><div><b>Detection IR v1.1 / Malware IR</b><span class="small">建立 Detection IR、ClamAV malware evidence、L5 context backbone，讓資料可被 replay 與 judge。</span><br><a href="https://github.com/a770131a/SIEM/issues/24">#24</a> <a href="https://github.com/a770131a/SIEM/issues/22">#22</a></div></div>
+        <div class="step"><span class="badge amber">Context</span><div><b>UEBA + Entity Context Graph</b><span class="small">把 asset、user、vulnerability、intel、compliance context 接到 evidence，而不是讓告警孤立存在。</span><br><a href="https://github.com/a770131a/SIEM/issues/19">#19</a></div></div>
+        <div class="step"><span class="badge violet">Replay</span><div><b>Golden Replay 與多來源測試</b><span class="small">用固定資料集驗證 schema、L2 mapping、L3/L4/L5 判讀與 tenant isolation。</span><br><a href="https://github.com/a770131a/SIEM/issues/14">#14</a> <a href="https://github.com/a770131a/SIEM/issues/15">#15</a></div></div>
+      </article>
+      <article class="panel rail">
+        <div class="rail-title">
+          <div><span class="badge green">Decision Rail</span><h3>判讀與治理軌</h3></div>
+          <span class="small">前後台共責</span>
+        </div>
+        <div class="step"><span class="badge blue">Notify</span><div><b>N0-N5 通報基線</b><span class="small">通報、升級、處置三件事拆開；高危 L2 可通報，但不可假裝成 L3/L4。</span><br><a href="https://github.com/a770131a/SIEM/issues/21">#21</a></div></div>
+        <div class="step"><span class="badge violet">Explain</span><div><b>Decision Rationale Drawer</b><span class="small">前台顯示 why promoted、why not promoted、why response required、evidence refs 與 action rules。</span><br><a href="https://github.com/a770131a/SIEM/issues/20">#20</a></div></div>
+        <div class="step"><span class="badge amber">Approve</span><div><b>Response Safety / Audit Closure</b><span class="small">所有高風險 action 預設 approval required；approve、reject、execute、rollback 都要可稽核。</span><br><a href="https://github.com/a770131a/SIEM/issues/22">#22</a> <a href="https://github.com/a770131a/SIEM/issues/23">#23</a></div></div>
+        <div class="step"><span class="badge red">Gate</span><div><b>GA Readiness Gates</b><span class="small">用 explanation contract、evidence chain、negative tests、PMQA evidence package 驗證可交付品質。</span><br><a href="https://github.com/a770131a/SIEM/issues/23">#23</a></div></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="front-back">
+    <div class="section-head">
+      <div>
+        <h2>前後台進度</h2>
+        <p class="small">目前以 issue label 作為進度來源。全部工項已集中，但尚未有 closed issue，因此實作與 PMQA 都先視為待完成。</p>
+      </div>
+    </div>
+    <div class="work-grid">
+      <article class="panel work-card">
+        <div>
+          <span class="badge blue">area:frontend</span>
+          <h3>前台 Console / Drawer / Evidence View</h3>
+          <p class="small">目標是讓 SOC、PMQA、客戶能看到事件為何通報、為何升級、為何不能自動處置，以及 evidence chain 是否完整。</p>
+        </div>
+        <div class="summary">
+          <span class="badge slate">4 issues</span>
+          <span class="badge amber">0 closed</span>
+          <span class="badge red">待實作驗收</span>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/4">#4</a><span class="small">Governance Training Center UI + PMQA / Dify-Ollama role integration</span></div>
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/20">#20</a><span class="small">AI Decision Rationale Drawer for downgrade / escalation evidence</span></div>
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/21">#21</a><span class="small">Layered notification baseline for L2/L3/L4/L5</span></div>
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/23">#23</a><span class="small">GA-XDR Explanation Quality / Evidence Chain / PMQA Gates</span></div>
+        </div>
+      </article>
+      <article class="panel work-card">
+        <div>
+          <span class="badge green">area:backend</span>
+          <h3>後台 IR / Runtime / Context / Safety</h3>
+          <p class="small">目標是把多來源 evidence 接進同一套 IR 與 context backbone，讓 judge、replay、response safety 和 audit trail 都有一致資料來源。</p>
+        </div>
+        <div class="summary">
+          <span class="badge slate">11 issues</span>
+          <span class="badge amber">0 closed</span>
+          <span class="badge red">待實作驗收</span>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/24">#24</a><span class="small">Detection IR v1.1 + L5 Context Backbone</span></div>
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/22">#22</a><span class="small">Security Surface Expansion: ClamAV + Entity Context Graph + Response Audit</span></div>
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/19">#19</a><span class="small">Sparse UEBA + Entity Graph + Hot/Warm/Cold Data Architecture</span></div>
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/17">#17</a><span class="small">Smart Collection Policy for XDR / SIEM / Audit Evidence</span></div>
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/16">#16</a><span class="small">10-Step Runtime Pipeline Performance / Soak Gate</span></div>
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/15">#15</a><span class="small">V41 Multi-Source Intel to L2-L5 Replay Gate</span></div>
+        </div>
+      </article>
+      <article class="panel work-card">
+        <div>
+          <span class="badge violet">area:pmqa-training</span>
+          <h3>訓練 / Replay / PMQA 驗收</h3>
+          <p class="small">目標是把 COR、RCA、BND、ERM、ROB 與 Golden Replay 變成固定驗收閉環，證明模型判斷不是一次性 demo。</p>
+        </div>
+        <div class="summary">
+          <span class="badge slate">11 issues</span>
+          <span class="badge amber">0 closed</span>
+          <span class="badge red">待 evidence package</span>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/8">#8</a><span class="small">L2-L5 Gate、五大推理考試與持續測試閉環</span></div>
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/9">#9</a><span class="small">Structured COR Exam</span></div>
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/10">#10</a><span class="small">Structured RCA Exam</span></div>
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/11">#11</a><span class="small">Structured BND Exam</span></div>
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/14">#14</a><span class="small">Golden Replay 100 E2E Gate</span></div>
+          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/23">#23</a><span class="small">GA Scorecard / PMQA Evidence Package</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="closures">
+    <div class="section-head">
+      <div>
+        <h2>大工項與功能閉環</h2>
+        <p class="small">每一列都用「輸入、判斷、輸出、證據」來看是否形成閉環；目前多數已完成規格集中，下一步是交付實作與 PMQA evidence。</p>
+      </div>
+    </div>
+    <div class="matrix">
+      <table>
+        <thead>
+          <tr>
+            <th>閉環</th>
+            <th>核心能力</th>
+            <th>前台輸出</th>
+            <th>後台輸入 / 處理</th>
+            <th>驗收證據</th>
+            <th>目前狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Evidence Backbone</b><br><a href="https://github.com/a770131a/SIEM/issues/24">#24</a> <a href="https://github.com/a770131a/SIEM/issues/22">#22</a></td>
+            <td>Detection IR v1.1、malware_detection_ir、L5 context backbone</td>
+            <td>Evidence refs、raw_ref、normalized_ir link</td>
+            <td>ClamAV / AV / SIEM / Agent / SAST translators</td>
+            <td>Schema report、fixture replay、dedup_hash stability</td>
+            <td class="state pending">Spec centralized / implementation pending</td>
+          </tr>
+          <tr>
+            <td><b>Entity Context</b><br><a href="https://github.com/a770131a/SIEM/issues/19">#19</a></td>
+            <td>Asset、user、vulnerability、intel、compliance context graph</td>
+            <td>Entity impact、risk modifiers、tenant-safe context view</td>
+            <td>entity_key、asset_id、user_id、context snapshot resolver</td>
+            <td>Context replay report、tenant isolation negative test</td>
+            <td class="state pending">Spec centralized / implementation pending</td>
+          </tr>
+          <tr>
+            <td><b>Decision Trace</b><br><a href="https://github.com/a770131a/SIEM/issues/20">#20</a> <a href="https://github.com/a770131a/SIEM/issues/21">#21</a></td>
+            <td>N0-N5 notification、why promoted、why not promoted</td>
+            <td>Decision Rationale Drawer、finding row state、reason fields</td>
+            <td>L2 high-impact rules、L3 chain logic、L4 storyline gate</td>
+            <td>Screenshot set、API samples、negative promotion tests</td>
+            <td class="state pending">Spec centralized / UI + API pending</td>
+          </tr>
+          <tr>
+            <td><b>Response Safety</b><br><a href="https://github.com/a770131a/SIEM/issues/22">#22</a> <a href="https://github.com/a770131a/SIEM/issues/23">#23</a></td>
+            <td>Recommendation、approval、execute、rollback、audit trail</td>
+            <td>Approval status、action matrix reason、audit timeline</td>
+            <td>Safety gate、policy matrix、human approval enforcement</td>
+            <td>unsafe auto action = 0、audit report、rollback sample</td>
+            <td class="state pending">Spec centralized / PMQA pending</td>
+          </tr>
+          <tr>
+            <td><b>Replay Training</b><br><a href="https://github.com/a770131a/SIEM/issues/8">#8</a> - <a href="https://github.com/a770131a/SIEM/issues/14">#14</a></td>
+            <td>COR、RCA、BND、ERM、ROB、Golden Replay 100</td>
+            <td>PMQA scorecard、exam result dashboard、failure buckets</td>
+            <td>Golden fixtures、evaluator rules、few-shot calibration</td>
+            <td>L2/L3/L4 match score、over/under escalation report</td>
+            <td class="state pending">Spec centralized / dataset pending</td>
+          </tr>
+          <tr>
+            <td><b>Governance Center</b><br><a href="https://github.com/a770131a/SIEM/issues/1">#1</a> - <a href="https://github.com/a770131a/SIEM/issues/7">#7</a></td>
+            <td>Training center、Dify/Ollama roles、scenario pack、control layer</td>
+            <td>Role workflow UI、training asset view、scenario execution evidence</td>
+            <td>Governance roles、scenario runner、feedback loop</td>
+            <td>Training screenshots、role integration report、scenario pack replay</td>
+            <td class="state pending">Migrated to SIEM / consolidation done</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel callout">
+    <div class="eyebrow">下一個最有效的收斂順序</div>
+    <h2>先打通後台閉環，再補前台證據視圖</h2>
+    <p class="small">建議優先順序以產品閉環依賴為準：先做 <a href="https://github.com/a770131a/SIEM/issues/24">#24 Detection IR / L5 Context Backbone</a>，接 <a href="https://github.com/a770131a/SIEM/issues/22">#22 Security Surface Expansion</a> 和 <a href="https://github.com/a770131a/SIEM/issues/21">#21 Notification Baseline</a>，再讓 <a href="https://github.com/a770131a/SIEM/issues/20">#20 Decision Drawer</a> 與 <a href="https://github.com/a770131a/SIEM/issues/23">#23 GA PMQA Gates</a> 展示可驗收 evidence。</p>
+  </section>
+
+  <footer class="footer">
+    Source repo: <a href="https://github.com/a770131a/SIEM">a770131a/SIEM</a> · Report rebuilt for DeepXDR product closure view · Updated 2026-05-14 Asia/Taipei
+  </footer>
 </main>
 </body>
 </html>
