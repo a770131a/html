@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SIEM 設計查閱</title>
+<style>
+:root{--bg:#f5f7fa;--panel:#fff;--panel2:#f9fbfd;--line:#d9e2ec;--text:#142033;--muted:#627187;--blue:#1f5f9e;--blue2:#e7f0fb;--green:#118466;--green2:#e6f6f1;--amber:#a76516;--amber2:#fff2dc;--red:#b83b48;--red2:#fde8eb;--violet:#6754bd;--violet2:#efecff;--slate:#46566d;--slate2:#eef3f8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;line-height:1.62;overflow-x:hidden}
+a{color:var(--blue);font-weight:760;text-decoration:none}
+a:hover{text-decoration:underline}
+a,b,h1,h2,h3,p,span,td,th,code{overflow-wrap:anywhere}
+.page{width:100%;max-width:1240px;margin:0 auto;padding:24px 20px 44px;overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}
+.brand{font-size:13px;color:var(--muted);font-weight:850}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{height:34px;display:inline-flex;align-items:center;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--slate);font-size:13px}
+.panel{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;box-shadow:0 8px 24px rgba(21,32,51,.05)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:14px;align-items:stretch}
+.eyebrow{color:var(--blue);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:36px;line-height:1.15;margin:8px 0 12px}
+h2{font-size:22px;margin:28px 0 12px}
+h3{font-size:16px;margin-bottom:8px;line-height:1.35}
+.lead{font-size:16px;color:#40516a;max-width:840px;margin-bottom:14px}
+.small{font-size:13px;color:var(--muted)}
+.tiny{font-size:12px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;min-height:26px;padding:3px 9px;border-radius:8px;font-size:12px;font-weight:850;margin:2px 4px 2px 0;white-space:nowrap}
+.blue{background:var(--blue2);color:var(--blue)}
+.green{background:var(--green2);color:var(--green)}
+.amber{background:var(--amber2);color:var(--amber)}
+.red{background:var(--red2);color:var(--red)}
+.violet{background:var(--violet2);color:var(--violet)}
+.slate{background:var(--slate2);color:var(--slate)}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.grid-2>*,.grid-3>*{min-width:0}
+.flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.node{background:var(--panel2);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:8px;padding:12px;min-height:118px}
+.node:nth-child(2){border-left-color:var(--green)}.node:nth-child(3){border-left-color:var(--amber)}.node:nth-child(4){border-left-color:var(--violet)}.node:nth-child(5){border-left-color:var(--red)}.node:nth-child(6){border-left-color:var(--slate)}
+.table-wrap{width:100%;max-width:100%;min-width:0;overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:980px}
+th,td{padding:12px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:13px}
+th{background:#f3f7fb;color:#44546b;font-size:12px;text-transform:uppercase}
+tr:last-child td{border-bottom:0}
+code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace}
+pre{margin:0;background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;overflow:auto;font-size:12px;line-height:1.55}
+.formula{background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;font-size:13px}
+.formula b{color:#f8c471}
+.callout{border-left:5px solid var(--amber);background:#fffaf1}
+.footer{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
+@media(max-width:1120px){.flow{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1040px){.hero,.grid-2,.grid-3{grid-template-columns:1fr}}
+@media(max-width:780px){.page{padding:16px 12px 32px}.topbar{align-items:flex-start;flex-direction:column}.nav{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.nav a{justify-content:center;padding:0 8px}h1{font-size:30px}.flow{grid-template-columns:1fr}table{min-width:880px}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="topbar">
+    <div class="brand">SIEM / 設計查閱</div>
+    <nav class="nav" aria-label="design navigation">
+      <a href="index.html?v=24">工時首頁</a>
+      <a href="#flow">資料流程</a>
+      <a href="#ir">IR 整併</a>
+      <a href="#weighting">#28 加權</a>
+      <a href="#safety">Safety Gate</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="panel">
+      <div class="eyebrow">快速查閱</div>
+      <h1>V41 / Detection IR / L5 Safety Gate 設計索引</h1>
+      <p class="lead">這頁用來查「資料怎麼進來、怎麼被整理成 IR、怎麼合併上下文、最後怎麼用 #28 的 Hybrid Risk Weighting Engine 做風險加權與 L5 Safety Gate」。它是設計索引，不是工時頁。</p>
+      <span class="badge blue">#25 Detection IR Schema Gate</span>
+      <span class="badge green">#26 Canonical Event Contract</span>
+      <span class="badge amber">#27 Kernel-derived Event Backbone</span>
+      <span class="badge violet">#28 Hybrid Risk Weighting</span>
+    </div>
+    <aside class="panel callout">
+      <div class="eyebrow">核心原則</div>
+      <h3>raw log 不可直接進攻擊主幹</h3>
+      <p class="small">所有來源資料都要先被 adapter 正規化，再進 Canonical Endpoint Event，之後由 mapper 轉成 Detection IR v1.1，通過 Schema Gate 才能進 L2/L3/L4/L5 分析。</p>
+      <p class="small">分數不能繞過安全邊界。就算風險分數 90+，阻斷性動作仍需要人工審批。</p>
+    </aside>
+  </section>
+
+  <section id="flow">
+    <h2>資料流程總覽</h2>
+    <div class="flow">
+      <div class="node"><span class="badge blue">1</span><h3>資料來源</h3><p class="tiny">Agent / Kernel / Defender / ClamAV / SIEM / SAST / GCB / CTI / Asset context</p></div>
+      <div class="node"><span class="badge green">2</span><h3>Adapter</h3><p class="tiny">source-specific event 轉成 canonical；raw id、syscall、vendor fields 只保留 raw_ref/source_details。</p></div>
+      <div class="node"><span class="badge amber">3</span><h3>Canonical Event</h3><p class="tiny">統一 actor、target、quality、raw_ref、evidence_refs。</p></div>
+      <div class="node"><span class="badge violet">4</span><h3>Detection IR v1.1</h3><p class="tiny">只收 normalized behavior entities，通過 12 類 category 與條件式欄位驗證。</p></div>
+      <div class="node"><span class="badge red">5</span><h3>Scoring / L2-L5</h3><p class="tiny">behavior base、intel 五維度、context multipliers、confidence、override rules。</p></div>
+      <div class="node"><span class="badge slate">6</span><h3>L5 Safety Gate</h3><p class="tiny">observe / review / approve / escalate；阻斷性 response 永遠需要 approval。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>V41 引擎收哪些資料</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>來源</th><th>進主幹前型態</th><th>進 Detection IR 後</th><th>用途</th><th>注意事項</th></tr></thead>
+        <tbody>
+          <tr><td><b>Endpoint Agent / Kernel</b></td><td>Canonical Endpoint Event</td><td>process_activity / file_activity / network_activity / privilege_activity / persistence_activity</td><td>L2 signal、L3 chain、L4 storyline、entity risk</td><td>kernel raw syscall 不可直接當 event_type</td></tr>
+          <tr><td><b>Microsoft Defender / external alert</b></td><td>external alert adapter output</td><td>security_alert / mapped detection evidence</td><td>外部告警佐證、ext score、correlated_with_agent</td><td>Defender critical + Agent correlated 可 force escalate</td></tr>
+          <tr><td><b>ClamAV / AV / YARA</b></td><td>malware evidence adapter</td><td>malware_detection / malware_detected</td><td>malware L2、file hash evidence、response recommendation</td><td>ClamAV-only 不可自動 delete / quarantine asset</td></tr>
+          <tr><td><b>SIEM / IDS / IPS</b></td><td>normalized security alert</td><td>security_alert / network_activity</td><td>外部告警、C2、network suspicion、ext score</td><td>IDS-only 不可直接 isolate host</td></tr>
+          <tr><td><b>SAST / AppSec</b></td><td>finding / weakness context</td><td>vulnerability_context 或 context store</td><td>vuln score、asset risk、storyline context</td><td>context 不可單獨確認 compromise</td></tr>
+          <tr><td><b>GCB / compliance</b></td><td>configuration risk context</td><td>configuration_risk / gcb_context</td><td>gcb score、治理風險、稽核 evidence</td><td>合規 fail 是風險加權，不是攻擊行為本身</td></tr>
+          <tr><td><b>Asset / UEBA / Entity Graph</b></td><td>context snapshot</td><td>context refs / multipliers</td><td>asset criticality、exposure、baseline deviation</td><td>完整 context 放 graph/store，IR 只帶 ref + summary</td></tr>
+          <tr><td><b>Threat Intel / IOC / KEV / EPSS</b></td><td>intel context</td><td>vuln / ioc / ttp dimensions</td><td>intel_context_score、force escalate 條件</td><td>IOC 無本機命中必須降權</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="ir">
+    <h2>IR 怎麼整併</h2>
+    <div class="grid-2">
+      <article class="panel">
+        <span class="badge green">#26</span>
+        <h3>Canonical Endpoint Event</h3>
+        <p class="small">所有 endpoint/source adapter 先統一成 canonical，保留共用欄位：tenant、asset、agent、timestamp、source、event_type、actor、target、quality、raw_ref。</p>
+        <pre>{
+  "schema_version": "deepxdr.canonical_endpoint_event.v1",
+  "event_type": "process_exec",
+  "actor": { "user": {}, "process": {}, "parent_process": {} },
+  "target": { "file": {}, "network": {}, "system": {} },
+  "quality": { "confidence": 0.8, "lossy_transform": false },
+  "raw_ref": "raw:etw:uuid"
+}</pre>
+      </article>
+      <article class="panel">
+        <span class="badge blue">#25</span>
+        <h3>Detection IR v1.1 Schema Gate</h3>
+        <p class="small">Canonical Event 由 mapper 轉入 Detection IR，通過 schema gate 才能進 `detection_ir_events`。heartbeat、inventory、usage summary、raw prompt content 不直接進攻擊主幹。</p>
+        <pre>{
+  "schema_version": "deepxdr.detection_ir.v1.1",
+  "event_category": "process_activity",
+  "event_type": "process_exec",
+  "actor": {},
+  "target": {},
+  "context": {},
+  "correlation": {},
+  "evidence_refs": []
+}</pre>
+      </article>
+    </div>
+    <div class="panel" style="margin-top:14px">
+      <h3>Detection IR 12 類主幹分類</h3>
+      <p class="small">process_activity、file_activity、network_activity、identity_activity、privilege_activity、persistence_activity、security_alert、malware_detection、data_activity、cloud_identity_activity、vulnerability_context、configuration_risk。</p>
+      <span class="badge slate">PASS_MAIN -> detection_ir_events</span>
+      <span class="badge slate">PASS_CONTEXT -> context stores</span>
+      <span class="badge slate">PASS_EVIDENCE_ONLY -> cold/raw store</span>
+      <span class="badge red">REJECT_QUARANTINE -> dead_letter_events</span>
+    </div>
+  </section>
+
+  <section id="weighting">
+    <h2>#28 Hybrid Risk Weighting Engine 怎麼加權</h2>
+    <div class="grid-2">
+      <article class="panel">
+        <span class="badge violet">Final Model</span>
+        <h3>五維度 + 漏斗校準</h3>
+        <div class="formula">
+          <p><b>1. 行為先定性</b><br>behavior_risk = static_behavior_base + actor_bonus + target_bonus + local_evidence_bonus + ttp_chain_bonus - benign_penalty</p>
+          <p><b>2. 情資再加權</b><br>intel_context_score = vuln*0.25 + ioc*0.25 + ttp*0.25 + ext*0.15 + gcb*0.10</p>
+          <p><b>3. 行為與情資整併</b><br>priority_base = behavior_risk*0.60 + intel_context_score*0.40</p>
+          <p><b>4. 上下文與信心校準</b><br>final_score = clamp(priority_base * context_multiplier * confidence_multiplier, 0, 100)</p>
+        </div>
+      </article>
+      <article class="panel">
+        <span class="badge amber">Scoring Breakdown</span>
+        <h3>Detection IR 必須留下可解釋分解</h3>
+        <pre>{
+  "risk_score": 82,
+  "confidence": 0.86,
+  "context": {
+    "behavior_risk": 78,
+    "vuln_score": 78,
+    "ioc_score": 90,
+    "ttp_score": 75,
+    "ext_score": 65,
+    "gcb_score": 40,
+    "intel_context_score": 77,
+    "priority_base": 77.6,
+    "context_multiplier": 1.69,
+    "confidence_multiplier": 0.951
+  },
+  "l5_gate": "escalate",
+  "approval_required": true
+}</pre>
+      </article>
+    </div>
+
+    <div class="table-wrap" style="margin-top:14px">
+      <table>
+        <thead><tr><th>階段</th><th>設計</th><th>查閱重點</th></tr></thead>
+        <tbody>
+          <tr><td><b>Behavior base</b></td><td>malware=90、persistence=80、sensitive_file=75、process_exec_suspicious=60、normal=20</td><td>先看行為本身，不先被 CVE/IOC 帶偏</td></tr>
+          <tr><td><b>IOC</b></td><td>本機命中時按 confidence/freshness 加權；無本機事件時只給約 30% 權重</td><td>避免只有情資清單命中就誤升級</td></tr>
+          <tr><td><b>TTP</b></td><td>跨階段且 ttp_count >= 3 才給 chain_bonus</td><td>單一 TTP 不等於完整攻擊鏈</td></tr>
+          <tr><td><b>Context</b></td><td>asset criticality、public exposure、baseline deviation 三類 multiplier</td><td>public_facing 不可重複加權</td></tr>
+          <tr><td><b>Confidence</b></td><td>confidence_multiplier = 0.65 + 0.35 * confidence</td><td>低信心不能把高風險 malware 壓成低風險</td></tr>
+          <tr><td><b>Override</b></td><td>force escalate / force approve / downgrade / suppress</td><td>硬邊界優先於公式</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="safety">
+    <h2>L5 Safety Gate 與自動化邊界</h2>
+    <div class="grid-2">
+      <article class="panel">
+        <span class="badge green">Gate Thresholds</span>
+        <table style="min-width:0">
+          <thead><tr><th>score</th><th>gate</th><th>行為</th></tr></thead>
+          <tbody>
+            <tr><td>0-39</td><td>observe</td><td>寫入 IR，不通知 SOC</td></tr>
+            <tr><td>40-64</td><td>review</td><td>建立 Incident，L5 只給建議</td></tr>
+            <tr><td>65-79</td><td>approve</td><td>response action 需 SOC Lead 核准</td></tr>
+            <tr><td>80-100</td><td>escalate</td><td>P0 Incident，通知管理層，阻斷性動作仍需審批</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article class="panel">
+        <span class="badge red">Hard Boundary</span>
+        <h3>不可自動執行阻斷性動作</h3>
+        <p class="small">允許自動：create_ticket、notify_soc、send_slack、send_email、attach_evidence、increase_case_priority、open_case_note。</p>
+        <p class="small">永遠需要人工審批：isolate_host、kill_process、block_ip、disable_user、revoke_token、delete_file、quarantine_asset、cross_tenant_action。</p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>相關 issue 索引</h2>
+    <div class="grid-2">
+      <article class="panel"><span class="badge blue">#25</span><h3><a href="https://github.com/a770131a/SIEM/issues/25">Detection IR v1.1 Schema Gate</a></h3><p class="small">主幹入口閘門，鎖 12 類 event category 與條件式 required fields。</p></article>
+      <article class="panel"><span class="badge green">#26</span><h3><a href="https://github.com/a770131a/SIEM/issues/26">Canonical Event Adapter Contract</a></h3><p class="small">所有 sensor / adapter 進 Detection IR 前的統一資料合約。</p></article>
+      <article class="panel"><span class="badge amber">#27</span><h3><a href="https://github.com/a770131a/SIEM/issues/27">Kernel-derived Event Backbone</a></h3><p class="small">Kernel / low-level telemetry 先進 Canonical，再進 Detection IR。</p></article>
+      <article class="panel"><span class="badge violet">#28</span><h3><a href="https://github.com/a770131a/SIEM/issues/28">Hybrid Risk Weighting Engine</a></h3><p class="small">把 behavior、intel、context、confidence、override、L5 Safety Gate 合併成可解釋風險引擎。</p></article>
+    </div>
+  </section>
+
+  <footer class="footer">
+    Design reference created 2026-05-14 Asia/Taipei · Source issues: #25 #26 #27 #28 · Main repo: <a href="https://github.com/a770131a/SIEM">a770131a/SIEM</a>
+  </footer>
+</main>
+</body>
+</html>
