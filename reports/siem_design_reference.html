@@ -60,7 +60,7 @@ pre{margin:0;background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;ove
   <header class="topbar">
     <div class="brand">SIEM / 設計查閱</div>
     <nav class="nav" aria-label="design navigation">
-      <a href="index.html?v=27">工時首頁</a>
+      <a href="index.html?v=28">工時首頁</a>
       <a href="#flow">資料流程</a>
       <a href="#glossary">名詞速查</a>
       <a href="#ir">IR 整併</a>
@@ -120,6 +120,7 @@ pre{margin:0;background:#0f172a;color:#e5eefb;border-radius:8px;padding:14px;ove
           <tr><td><b>Case Grouping</b></td><td>把同一主機、同一 correlation_key、同一攻擊鏈或同一調查目標的事件合併成 case。</td><td>Incident / Case service，使用 dedupe_key、correlation_key、asset_id、storyline id。</td><td>顯示「建立 Case / 加入既有 Case」，避免同一設備出現多張重複卡。</td></tr>
           <tr><td><b>AI-assisted Investigation</b></td><td>AI 幫分析師整理證據、提出假說、指出缺少資料與下一步 hunt action。</td><td>AI Assessment、AI vs L5、Investigation Drawer。</td><td>顯示「建議先查 command line / network / persistence」，不是自動結案或自動處置。</td></tr>
           <tr><td><b>Guided / Automated Response</b></td><td>Guided 是引導人做下一步；Automated 只能做安全非破壞性動作，高風險阻斷仍需 approval。</td><td>Response / Approval、L5 Safety Gate、Audit Trail。</td><td>顯示「可建立工單、附加證據、收集 telemetry」；隔離、kill、block、delete 要顯示需人工審批。</td></tr>
+          <tr><td><b>Tailwind CSS</b></td><td>前台 utility-first CSS 工具，用小型 class 快速組出一致的 spacing、顏色、排版、狀態樣式。</td><td>Frontend UI layer；適合 Console、Drawer、KPI、Table、Badge、Tabs、Filter chips 等元件。</td><td>前台不需要向使用者顯示 Tailwind，本質是讓 UI 更一致、可維護、快速迭代。</td></tr>
           <tr><td><b>Investigation Evidence Pack</b></td><td>調查證據包，補上 process tree、command line、network、file、user、timeline、cross-asset context。</td><td>Detection IR / L5 之後，由 slow-path enrichment 產生。</td><td>顯示在 Investigation / Evidence tab，回答「誰啟動了什麼、還缺什麼證據」。</td></tr>
           <tr><td><b>Frozen AI Evidence Pack</b></td><td>給 AI 的凍結版卷宗，從 Investigation Pack 摘要、去敏、截斷並加 hash。</td><td>Stateful L5 Final Decision 之後，AI Assessment 之前。</td><td>不直接顯示完整內容；前台顯示 AI 用了哪些證據與缺少哪些證據。</td></tr>
           <tr><td><b>DB Source of Truth</b></td><td>完整事實與稽核來源，保存 evidence、L5 decision、AI assessment、comparison、routing、audit。</td><td>主資料層。</td><td>前台不講 DB，只用它保證「這次判斷可追溯」。</td></tr>
