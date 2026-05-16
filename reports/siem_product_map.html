@@ -54,6 +54,8 @@ h3{font-size:16px;margin-bottom:8px;line-height:1.35}
 .diagram-card.slate{border-left:5px solid var(--slate);background:#fff}
 .diagram-arrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;font-weight:900}
 .diagram-note{border:1px dashed var(--line);border-radius:8px;background:#fff;padding:12px;color:var(--muted);font-size:13px}
+.mermaid-panel{padding:18px;overflow:auto}
+.mermaid{min-width:980px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px}
 .flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
 .node{background:var(--panel2);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:8px;padding:12px;min-height:118px}
 .node:nth-child(2){border-left-color:var(--green)}.node:nth-child(3){border-left-color:var(--amber)}.node:nth-child(4){border-left-color:var(--violet)}.node:nth-child(5){border-left-color:var(--red)}.node:nth-child(6){border-left-color:var(--slate)}
@@ -67,7 +69,7 @@ tr:last-child td{border-bottom:0}
 .footer{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
 @media(max-width:1120px){.flow{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}.structure-track,.structure-track.six{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:1040px){.hero,.grid-2,.grid-3{grid-template-columns:1fr}}
-@media(max-width:780px){.page{padding:16px 12px 32px}.topbar{align-items:flex-start;flex-direction:column}.nav{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.nav a{justify-content:center;padding:0 8px}h1{font-size:30px}.flow,.grid-4,.structure-row,.structure-track,.structure-track.three,.structure-track.six{grid-template-columns:1fr}.structure-label{justify-content:flex-start;text-align:left}table{min-width:920px}}
+@media(max-width:780px){.page{padding:16px 12px 32px}.topbar{align-items:flex-start;flex-direction:column}.nav{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.nav a{justify-content:center;padding:0 8px}h1{font-size:30px}.flow,.grid-4,.structure-row,.structure-track,.structure-track.three,.structure-track.six{grid-template-columns:1fr}.structure-label{justify-content:flex-start;text-align:left}.mermaid{min-width:840px}table{min-width:920px}}
 </style>
 </head>
 <body>
@@ -75,8 +77,9 @@ tr:last-child td{border-bottom:0}
   <header class="topbar">
     <div class="brand">SIEM / 產品功能地圖</div>
     <nav class="nav" aria-label="product map navigation">
-      <a href="index.html?v=32">工時首頁</a>
+      <a href="index.html?v=33">工時首頁</a>
       <a href="siem_design_reference.html?v=5">設計查閱</a>
+      <a href="#mermaid-map">Mermaid 圖</a>
       <a href="#structure">結構圖</a>
       <a href="#platform">平台</a>
       <a href="#intel">情資整理</a>
@@ -105,6 +108,46 @@ tr:last-child td{border-bottom:0}
       <p class="small">這頁不是 Roadmap，也不是工時表。它是產品架構地圖，用「大項 -> 下級項目 -> 前台路徑」整理，避免資料來源、情資、威脅判斷、AI、訓練、前台功能混在一起。</p>
       <p class="small">前台路徑是目前建議 IA，可對應到已開 issue；實作時仍以 SIEM repo 內實際 router 命名為準。</p>
     </aside>
+  </section>
+
+  <section id="mermaid-map">
+    <h2>Mermaid 產品架構圖</h2>
+    <div class="panel mermaid-panel">
+      <pre class="mermaid">
+flowchart TD
+    %% DeepXDR / SIEM product map
+    classDef default fill:#ffffff,stroke:#003366,stroke-width:2px,color:#003366;
+    classDef dark fill:#003366,stroke:#00AEEF,stroke-width:2px,color:#ffffff;
+    classDef source fill:#E7F0FB,stroke:#003366,stroke-width:2px,color:#003366;
+    classDef ext fill:#FFF2DC,stroke:#A76516,stroke-width:2px,color:#5B3507;
+    classDef redteam fill:#FDE8EB,stroke:#B83B48,stroke-width:2px,color:#7A1F2A;
+    classDef govern fill:#E6F6F1,stroke:#118466,stroke-width:2px,color:#0B5B46;
+    classDef judge fill:#EFECFF,stroke:#6754BD,stroke-width:2px,color:#31256D;
+    classDef work fill:#EEF3F8,stroke:#46566D,stroke-width:2px,color:#283549;
+    classDef train fill:#003366,stroke:#00AEEF,stroke-width:2px,color:#ffffff;
+
+    A["情資資料整理<br/>Threat Intelligence Preparation"]:::dark
+
+    A --> B1["第一類：平台內生情資<br/>偵測 telemetry<br/>資產 / 身分 / baseline context"]:::source
+    A --> B2["第二類：外部產品 / AST / 正規化情資<br/>外部告警<br/>SAST / SCA / DAST<br/>CTI / IOC / KEV / EPSS / TTP"]:::ext
+    A --> B3["第三類：紅藍隊情資<br/>紅隊劇本<br/>藍隊規則<br/>紫隊場景<br/>Golden Replay / human verdict"]:::redteam
+
+    B1 --> C["資料治理中心<br/>Schema 清理<br/>Canonical Event<br/>Detection IR<br/>Evidence Pack<br/>OpenSearch Mirror<br/>Lineage / Audit"]:::govern
+    B2 --> C
+    B3 --> C
+
+    C --> D1["L5 加權判斷<br/>Hybrid Risk Weighting<br/>Gate / Approval<br/>Safe vs Disruptive Boundary"]:::judge
+    C --> D2["UEBA 判斷<br/>Baseline Deviation<br/>Entity Graph<br/>Cross-Asset Context"]:::judge
+    C --> D3["AI 判斷<br/>AI Assessment<br/>Missing Evidence<br/>AI vs L5 Comparison<br/>Rule Gap Candidate"]:::judge
+
+    D1 --> E["前台工作台<br/>Assets Under Attack<br/>Threat Event Queue<br/>Investigation Drawer<br/>Approval Queue<br/>Cases<br/>Data Governance"]:::work
+    D2 --> E
+    D3 --> E
+
+    E --> F["訓練與驗收<br/>Structured Exams<br/>Golden Replay<br/>PMQA / UAT<br/>Training Seed Review"]:::train
+    B3 --> F
+      </pre>
+    </div>
   </section>
 
   <section id="structure">
@@ -271,5 +314,24 @@ tr:last-child td{border-bottom:0}
     Product map created 2026-05-16 Asia/Taipei · Main repo: <a href="https://github.com/a770131a/SIEM">a770131a/SIEM</a>
   </footer>
 </main>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: "base",
+    securityLevel: "loose",
+    flowchart: { curve: "basis", htmlLabels: true },
+    themeVariables: {
+      background: "#ffffff",
+      primaryColor: "#ffffff",
+      primaryTextColor: "#003366",
+      primaryBorderColor: "#003366",
+      lineColor: "#46566d",
+      secondaryColor: "#e7f0fb",
+      tertiaryColor: "#eef3f8",
+      fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Noto Sans TC, Segoe UI, sans-serif"
+    }
+  });
+</script>
 </body>
 </html>
