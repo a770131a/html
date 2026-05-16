@@ -77,7 +77,7 @@ tr:last-child td{border-bottom:0}
   <header class="topbar">
     <div class="brand">SIEM / 產品功能地圖</div>
     <nav class="nav" aria-label="product map navigation">
-      <a href="index.html?v=33">工時首頁</a>
+      <a href="index.html?v=34">工時首頁</a>
       <a href="siem_design_reference.html?v=5">設計查閱</a>
       <a href="#mermaid-map">Mermaid 圖</a>
       <a href="#structure">結構圖</a>
@@ -132,8 +132,10 @@ flowchart TD
     A --> B2["第二類：外部產品 / AST / 正規化情資<br/>外部告警<br/>SAST / SCA / DAST<br/>CTI / IOC / KEV / EPSS / TTP"]:::ext
     A --> B3["第三類：紅藍隊情資<br/>紅隊劇本<br/>藍隊規則<br/>紫隊場景<br/>Golden Replay / human verdict"]:::redteam
 
+    B2 --> B2IR["AST IR / AppSec Finding IR<br/>SAST / SCA / DAST findings 正規化<br/>weakness / component / exploitability / exposure"]:::ext
+
     B1 --> C["資料治理中心<br/>Schema 清理<br/>Canonical Event<br/>Detection IR<br/>Evidence Pack<br/>OpenSearch Mirror<br/>Lineage / Audit"]:::govern
-    B2 --> C
+    B2IR --> C
     B3 --> C
 
     C --> D1["L5 加權判斷<br/>Hybrid Risk Weighting<br/>Gate / Approval<br/>Safe vs Disruptive Boundary"]:::judge
@@ -157,7 +159,7 @@ flowchart TD
         <div class="structure-label">情資資料整理</div>
         <div class="structure-track three">
           <div class="diagram-card blue"><strong>第一類：平台內生情資</strong><p>拆兩種：偵測 telemetry 與資產 / 身分 / baseline context。</p></div>
-          <div class="diagram-card amber"><strong>第二類：外部產品 / AST</strong><p>外部產品告警、AST、SAST / SCA / DAST、正規化弱點情資。</p></div>
+          <div class="diagram-card amber"><strong>第二類：外部產品 / AST</strong><p>外部產品告警、AST、SAST / SCA / DAST，先進 AST IR / AppSec Finding IR。</p></div>
           <div class="diagram-card red"><strong>第三類：紅藍隊情資</strong><p>攻擊演練、紫隊場景、Golden Replay、對抗樣本、測試 verdict。</p></div>
         </div>
       </div>
@@ -169,7 +171,7 @@ flowchart TD
         <div class="structure-track six">
           <div class="diagram-card green"><strong>Schema 清理</strong><p>tenant、entity_refs、detection_id、collector、score 說明。</p></div>
           <div class="diagram-card green"><strong>Canonical Event</strong><p>統一 actor、target、quality、raw_ref。</p></div>
-          <div class="diagram-card green"><strong>Detection IR</strong><p>normalized behavior 與 typed entity refs。</p></div>
+          <div class="diagram-card green"><strong>Detection IR / AST IR</strong><p>Detection IR 收行為訊號；AST IR 收 AppSec finding 與弱點上下文。</p></div>
           <div class="diagram-card green"><strong>Evidence Pack</strong><p>process tree、command line、network、timeline、missing evidence。</p></div>
           <div class="diagram-card green"><strong>OpenSearch Mirror</strong><p>查詢、timeline、聚合、dashboard。</p></div>
           <div class="diagram-card green"><strong>Lineage / Audit</strong><p>raw_ref、evidence_refs、dead letter、replay snapshot。</p></div>
@@ -244,7 +246,7 @@ flowchart TD
         <div class="structure-label">第二類<br>外部產品 / AST</div>
         <div class="structure-track">
           <div class="diagram-card amber"><strong>外部產品告警</strong><p>Defender、EDR、SIEM、IDS / IPS、AV、YARA、ClamAV。作為外部佐證，不單獨越過 L5。</p></div>
-          <div class="diagram-card amber"><strong>AST</strong><p>SAST、SCA / SBOM、DAST / IAST / Runtime finding。形成 vulnerability_context 與 exploitability。</p></div>
+          <div class="diagram-card amber"><strong>AST IR</strong><p>SAST、SCA / SBOM、DAST / IAST / Runtime finding 先正規化成 AST IR，再形成 vulnerability_context 與 exploitability。</p></div>
           <div class="diagram-card amber"><strong>正規化情資</strong><p>CTI / IOC / KEV / EPSS / TTP mapping。進 intel_context_score 與 risk explanation。</p></div>
           <div class="diagram-card amber"><strong>對應 issue</strong><p><a href="https://github.com/a770131a/SIEM/issues/22">#22</a> <a href="https://github.com/a770131a/SIEM/issues/28">#28</a> <a href="https://github.com/a770131a/SIEM/issues/43">#43</a> <a href="https://github.com/a770131a/SIEM/issues/15">#15</a></p></div>
         </div>
@@ -268,6 +270,12 @@ flowchart TD
       <article class="panel"><span class="badge blue">SAST</span><h3>原始碼弱點</h3><p class="small">靜態分析產生 weakness、sink/source、函式路徑、修補建議。進入 vulnerability_context，作為 asset 或 app 的風險背景。</p></article>
       <article class="panel"><span class="badge green">SCA / SBOM</span><h3>元件與供應鏈</h3><p class="small">整理 dependency、package、CVE、license、KEV、EPSS。用於 exploitability 與修補優先級。</p></article>
       <article class="panel"><span class="badge amber">DAST / IAST / Runtime</span><h3>可利用與執行期證據</h3><p class="small">把掃描、runtime trace、web exploit attempt 與實際 asset exposure 合併。若沒有本機證據，不直接宣稱 compromise。</p></article>
+    </div>
+    <div class="panel" style="margin-top:14px">
+      <span class="badge amber">AST IR</span>
+      <h3>AST IR 是第二類情資的中介節點</h3>
+      <p class="small">AST IR / AppSec Finding IR 負責把 SAST、SCA/SBOM、DAST/IAST/Runtime finding 正規化成穩定欄位，例如 weakness、component、package、CVE、exploitability、asset exposure、evidence_refs。它不直接等於 Detection IR；Detection IR 偏行為事件，AST IR 偏弱點與應用安全情資。</p>
+      <p class="small">AST IR 後續可進 vulnerability_context、intel_context_score、asset risk、Evidence Pack 與 L5 加權判斷，但不能單獨宣稱 confirmed compromise。</p>
     </div>
   </section>
 
