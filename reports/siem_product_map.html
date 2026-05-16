@@ -77,7 +77,7 @@ tr:last-child td{border-bottom:0}
   <header class="topbar">
     <div class="brand">SIEM / 產品功能地圖</div>
     <nav class="nav" aria-label="product map navigation">
-      <a href="index.html?v=35">工時首頁</a>
+      <a href="index.html?v=36">工時首頁</a>
       <a href="siem_design_reference.html?v=5">設計查閱</a>
       <a href="#mermaid-map">Mermaid 圖</a>
       <a href="#structure">結構圖</a>
@@ -93,8 +93,8 @@ tr:last-child td{border-bottom:0}
   <section class="hero">
     <div class="panel">
       <div class="eyebrow">Product Map</div>
-      <h1>SIEM 產品功能地圖</h1>
-      <p class="lead">這頁整理產品大項與下級項目：情資資料整理分三大類，第一類再拆兩種；第二類是外部產品 / AST / 正規化情資；第三類是紅藍隊情資。威脅判斷也分三大類：L5 加權判斷、UEBA、AI。</p>
+      <h1>DeepXDR 資料到決策主流程</h1>
+      <p class="lead">Data-to-Decision Architecture：三種每日來源 → 統一 IR → 威脅判斷 → XDR Outcome → 前台呈現 → 訓練回饋。這頁整理產品大項與下級項目，說明資料如何進來、如何統一成 IR、如何判斷威脅、AI + L5 在哪裡，以及紅藍與 PMQA 如何回饋系統。</p>
       <span class="badge blue">Platform</span>
       <span class="badge green">情資資料整理</span>
       <span class="badge amber">外部產品 / AST</span>
@@ -111,7 +111,7 @@ tr:last-child td{border-bottom:0}
   </section>
 
   <section id="mermaid-map">
-    <h2>Mermaid 產品架構圖</h2>
+    <h2>DeepXDR 資料到決策主流程</h2>
     <div class="panel mermaid-panel">
       <pre class="mermaid">
 flowchart TD
@@ -126,13 +126,13 @@ flowchart TD
     classDef work fill:#EEF3F8,stroke:#46566D,stroke-width:2px,color:#283549;
     classDef train fill:#003366,stroke:#00AEEF,stroke-width:2px,color:#ffffff;
 
-    S["三種來源<br/>Source Inputs"]:::dark
+    S["三種每日強化來源<br/>Daily Strengthening Sources"]:::dark
 
     S --> S1["規則更新 / 外部情資<br/>Sigma / Elastic / Wazuh<br/>VANS / CVE / CPE / KEV / EPSS<br/>ATT&CK / IOC / TTP"]:::source
     S --> S2["外部產品告警<br/>Defender / EDR / SIEM / WAF / NDR / Wazuh<br/>Common Alert Envelope"]:::ext
     S --> S3["紅藍測試 / Shadow Validation<br/>Red Intent Cards<br/>Replay / Judge<br/>Coverage Gap / FP / FN"]:::redteam
 
-    S1 --> IR["統一 IR / 資料治理層<br/>Common Alert Envelope<br/>AST IR / Canonical Mapping<br/>Security IR / Detection IR<br/>Evidence Pack<br/>Lineage / Audit<br/>Review Quarantine"]:::govern
+    S1 --> IR["統一 IR / 資料治理層<br/>不同來源先轉成同一種語言，不直接判定攻擊<br/>Common Alert Envelope<br/>AST IR / Canonical Mapping<br/>Security IR / Detection IR<br/>Evidence Pack<br/>Lineage / Audit<br/>Review Quarantine"]:::govern
     S2 --> IR
     S3 --> IR
 
@@ -150,7 +150,7 @@ flowchart TD
 
     UI --> TR["訓練與驗收閉環<br/>Structured Exams<br/>Golden Replay<br/>PMQA / UAT<br/>Training Seed Review"]:::train
     S3 --> TR
-    TR -. baseline / candidate / replay feedback .-> IR
+    TR -. candidate / replay / PMQA feedback<br/>不是直接上線 .-> IR
       </pre>
     </div>
   </section>
@@ -159,7 +159,7 @@ flowchart TD
     <h2>產品結構圖</h2>
     <div class="panel structure">
       <div class="structure-row">
-        <div class="structure-label">第一層<br>三種來源</div>
+        <div class="structure-label">第一層<br>三種每日強化來源</div>
         <div class="structure-track three">
           <div class="diagram-card blue"><strong>規則更新 / 外部情資</strong><p>Sigma、Elastic、Wazuh、VANS、CVE、CPE、KEV、EPSS、ATT&CK、IOC、TTP。</p></div>
           <div class="diagram-card amber"><strong>外部產品告警</strong><p>Defender、EDR、SIEM、WAF、NDR、Wazuh，先轉 Common Alert Envelope。</p></div>
@@ -167,7 +167,7 @@ flowchart TD
         </div>
       </div>
 
-      <div class="diagram-arrow">三種來源都先進共同入口，不直接連前台或單一判斷線</div>
+      <div class="diagram-arrow">三種每日來源都先進共同入口，不直接連前台或單一判斷線</div>
 
       <div class="structure-row">
         <div class="structure-label">第二層<br>統一 IR / 資料治理層</div>
@@ -180,6 +180,7 @@ flowchart TD
           <div class="diagram-card green"><strong>Review Quarantine</strong><p>不乾淨或語意不明資料先隔離審查。</p></div>
         </div>
       </div>
+      <div class="diagram-note">核心規則：不同來源先轉成同一種語言，不直接判定攻擊。</div>
 
       <div class="diagram-arrow">統一 IR 出來後，才進入多條判斷線</div>
 
@@ -229,14 +230,14 @@ flowchart TD
         </div>
       </div>
 
-      <div class="diagram-note">核心邏輯：所有資料先進統一 IR / 資料治理層，再進行為偵測、關聯推理、風險治理與 UEBA 判斷；判斷結果先彙整成 XDR Outcome，最後才給前台呈現。訓練驗收是回饋迴圈，不是來源直通前台。</div>
+      <div class="diagram-note">核心邏輯：所有資料先進統一 IR / 資料治理層，再進行為偵測、關聯推理、風險治理與 UEBA 判斷；判斷結果先彙整成 XDR Outcome，最後才給前台呈現。訓練驗收是回饋迴圈，回到 candidate / replay / PMQA，不直接上線。</div>
     </div>
   </section>
 
   <section id="platform">
     <h2>平台總流程</h2>
     <div class="flow">
-      <div class="node"><span class="badge blue">1</span><h3>三種來源</h3><p class="tiny">規則/外部情資、外部產品告警、紅藍測試 / Shadow Validation。</p></div>
+      <div class="node"><span class="badge blue">1</span><h3>三種每日強化來源</h3><p class="tiny">規則/外部情資、外部產品告警、紅藍測試 / Shadow Validation。</p></div>
       <div class="node"><span class="badge green">2</span><h3>統一 IR / 治理</h3><p class="tiny">Common Alert Envelope、AST IR、Security IR / Detection IR、Evidence Pack、Review Quarantine。</p></div>
       <div class="node"><span class="badge amber">3</span><h3>判斷線</h3><p class="tiny">行為偵測、關聯推理、風險治理、UEBA / Entity Context。</p></div>
       <div class="node"><span class="badge violet">4</span><h3>XDR Outcome</h3><p class="tiny">Detection Outcome、Risk + Confidence、Evidence Summary、Promotion Package、Recommended Actions。</p></div>
