@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SIEM 產品功能地圖</title>
+<style>
+:root{--bg:#f5f7fa;--panel:#fff;--panel2:#f9fbfd;--line:#d9e2ec;--text:#142033;--muted:#627187;--blue:#1f5f9e;--blue2:#e7f0fb;--green:#118466;--green2:#e6f6f1;--amber:#a76516;--amber2:#fff2dc;--red:#b83b48;--red2:#fde8eb;--violet:#6754bd;--violet2:#efecff;--slate:#46566d;--slate2:#eef3f8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;line-height:1.62;overflow-x:hidden}
+a{color:var(--blue);font-weight:760;text-decoration:none}
+a:hover{text-decoration:underline}
+a,b,h1,h2,h3,p,span,td,th{overflow-wrap:anywhere}
+.page{width:100%;max-width:1240px;margin:0 auto;padding:24px 20px 44px;overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}
+.brand{font-size:13px;color:var(--muted);font-weight:850}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{height:34px;display:inline-flex;align-items:center;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--slate);font-size:13px}
+.panel{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;box-shadow:0 8px 24px rgba(21,32,51,.05)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:14px;align-items:stretch}
+.eyebrow{color:var(--blue);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:36px;line-height:1.15;margin:8px 0 12px}
+h2{font-size:22px;margin:28px 0 12px}
+h3{font-size:16px;margin-bottom:8px;line-height:1.35}
+.lead{font-size:16px;color:#40516a;max-width:850px;margin-bottom:14px}
+.small{font-size:13px;color:var(--muted)}
+.tiny{font-size:12px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;min-height:26px;padding:3px 9px;border-radius:8px;font-size:12px;font-weight:850;margin:2px 4px 2px 0;white-space:nowrap}
+.blue{background:var(--blue2);color:var(--blue)}
+.green{background:var(--green2);color:var(--green)}
+.amber{background:var(--amber2);color:var(--amber)}
+.red{background:var(--red2);color:var(--red)}
+.violet{background:var(--violet2);color:var(--violet)}
+.slate{background:var(--slate2);color:var(--slate)}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.grid-2>*,.grid-3>*,.grid-4>*{min-width:0}
+.flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.node{background:var(--panel2);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:8px;padding:12px;min-height:118px}
+.node:nth-child(2){border-left-color:var(--green)}.node:nth-child(3){border-left-color:var(--amber)}.node:nth-child(4){border-left-color:var(--violet)}.node:nth-child(5){border-left-color:var(--red)}.node:nth-child(6){border-left-color:var(--slate)}
+.table-wrap{width:100%;max-width:100%;min-width:0;overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:1060px}
+th,td{padding:12px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:13px}
+th{background:#f3f7fb;color:#44546b;font-size:12px;text-transform:uppercase}
+tr:last-child td{border-bottom:0}
+.callout{border-left:5px solid var(--amber);background:#fffaf1}
+.route{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;font-size:12px;color:#34435a}
+.footer{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
+@media(max-width:1120px){.flow{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1040px){.hero,.grid-2,.grid-3{grid-template-columns:1fr}}
+@media(max-width:780px){.page{padding:16px 12px 32px}.topbar{align-items:flex-start;flex-direction:column}.nav{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.nav a{justify-content:center;padding:0 8px}h1{font-size:30px}.flow,.grid-4{grid-template-columns:1fr}table{min-width:920px}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="topbar">
+    <div class="brand">SIEM / 產品功能地圖</div>
+    <nav class="nav" aria-label="product map navigation">
+      <a href="index.html?v=29">工時首頁</a>
+      <a href="siem_design_reference.html?v=5">設計查閱</a>
+      <a href="#platform">平台</a>
+      <a href="#governance">資料治理中心</a>
+      <a href="#ast">AST</a>
+      <a href="#judgement">威脅判斷</a>
+      <a href="#training">訓練</a>
+      <a href="#frontend">前台路徑</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="panel">
+      <div class="eyebrow">Product Map</div>
+      <h1>SIEM 產品功能地圖</h1>
+      <p class="lead">這頁整理「平台從哪裡收資料、資料治理中心往下分支做哪些事、AST 三個情資來源怎麼進風險、威脅判斷三條線怎麼合流、訓練驗收有哪些，以及目前前台功能應該放在哪些路徑」。</p>
+      <span class="badge blue">Platform</span>
+      <span class="badge green">Data Governance Center</span>
+      <span class="badge amber">AST / AppSec Intel</span>
+      <span class="badge violet">Threat Judgement Lines</span>
+      <span class="badge slate">Frontend Routes</span>
+    </div>
+    <aside class="panel callout">
+      <div class="eyebrow">閱讀方式</div>
+      <h3>先看資料責任，再看前台功能</h3>
+      <p class="small">這頁不是 Roadmap，也不是工時表。它是產品架構地圖，用來避免「資料來源、威脅判斷、AI、訓練、前台功能」混在一起。</p>
+      <p class="small">前台路徑是目前建議 IA，可對應到已開 issue；實作時仍以 SIEM repo 內實際 router 命名為準。</p>
+    </aside>
+  </section>
+
+  <section id="platform">
+    <h2>平台總流程</h2>
+    <div class="flow">
+      <div class="node"><span class="badge blue">1</span><h3>收集</h3><p class="tiny">Agent、Kernel、EDR、AV、SIEM、AST、GCB、Asset、CTI、UEBA context。</p></div>
+      <div class="node"><span class="badge green">2</span><h3>正規化</h3><p class="tiny">Adapter 轉 Canonical Event，再進 Detection IR v1.1 Schema Gate。</p></div>
+      <div class="node"><span class="badge amber">3</span><h3>治理</h3><p class="tiny">Data Governance Center 做欄位品質、entity refs、tenant 分區、evidence lineage。</p></div>
+      <div class="node"><span class="badge violet">4</span><h3>威脅判斷</h3><p class="tiny">行為線、情資上下文線、AI/L5 reconciliation 線三路合流。</p></div>
+      <div class="node"><span class="badge red">5</span><h3>調查與回應</h3><p class="tiny">Evidence Pack、Case、Approval、Guided Response、Audit Trail。</p></div>
+      <div class="node"><span class="badge slate">6</span><h3>訓練驗收</h3><p class="tiny">Structured exams、Golden Replay、PMQA、rule gap、training seed。</p></div>
+    </div>
+  </section>
+
+  <section id="governance">
+    <h2>資料治理中心收集與分支</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>收集來源</th><th>治理中心先做什麼</th><th>往下分支</th><th>產品用途</th><th>對應 issue</th></tr></thead>
+        <tbody>
+          <tr><td><b>Endpoint Agent / Kernel</b></td><td>清理 tenant_id、asset_id、agent_id、process/user refs，轉 Canonical Event。</td><td>Detection IR、L2 Signal、Investigation Evidence Pack。</td><td>主機威脅、process tree、file/network/persistence 調查。</td><td><a href="https://github.com/a770131a/SIEM/issues/24">#24</a> <a href="https://github.com/a770131a/SIEM/issues/25">#25</a> <a href="https://github.com/a770131a/SIEM/issues/26">#26</a></td></tr>
+          <tr><td><b>Defender / EDR / External Alert</b></td><td>把 vendor severity、alert id、evidence refs 轉成 security_alert。</td><td>外部告警佐證、ext_score、L5 scoring context。</td><td>外部告警不直接處置，需與本機證據關聯。</td><td><a href="https://github.com/a770131a/SIEM/issues/22">#22</a> <a href="https://github.com/a770131a/SIEM/issues/28">#28</a></td></tr>
+          <tr><td><b>ClamAV / AV / YARA</b></td><td>整理 malware evidence、file hash、scan result、quarantine eligibility。</td><td>malware_detection、Evidence Pack、Response Safety。</td><td>顯示惡意檔案證據；delete/quarantine 仍需 approval。</td><td><a href="https://github.com/a770131a/SIEM/issues/22">#22</a> <a href="https://github.com/a770131a/SIEM/issues/34">#34</a></td></tr>
+          <tr><td><b>SIEM / IDS / IPS</b></td><td>轉 normalized security alert，保留 source_ref 與 network evidence。</td><td>network_activity、cross-asset context、timeline。</td><td>輔助 C2、掃描、橫向移動判斷。</td><td><a href="https://github.com/a770131a/SIEM/issues/35">#35</a> <a href="https://github.com/a770131a/SIEM/issues/37">#37</a></td></tr>
+          <tr><td><b>AST / AppSec</b></td><td>整理 SAST、SCA/SBOM、DAST/IAST/runtime finding。</td><td>vulnerability_context、asset exposure、intel_context_score。</td><td>把弱點變成風險上下文，不單獨宣稱入侵。</td><td><a href="https://github.com/a770131a/SIEM/issues/28">#28</a> <a href="https://github.com/a770131a/SIEM/issues/43">#43</a></td></tr>
+          <tr><td><b>GCB / Compliance</b></td><td>整理設定基準、稽核結果、policy deviation。</td><td>configuration_risk、gcb_score、governance evidence。</td><td>用於風險加權與治理報表，不是攻擊證據本身。</td><td><a href="https://github.com/a770131a/SIEM/issues/18">#18</a> <a href="https://github.com/a770131a/SIEM/issues/28">#28</a></td></tr>
+          <tr><td><b>Asset / CMDB / Exposure</b></td><td>整理 asset criticality、public exposure、owner、platform、runtime context。</td><td>asset_context、context_multiplier、Case grouping。</td><td>判斷哪台設備更重要、是否 lab baseline。</td><td><a href="https://github.com/a770131a/SIEM/issues/19">#19</a> <a href="https://github.com/a770131a/SIEM/issues/31">#31</a></td></tr>
+          <tr><td><b>UEBA / Entity Graph</b></td><td>整理 baseline deviation、same user、same process、same pattern。</td><td>Graph Correlation、Cross-Asset Context、L3/L4 builders。</td><td>看出同帳號跨主機、同程序鏈、相似攻擊 pattern。</td><td><a href="https://github.com/a770131a/SIEM/issues/19">#19</a> <a href="https://github.com/a770131a/SIEM/issues/37">#37</a></td></tr>
+          <tr><td><b>Threat Intel / IOC / KEV / EPSS</b></td><td>整理 IOC hit、CVE exploitability、KEV、EPSS、TTP mapping。</td><td>intel_context_score、risk explanation、rule gap candidate。</td><td>輔助優先級；IOC=0 不代表 living-off-the-land 低風險。</td><td><a href="https://github.com/a770131a/SIEM/issues/15">#15</a> <a href="https://github.com/a770131a/SIEM/issues/28">#28</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="ast">
+    <h2>AST 三個情資來源</h2>
+    <div class="grid-3">
+      <article class="panel"><span class="badge blue">SAST</span><h3>原始碼弱點</h3><p class="small">靜態分析產生 weakness、sink/source、函式路徑、修補建議。進入 vulnerability_context，作為 asset 或 app 的風險背景。</p></article>
+      <article class="panel"><span class="badge green">SCA / SBOM</span><h3>元件與供應鏈</h3><p class="small">整理 dependency、package、CVE、license、KEV、EPSS。用於 exploitability 與修補優先級。</p></article>
+      <article class="panel"><span class="badge amber">DAST / IAST / Runtime</span><h3>可利用與執行期證據</h3><p class="small">把掃描、runtime trace、web exploit attempt 與實際 asset exposure 合併。若沒有本機證據，不直接宣稱 compromise。</p></article>
+    </div>
+  </section>
+
+  <section id="judgement">
+    <h2>威脅判斷三條線</h2>
+    <div class="grid-3">
+      <article class="panel"><span class="badge red">Line A</span><h3>行為證據線</h3><p class="small">Detection IR → L2 Signal → L3 Behavior Chain → L4 Storyline。回答「發生了什麼行為，是否成鏈」。</p><p class="tiny">對應 #38 #39 #40</p></article>
+      <article class="panel"><span class="badge violet">Line B</span><h3>情資 / 上下文風險線</h3><p class="small">AST、CTI、UEBA、asset criticality、GCB、exposure 進 Hybrid Risk Weighting。回答「這件事有多急」。</p><p class="tiny">對應 #28 #35 #37</p></article>
+      <article class="panel"><span class="badge green">Line C</span><h3>AI / L5 reconciliation 線</h3><p class="small">Server L5 先給安全邊界，AI 做第二分析師，Comparison Engine 比對一致或分歧。回答「下一步是審批、複核、規則缺口或 timeline」。</p><p class="tiny">對應 #34 #36</p></article>
+    </div>
+  </section>
+
+  <section id="training">
+    <h2>訓練與驗收有哪些</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>訓練 / 驗收</th><th>測什麼</th><th>用途</th><th>對應 issue</th></tr></thead>
+        <tbody>
+          <tr><td><b>COR Exam</b></td><td>L2/L3/L4 關聯推理邊界。</td><td>確認 AI 不把單點訊號誤判成完整 storyline。</td><td><a href="https://github.com/a770131a/SIEM/issues/9">#9</a></td></tr>
+          <tr><td><b>RCA Exam</b></td><td>根因分析推理邊界。</td><td>確認 AI 能說明證據鏈，但不憑空補證據。</td><td><a href="https://github.com/a770131a/SIEM/issues/10">#10</a></td></tr>
+          <tr><td><b>BND Exam</b></td><td>邊界升級與不該升不升。</td><td>確認 L5 / AI 分歧時能進人工複核或 rule gap。</td><td><a href="https://github.com/a770131a/SIEM/issues/11">#11</a></td></tr>
+          <tr><td><b>ERM Exam</b></td><td>風險治理與處置建議邊界。</td><td>確認 guided response 不變成 unsafe auto response。</td><td><a href="https://github.com/a770131a/SIEM/issues/12">#12</a></td></tr>
+          <tr><td><b>ROB Exam</b></td><td>提示注入與使用者話術干擾防護。</td><td>確認 AI 不被要求越權 approve / isolate / delete。</td><td><a href="https://github.com/a770131a/SIEM/issues/13">#13</a></td></tr>
+          <tr><td><b>Golden Replay 100</b></td><td>PoC / Shadow Mode 推理閉環。</td><td>跑完整資料流、L5、AI、Comparison、Audit 的驗收。</td><td><a href="https://github.com/a770131a/SIEM/issues/14">#14</a></td></tr>
+          <tr><td><b>Windows_attack_v3 E2E</b></td><td>完整欄位 Detection IR fixture。</td><td>驗證實際事件能支撐前台、Evidence Pack、L5 scoring。</td><td><a href="https://github.com/a770131a/SIEM/issues/30">#30</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="frontend">
+    <h2>前台功能呈現與建議路徑</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>功能</th><th>建議路徑</th><th>畫面回答什麼</th><th>主要資料</th><th>對應 issue</th></tr></thead>
+        <tbody>
+          <tr><td><b>受攻擊資產</b></td><td><span class="route">/threat-center/assets-under-attack</span></td><td>哪幾台設備最危險、是否 L2/L3/L4、跨設備 pattern。</td><td>Cross-Asset Overview、Entity Graph、L2/L3/L4 summary。</td><td><a href="https://github.com/a770131a/SIEM/issues/32">#32</a></td></tr>
+          <tr><td><b>威脅事件佇列</b></td><td><span class="route">/threat-center/events</span></td><td>哪些事件待處理、待審批、調查中、已解決、下一步。</td><td>Threat Event View、workflow_status、approval_status、SLA。</td><td><a href="https://github.com/a770131a/SIEM/issues/33">#33</a></td></tr>
+          <tr><td><b>事件調查 Drawer</b></td><td><span class="route">/threat-center/events/:id</span></td><td>Raw Event、Detection、L5、AI、Response、Audit 分層。</td><td>Incident Investigation View、Evidence Pack、AI/L5 comparison。</td><td><a href="https://github.com/a770131a/SIEM/issues/34">#34</a></td></tr>
+          <tr><td><b>L5 審批佇列</b></td><td><span class="route">/operations/approval-queue</span></td><td>哪些高風險處置需要人工核准或拒絕。</td><td>L5 decision、blocked_action_details、audit trail。</td><td><a href="https://github.com/a770131a/SIEM/issues/29">#29</a></td></tr>
+          <tr><td><b>資產模組</b></td><td><span class="route">/assets</span> / <span class="route">/assets/:assetId</span></td><td>資產清單、詳情、暴露面、弱點、修補與 baseline。</td><td>Asset context、CMDB、GCB、AST、UEBA。</td><td><a href="https://github.com/a770131a/SIEM/issues/31">#31</a></td></tr>
+          <tr><td><b>Case Management</b></td><td><span class="route">/cases</span> / <span class="route">/cases/:caseId</span></td><td>同一調查容器下有哪些事件、證據、決策、回應與備註。</td><td>Case grouping、incident timeline、human arbitration。</td><td><a href="https://github.com/a770131a/SIEM/issues/41">#41</a></td></tr>
+          <tr><td><b>AI vs L5 決策摘要</b></td><td><span class="route">/threat-center/events/:id/ai-vs-l5</span></td><td>AI 是否同意 L5、有何分歧、是否 rule gap、最終 routing。</td><td>Frozen AI Evidence Pack、AI Assessment、Comparison。</td><td><a href="https://github.com/a770131a/SIEM/issues/36">#36</a></td></tr>
+          <tr><td><b>Threat Hunting Playbook</b></td><td><span class="route">/hunt/playbooks</span></td><td>根據 entity graph、L2/L3/L4、Evidence Pack 產生查詢與狩獵路徑。</td><td>Graph Correlation、hunt actions、Evidence Pack。</td><td><a href="https://github.com/a770131a/SIEM/issues/42">#42</a></td></tr>
+          <tr><td><b>Training / PMQA</b></td><td><span class="route">/training</span> / <span class="route">/pmqa/replay</span></td><td>五大推理考試、Golden Replay、驗收結果與缺口。</td><td>Exam fixtures、replay reports、audit snapshots。</td><td><a href="https://github.com/a770131a/SIEM/issues/8">#8</a> <a href="https://github.com/a770131a/SIEM/issues/14">#14</a></td></tr>
+          <tr><td><b>資料治理中心</b></td><td><span class="route">/data-governance</span></td><td>資料來源、schema health、entity refs、OpenSearch mirror、dead letter、lineage。</td><td>Canonical Event、Detection IR、Evidence Pack、OpenSearch mirror。</td><td><a href="https://github.com/a770131a/SIEM/issues/25">#25</a> <a href="https://github.com/a770131a/SIEM/issues/26">#26</a> <a href="https://github.com/a770131a/SIEM/issues/35">#35</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="footer">
+    Product map created 2026-05-16 Asia/Taipei · Main repo: <a href="https://github.com/a770131a/SIEM">a770131a/SIEM</a>
+  </footer>
+</main>
+</body>
+</html>
