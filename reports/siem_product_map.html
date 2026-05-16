@@ -37,6 +37,23 @@ h3{font-size:16px;margin-bottom:8px;line-height:1.35}
 .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .grid-2>*,.grid-3>*,.grid-4>*{min-width:0}
+.structure{display:grid;gap:12px}
+.structure-row{display:grid;grid-template-columns:180px minmax(0,1fr);gap:12px;align-items:stretch}
+.structure-label{display:flex;align-items:center;justify-content:center;text-align:center;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:13px;font-weight:900;color:var(--slate);padding:10px}
+.structure-track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;position:relative}
+.structure-track.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.structure-track.six{grid-template-columns:repeat(6,minmax(0,1fr))}
+.diagram-card{min-width:0;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:12px;min-height:92px}
+.diagram-card strong{display:block;font-size:14px;margin-bottom:5px}
+.diagram-card p{margin:0;font-size:12px;color:var(--muted)}
+.diagram-card.blue{border-left:5px solid var(--blue);background:#fff}
+.diagram-card.green{border-left:5px solid var(--green);background:#fff}
+.diagram-card.amber{border-left:5px solid var(--amber);background:#fff}
+.diagram-card.violet{border-left:5px solid var(--violet);background:#fff}
+.diagram-card.red{border-left:5px solid var(--red);background:#fff}
+.diagram-card.slate{border-left:5px solid var(--slate);background:#fff}
+.diagram-arrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;font-weight:900}
+.diagram-note{border:1px dashed var(--line);border-radius:8px;background:#fff;padding:12px;color:var(--muted);font-size:13px}
 .flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
 .node{background:var(--panel2);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:8px;padding:12px;min-height:118px}
 .node:nth-child(2){border-left-color:var(--green)}.node:nth-child(3){border-left-color:var(--amber)}.node:nth-child(4){border-left-color:var(--violet)}.node:nth-child(5){border-left-color:var(--red)}.node:nth-child(6){border-left-color:var(--slate)}
@@ -48,9 +65,9 @@ tr:last-child td{border-bottom:0}
 .callout{border-left:5px solid var(--amber);background:#fffaf1}
 .route{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;font-size:12px;color:#34435a}
 .footer{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
-@media(max-width:1120px){.flow{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1120px){.flow{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}.structure-track,.structure-track.six{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:1040px){.hero,.grid-2,.grid-3{grid-template-columns:1fr}}
-@media(max-width:780px){.page{padding:16px 12px 32px}.topbar{align-items:flex-start;flex-direction:column}.nav{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.nav a{justify-content:center;padding:0 8px}h1{font-size:30px}.flow,.grid-4{grid-template-columns:1fr}table{min-width:920px}}
+@media(max-width:780px){.page{padding:16px 12px 32px}.topbar{align-items:flex-start;flex-direction:column}.nav{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.nav a{justify-content:center;padding:0 8px}h1{font-size:30px}.flow,.grid-4,.structure-row,.structure-track,.structure-track.three,.structure-track.six{grid-template-columns:1fr}.structure-label{justify-content:flex-start;text-align:left}table{min-width:920px}}
 </style>
 </head>
 <body>
@@ -58,8 +75,9 @@ tr:last-child td{border-bottom:0}
   <header class="topbar">
     <div class="brand">SIEM / 產品功能地圖</div>
     <nav class="nav" aria-label="product map navigation">
-      <a href="index.html?v=29">工時首頁</a>
+      <a href="index.html?v=30">工時首頁</a>
       <a href="siem_design_reference.html?v=5">設計查閱</a>
+      <a href="#structure">結構圖</a>
       <a href="#platform">平台</a>
       <a href="#governance">資料治理中心</a>
       <a href="#ast">AST</a>
@@ -86,6 +104,72 @@ tr:last-child td{border-bottom:0}
       <p class="small">這頁不是 Roadmap，也不是工時表。它是產品架構地圖，用來避免「資料來源、威脅判斷、AI、訓練、前台功能」混在一起。</p>
       <p class="small">前台路徑是目前建議 IA，可對應到已開 issue；實作時仍以 SIEM repo 內實際 router 命名為準。</p>
     </aside>
+  </section>
+
+  <section id="structure">
+    <h2>產品結構圖</h2>
+    <div class="panel structure">
+      <div class="structure-row">
+        <div class="structure-label">平台收集層</div>
+        <div class="structure-track six">
+          <div class="diagram-card blue"><strong>Endpoint / Kernel</strong><p>process、file、network、privilege、persistence。</p></div>
+          <div class="diagram-card blue"><strong>EDR / AV / SIEM</strong><p>Defender、ClamAV、YARA、IDS / IPS 告警。</p></div>
+          <div class="diagram-card blue"><strong>AST / AppSec</strong><p>SAST、SCA / SBOM、DAST / IAST / Runtime。</p></div>
+          <div class="diagram-card blue"><strong>Asset / CMDB</strong><p>asset criticality、owner、platform、exposure。</p></div>
+          <div class="diagram-card blue"><strong>GCB / Compliance</strong><p>configuration baseline、policy deviation、audit evidence。</p></div>
+          <div class="diagram-card blue"><strong>CTI / IOC</strong><p>IOC、KEV、EPSS、TTP、external reputation。</p></div>
+        </div>
+      </div>
+
+      <div class="diagram-arrow">資料先正規化，再分流</div>
+
+      <div class="structure-row">
+        <div class="structure-label">資料治理中心</div>
+        <div class="structure-track">
+          <div class="diagram-card green"><strong>Canonical Event</strong><p>統一 actor、target、quality、raw_ref。</p></div>
+          <div class="diagram-card green"><strong>Detection IR v1.1</strong><p>只收 normalized behavior 與 typed entity refs。</p></div>
+          <div class="diagram-card green"><strong>OpenSearch Mirror</strong><p>查詢、timeline、聚合、dashboard，不當 source of truth。</p></div>
+          <div class="diagram-card green"><strong>Evidence Lineage</strong><p>raw_ref、evidence_refs、schema health、dead letter。</p></div>
+        </div>
+      </div>
+
+      <div class="diagram-arrow">治理後進入三條威脅判斷線</div>
+
+      <div class="structure-row">
+        <div class="structure-label">威脅判斷三條線</div>
+        <div class="structure-track three">
+          <div class="diagram-card red"><strong>行為證據線</strong><p>L2 Signal -> L3 Behavior Chain -> L4 Storyline。</p></div>
+          <div class="diagram-card amber"><strong>情資上下文線</strong><p>AST、CTI、UEBA、GCB、asset context 進 #28 風險加權。</p></div>
+          <div class="diagram-card violet"><strong>AI / L5 雙軌線</strong><p>Fast L5、Evidence Pack、AI Assessment、Comparison、Final Routing。</p></div>
+        </div>
+      </div>
+
+      <div class="diagram-arrow">判斷結果分成產品工作台與驗收閉環</div>
+
+      <div class="structure-row">
+        <div class="structure-label">前台工作台</div>
+        <div class="structure-track six">
+          <div class="diagram-card slate"><strong>Assets Under Attack</strong><p>跨設備威脅總覽與資產優先級。</p></div>
+          <div class="diagram-card slate"><strong>Threat Event Queue</strong><p>workflow、approval、owner、SLA、next action。</p></div>
+          <div class="diagram-card slate"><strong>Investigation Drawer</strong><p>Summary、Evidence、L5、AI vs L5、Response、Audit。</p></div>
+          <div class="diagram-card slate"><strong>Approval Queue</strong><p>阻斷性 response 的人工審批。</p></div>
+          <div class="diagram-card slate"><strong>Case Management</strong><p>事件、證據、決策、回應、備註合併成 case。</p></div>
+          <div class="diagram-card slate"><strong>Data Governance</strong><p>來源、schema health、entity refs、lineage。</p></div>
+        </div>
+      </div>
+
+      <div class="structure-row">
+        <div class="structure-label">訓練與驗收</div>
+        <div class="structure-track">
+          <div class="diagram-card violet"><strong>Structured Exams</strong><p>COR、RCA、BND、ERM、ROB。</p></div>
+          <div class="diagram-card violet"><strong>Golden Replay</strong><p>100 組 replay 驗證 L2-L5、AI、Audit。</p></div>
+          <div class="diagram-card violet"><strong>PMQA / UAT</strong><p>截圖、證據鏈、前台可讀性、驗收缺口。</p></div>
+          <div class="diagram-card violet"><strong>Rule Gap / Training Seed</strong><p>人工仲裁後才進 rule gap 或 training seed review。</p></div>
+        </div>
+      </div>
+
+      <div class="diagram-note">核心邏輯：收集層負責把資料拿進來；資料治理中心負責讓資料乾淨穩定；三條威脅判斷線負責產出風險與下一步；前台工作台負責讓 SOC 能處理；訓練驗收負責證明 AI 和 L5 沒有越權。</div>
+    </div>
   </section>
 
   <section id="platform">
