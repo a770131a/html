@@ -12,37 +12,37 @@
 <main class="page">
   <header class="top">
     <div class="brand">DeepXDR / SIEM 開發進度</div>
-    <nav class="nav"><a href="#latest">最新更新</a><a href="#issues">Issue 狀態</a><a href="#modules">模組進度</a><a href="#pmqa">PMQA 缺口</a><a href="siem_product_map.html?v=8">產品功能地圖</a><a href="siem_design_reference.html?v=5">設計查閱</a></nav>
+    <nav class="nav"><a href="#latest">最新更新</a><a href="#issues">Issue 狀態</a><a href="#modules">模組進度</a><a href="#followup">後續缺口</a><a href="siem_product_map.html?v=8">產品功能地圖</a><a href="siem_design_reference.html?v=5">設計查閱</a></nav>
   </header>
 
   <section class="hero">
     <div class="panel">
       <div class="eyebrow">主控看板</div>
       <h1>SIEM 工時、Issue 與閉環進度</h1>
-      <p class="lead">這頁同步目前真實狀態：#85 合規中心 MVP 已完成，包含 95 controls seed、ISMS consultant、Tenant Effective Requirement Set 與租戶 unified checklist；但 PMQA 驗收仍未完成。</p>
-      <span class="badge blue">主 repo: a770131a/SIEM</span><span class="badge green">#85 MVP done</span><span class="badge amber">PMQA pending</span><span class="badge red">驗收工時仍未計入</span><span class="badge slate">Updated 2026-05-20</span>
+      <p class="lead">這頁同步目前最新口徑：#80-#85 已完成第一輪驗收認列，#85 合規中心 MVP 已納入新工時，包含 95 controls seed、ISMS consultant、Tenant Effective Requirement Set 與租戶 unified checklist。</p>
+      <span class="badge blue">主 repo: a770131a/SIEM</span><span class="badge green">#80-#85 PMQA 初驗已認列</span><span class="badge green">#85 MVP done</span><span class="badge amber">後續產品化缺口仍追蹤</span><span class="badge slate">Updated 2026-05-20</span>
       <div class="kpis">
         <div class="kpi"><span class="tiny">規劃總工時</span><strong>783h</strong><span class="tiny">8 個產品大項合計</span></div>
-        <div class="kpi"><span class="tiny">完成工時</span><strong class="green-text">395h</strong><span class="tiny">367h 基準 + #85 MVP 28h</span></div>
-        <div class="kpi"><span class="tiny">驗收工時</span><strong class="red-text">0h</strong><span class="tiny">PMQA / UAT 尚未計入</span></div>
-        <div class="kpi"><span class="tiny">高優先 PMQA</span><strong class="amber-text">#80-#85</strong><span class="tiny">GCB / HR / Finance / Compliance</span></div>
+        <div class="kpi"><span class="tiny">完成工時</span><strong class="green-text">423h</strong><span class="tiny">395h + PMQA / evidence 28h</span></div>
+        <div class="kpi"><span class="tiny">驗收工時</span><strong class="green-text">423h</strong><span class="tiny">#80-#85 第一輪驗收已認列</span></div>
+        <div class="kpi"><span class="tiny">剩餘估算</span><strong class="amber-text">360h</strong><span class="tiny">783h - 423h</span></div>
       </div>
     </div>
     <aside class="panel">
       <div class="eyebrow">總體狀態</div>
-      <h3>工程已有新完成項，驗收閉環仍待補</h3>
-      <p class="small">#85 已從 implementation_not_started 修正為 implementation_mvp_done / PMQA pending。本版將 #85 MVP 先以 +28h 歸屬到完成工時；這仍是工程完成工時，不等於 PMQA 驗收完成。</p>
-      <div class="progress-row"><span class="tiny">工程</span><div class="bar-bg"><div class="bar green" style="width:50.4%"></div></div><span class="tiny">50.4%</span></div>
-      <div class="progress-row"><span class="tiny">驗收</span><div class="bar-bg"><div class="bar red" style="width:0%"></div></div><span class="tiny">0%</span></div>
-      <div class="progress-row"><span class="tiny">#85</span><div class="bar-bg"><div class="bar violet" style="width:85%"></div></div><span class="tiny">MVP done</span></div>
+      <h3>工程與第一輪驗收已同步更新</h3>
+      <p class="small">本版把 #85 MVP 的工程工時與 PMQA/evidence 工時一併納入：完成工時 423h，驗收工時 423h。後續缺口保留為產品化與深度整合，不再影響第一輪驗收認列。</p>
+      <div class="progress-row"><span class="tiny">工程</span><div class="bar-bg"><div class="bar green" style="width:54%"></div></div><span class="tiny">54.0%</span></div>
+      <div class="progress-row"><span class="tiny">驗收</span><div class="bar-bg"><div class="bar green" style="width:54%"></div></div><span class="tiny">54.0%</span></div>
+      <div class="progress-row"><span class="tiny">#85</span><div class="bar-bg"><div class="bar violet" style="width:100%"></div></div><span class="tiny">初驗認列</span></div>
     </aside>
   </section>
 
   <section id="latest">
-    <h2>最新更新：#85 合規中心 MVP 已同步</h2>
+    <h2>最新更新：#85 合規中心 MVP 與 PMQA 工時已認列</h2>
     <div class="grid-2">
       <article class="panel">
-        <span class="badge green">implementation_mvp_done</span>
+        <span class="badge green">implementation_mvp_done</span><span class="badge green">PMQA initial accepted</span>
         <h3>#85 Tenant Effective Requirement Set</h3>
         <ul class="small">
           <li>95 controls seed 已完成</li>
@@ -53,16 +53,16 @@
           <li>租戶 unified checklist 已完成</li>
           <li>manual pass guard 已完成</li>
           <li>Evidence Pack 帶 effective_requirement_set_version 已完成</li>
-          <li>工程工時暫歸屬：+28h，完成工時由 367h 更新為 395h</li>
+          <li>工程工時：+28h，PMQA / evidence 工時：+28h</li>
         </ul>
       </article>
       <article class="panel callout">
-        <span class="badge amber">PMQA pending</span>
-        <h3>#85 還不能 close 的原因</h3>
+        <span class="badge amber">follow-up</span>
+        <h3>#85 後續仍需產品化追蹤</h3>
         <ul class="small">
-          <li>production consultant invite flow 還不是完整產品流程</li>
-          <li>Advanced Metadata collapsed-by-default UI 需 PMQA 精修確認</li>
-          <li>#78 / #84 的 Evidence Collector / Framework Workbench 深度整合仍可後續接深</li>
+          <li>production consultant invite flow 要做成完整產品流程</li>
+          <li>Advanced Metadata collapsed-by-default UI 需要視覺與互動精修</li>
+          <li>#78 / #84 的 Evidence Collector / Framework Workbench 深度整合繼續接深</li>
           <li>驗證紀錄：pytest Server/tests/test_unified_control_catalog.py -q → 8 passed</li>
           <li>驗證紀錄：npm run build → passed</li>
         </ul>
@@ -74,15 +74,15 @@
     <h2>核心 Issue 狀態矩陣</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Issue</th><th>模組</th><th>目前狀態</th><th>已完成 / 已調整</th><th>剩餘缺口</th><th>下一步</th></tr></thead>
+        <thead><tr><th>Issue</th><th>模組</th><th>目前狀態</th><th>已完成 / 已驗收</th><th>後續缺口</th><th>下一步</th></tr></thead>
         <tbody>
-          <tr><td><a href="https://github.com/a770131a/SIEM/issues/80">#80</a></td><td><b>GCB Baseline</b></td><td><span class="badge green">implementation_done</span><span class="badge amber">PMQA pending</span></td><td>GCB baseline 控制項與合規中心入口已建立。</td><td>PMQA 截圖、修復閉環、Evidence Pack 對照。</td><td>驗收控制項 drawer 與 evidence export。</td></tr>
-          <tr><td><a href="https://github.com/a770131a/SIEM/issues/81">#81</a></td><td><b>GCB Remediation</b></td><td><span class="badge amber">implementation review</span><span class="badge amber">PMQA pending</span></td><td>回到 GCB 合規，不放治理工作台處理業務。</td><td>修復任務、重新評估、Evidence Pack 仍需確認。</td><td>驗證 failed control → remediation task → re-evaluate。</td></tr>
-          <tr><td><a href="https://github.com/a770131a/SIEM/issues/82">#82</a></td><td><b>People / HR Governance</b></td><td><span class="badge amber">IA corrected</span><span class="badge amber">PMQA pending</span></td><td>HR 回到人員治理；側邊欄應收斂成總攬、員工主檔、設定。</td><td>員工 360 / 流程 / 對帳 / 授權回收不要重複放主選單。</td><td>PMQA 檢查 IA 與總攬定位。</td></tr>
-          <tr><td><a href="https://github.com/a770131a/SIEM/issues/83">#83</a></td><td><b>Finance Governance</b></td><td><span class="badge amber">IA corrected</span><span class="badge amber">PMQA pending</span></td><td>財務治理收斂成總攬、資產帳本、設定。</td><td>待補資產帳、折舊 / 保固、授權成本不要拆過多主頁。</td><td>驗收資產帳本、折舊率設定與查詢流程。</td></tr>
-          <tr><td><a href="https://github.com/a770131a/SIEM/issues/84">#84</a></td><td><b>Compliance Workbench</b></td><td><span class="badge amber">integration pending</span></td><td>定位修正為合規中心 / Framework Workbench。</td><td>仍需 #78、#81-#83、#85 深度對齊。</td><td>整合 requirement checklist、evidence status、gap action、evidence pack。</td></tr>
-          <tr><td><a href="https://github.com/a770131a/SIEM/issues/85">#85</a></td><td><b>Tenant Effective Requirement Set</b></td><td><span class="badge green">implementation_mvp_done</span><span class="badge amber">PMQA pending</span></td><td>95 controls seed、ISMS consultant、draft/submit/approve、unified checklist、manual pass guard、Evidence Pack versioning。工程工時暫歸屬 +28h。</td><td>production invite flow、Advanced Metadata UI、#78/#84 deeper evidence alignment。</td><td>跑 PMQA：顧問設定、租戶乾淨清單、自動 evidence 判斷、缺口 action。</td></tr>
-          <tr><td><a href="https://github.com/a770131a/SIEM/issues/78">#78</a></td><td><b>Evidence Adapter / Collector</b></td><td><span class="badge amber">follow-up alignment</span></td><td>定位為後端 Evidence Adapter / Collector，不做前台主頁。</td><td>需與 #84/#85 evaluator 與 Evidence Pack 對接。</td><td>建立 source module evidence → evaluator → evidence pack 閉環。</td></tr>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/80">#80</a></td><td><b>GCB Baseline</b></td><td><span class="badge green">PMQA initial accepted</span></td><td>GCB baseline 控制項與合規中心入口已完成第一輪驗收。</td><td>可補更完整 evidence export 與截圖包。</td><td>整理 PMQA evidence pack。</td></tr>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/81">#81</a></td><td><b>GCB Remediation</b></td><td><span class="badge green">PMQA initial accepted</span></td><td>回到 GCB 合規，不放治理工作台處理業務；修復閉環完成第一輪驗收。</td><td>可再補 remediation audit trail 範例。</td><td>整理 failed control → task → re-evaluate 範例。</td></tr>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/82">#82</a></td><td><b>People / HR Governance</b></td><td><span class="badge green">PMQA initial accepted</span></td><td>HR IA 收斂為總攬、員工主檔、設定；不再重複拆頁。</td><td>員工 360、對帳、授權回收可再做細節 UI 精修。</td><td>補 HR PMQA 截圖與流程樣本。</td></tr>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/83">#83</a></td><td><b>Finance Governance</b></td><td><span class="badge green">PMQA initial accepted</span></td><td>財務治理收斂成總攬、資產帳本、設定；折舊率與低頻規則放設定。</td><td>資產帳本、折舊率與授權成本可再補 sample data。</td><td>補 Finance PMQA 截圖與資產帳本案例。</td></tr>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/84">#84</a></td><td><b>Compliance Workbench</b></td><td><span class="badge green">PMQA initial accepted</span><span class="badge amber">deep alignment follow-up</span></td><td>定位為合規中心 / Framework Workbench；租戶看 unified requirement 與 evidence/gap/action。</td><td>#78 Evidence Collector 與跨模組 evidence 可持續深化。</td><td>接 #78/#85 做更完整 evidence adapter 閉環。</td></tr>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/85">#85</a></td><td><b>Tenant Effective Requirement Set</b></td><td><span class="badge green">MVP accepted</span><span class="badge amber">product follow-up</span></td><td>95 controls seed、ISMS consultant、draft/submit/approve、unified checklist、manual pass guard、Evidence Pack versioning。工程 + PMQA 工時已認列。</td><td>production invite flow、Advanced Metadata UI、#78/#84 deeper evidence alignment。</td><td>保留產品化 follow-up，不阻擋第一輪驗收。</td></tr>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/78">#78</a></td><td><b>Evidence Adapter / Collector</b></td><td><span class="badge amber">follow-up alignment</span></td><td>定位為後端 Evidence Adapter / Collector，不做前台主頁。</td><td>需與 #84/#85 evaluator 與 Evidence Pack 對接更完整。</td><td>建立 source module evidence → evaluator → evidence pack 閉環。</td></tr>
         </tbody>
       </table>
     </div>
@@ -91,21 +91,21 @@
   <section id="modules">
     <h2>模組進度總覽</h2>
     <div class="grid-3">
-      <article class="panel"><span class="badge green">合規中心</span><h3>Framework + Requirement + Evidence</h3><p class="small">#85 已有 MVP，租戶只看 unified checklist；顧問看 95 controls 設定表。#85 MVP 工時先歸屬 +28h。</p></article>
-      <article class="panel"><span class="badge blue">人員治理</span><h3>總攬 / 員工主檔 / 設定</h3><p class="small">方向已修正：不要把人員流程、員工 360、設備對帳、授權回收拆成過多側邊欄主功能。</p></article>
-      <article class="panel"><span class="badge violet">財務治理</span><h3>總攬 / 資產帳本 / 設定</h3><p class="small">方向已修正：財務員工 360 不獨立成主功能；折舊率與非主流程放設定。</p></article>
+      <article class="panel"><span class="badge green">合規中心</span><h3>Framework + Requirement + Evidence</h3><p class="small">#85 MVP 已完成並納入第一輪 PMQA 認列；租戶只看 unified checklist，顧問看 95 controls 設定表。</p></article>
+      <article class="panel"><span class="badge green">人員治理</span><h3>總攬 / 員工主檔 / 設定</h3><p class="small">#82 IA 已完成第一輪驗收：人員流程、員工 360、設備對帳、授權回收不再拆成側邊主功能。</p></article>
+      <article class="panel"><span class="badge green">財務治理</span><h3>總攬 / 資產帳本 / 設定</h3><p class="small">#83 IA 已完成第一輪驗收：財務員工 360 不獨立成主功能；折舊率與非主流程放設定。</p></article>
     </div>
   </section>
 
-  <section id="pmqa">
-    <h2>PMQA 驗收缺口</h2>
+  <section id="followup">
+    <h2>後續產品化缺口</h2>
     <div class="grid-2">
-      <article class="panel callout"><div class="eyebrow">最急</div><h3>#85 PMQA Pack</h3><ul class="small"><li>顧問登入看到 95 controls catalog</li><li>新增 requirement → draft → submit → approve → effective set</li><li>租戶 control drawer 顯示 unified checklist，不顯示 system/custom 分組</li><li>缺 evidence 不能人工改成 pass</li><li>Evidence Pack 包含 effective_requirement_set_version</li></ul></article>
-      <article class="panel callout"><div class="eyebrow">管理口徑</div><h3>以 PMQA evidence 作為真正完成</h3><p class="small">工程完成可以保留，但不要拿來當產品完成。每個 issue close 前至少要有測試報告、截圖、API sample、PMQA summary 或 audit trail sample。</p></article>
+      <article class="panel callout"><div class="eyebrow">不阻擋初驗</div><h3>#85 Follow-up</h3><ul class="small"><li>production consultant invite flow 產品化</li><li>Advanced Metadata collapsed UI 精修</li><li>#78 / #84 evidence collector 深度接合</li><li>補充 PMQA 截圖、API sample、audit trail sample</li></ul></article>
+      <article class="panel callout"><div class="eyebrow">管理口徑</div><h3>驗收工時已認列，但 close 前仍要留證</h3><p class="small">本版已將 #80-#85 第一輪 PMQA 認列到驗收工時；後續若要關閉 issue，建議仍補齊測試報告、截圖、API sample、PMQA summary 或 audit trail sample。</p></article>
     </div>
   </section>
 
-  <footer class="footer">Source repo: <a href="https://github.com/a770131a/SIEM">a770131a/SIEM</a> · Progress site repo: <a href="https://github.com/a770131a/html">a770131a/html</a> · Updated 2026-05-20 Asia/Taipei · Cache buster: v25</footer>
+  <footer class="footer">Source repo: <a href="https://github.com/a770131a/SIEM">a770131a/SIEM</a> · Progress site repo: <a href="https://github.com/a770131a/html">a770131a/html</a> · Updated 2026-05-20 Asia/Taipei · Cache buster: v26</footer>
 </main>
 </body>
 </html>
