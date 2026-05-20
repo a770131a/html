@@ -3,378 +3,108 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SIEM 工時與閉環進度</title>
+<title>DeepXDR / SIEM 開發進度總覽</title>
 <style>
-:root{
-  --bg:#f5f7fa;
-  --panel:#fff;
-  --panel2:#f9fbfd;
-  --line:#d9e2ec;
-  --text:#142033;
-  --muted:#627187;
-  --blue:#1f5f9e;
-  --blue2:#e7f0fb;
-  --green:#118466;
-  --green2:#e6f6f1;
-  --amber:#a76516;
-  --amber2:#fff2dc;
-  --red:#b83b48;
-  --red2:#fde8eb;
-  --violet:#6754bd;
-  --violet2:#efecff;
-  --slate:#46566d;
-  --slate2:#eef3f8;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;
-  line-height:1.62;
-  overflow-x:hidden;
-}
-a{color:var(--blue);font-weight:750;text-decoration:none}
-a:hover{text-decoration:underline}
-a,b,h1,h2,h3,p,span,td,th{overflow-wrap:anywhere}
-.page{width:100%;max-width:1240px;margin:0 auto;padding:24px 20px 44px;overflow:hidden}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}
-.brand{font-size:13px;color:var(--muted);font-weight:850}
-.nav{min-width:0;max-width:100%;display:flex;gap:8px;flex-wrap:wrap}
-.nav a{height:34px;display:inline-flex;align-items:center;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--slate);font-size:13px}
-.panel{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;box-shadow:0 8px 24px rgba(21,32,51,.05)}
-.hero{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:14px;align-items:stretch}
-.eyebrow{color:var(--blue);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
-h1,h2,h3,p{margin-top:0}
-h1{font-size:36px;line-height:1.15;margin:8px 0 12px}
-h2{font-size:22px;margin:28px 0 12px}
-h3{font-size:16px;margin-bottom:8px;line-height:1.35}
-.lead{font-size:16px;color:#40516a;max-width:820px;margin-bottom:14px}
-.small{font-size:13px;color:var(--muted)}
-.tiny{font-size:12px;color:var(--muted)}
-.badge{display:inline-flex;align-items:center;min-height:26px;padding:3px 9px;border-radius:8px;font-size:12px;font-weight:850;margin:2px 4px 2px 0;white-space:nowrap}
-.blue{background:var(--blue2);color:var(--blue)}
-.green{background:var(--green2);color:var(--green)}
-.amber{background:var(--amber2);color:var(--amber)}
-.red{background:var(--red2);color:var(--red)}
-.violet{background:var(--violet2);color:var(--violet)}
-.slate{background:var(--slate2);color:var(--slate)}
-.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px}
-.kpi{min-width:0;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:13px}
-.kpi strong{display:block;font-size:31px;line-height:1.1;margin:3px 0;color:var(--text)}
-.kpi strong.green-text{color:var(--green)}
-.kpi strong.amber-text{color:var(--amber)}
-.kpi strong.red-text{color:var(--red)}
-.kpi strong.blue-text{color:var(--blue)}
-.progress-row{display:flex;align-items:center;gap:8px;margin-top:10px}
-.bar-bg{height:9px;flex:1;border-radius:99px;background:#e8eef5;overflow:hidden}
-.bar{height:100%;border-radius:99px;background:var(--blue)}
-.bar.green{background:var(--green)}
-.bar.amber{background:var(--amber)}
-.bar.red{background:var(--red)}
-.bar.violet{background:var(--violet)}
-.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.grid-3>*,.grid-2>*{min-width:0}
-.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.section-head p{margin-bottom:0}
-.summary-card{display:flex;flex-direction:column;gap:10px}
-.hour-line{display:grid;grid-template-columns:96px minmax(0,1fr) 72px;gap:9px;align-items:center}
-.table-wrap{width:100%;max-width:100%;min-width:0;overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
-table{width:100%;border-collapse:collapse;min-width:1100px}
-th,td{padding:12px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:13px}
-th{background:#f3f7fb;color:#44546b;font-size:12px;text-transform:uppercase}
-tr:last-child td{border-bottom:0}
-.num{font-weight:850;color:var(--text);white-space:nowrap}
-.state{font-weight:850}
-.pending{color:var(--amber)}
-.blocked{color:var(--red)}
-.done{color:var(--green)}
-.issue-list{display:flex;flex-direction:column;gap:8px}
-.issue-row{display:grid;grid-template-columns:54px minmax(0,1fr);gap:9px;align-items:start;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)}
-.issue-no{font-weight:900;color:var(--blue);font-size:13px}
-.callout{border-left:5px solid var(--amber);background:#fffaf1}
-.footer{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
-@media(max-width:1040px){
-  .hero,.grid-3,.grid-2{grid-template-columns:1fr}
-}
-@media(max-width:780px){
-  .page{padding:16px 12px 32px}
-  .topbar{align-items:flex-start;flex-direction:column}
-  .nav{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .nav a{justify-content:center;padding:0 8px}
-  h1{font-size:30px}
-  .kpis{grid-template-columns:1fr}
-  .kpi strong{font-size:29px}
-  .progress-row{flex-wrap:wrap}
-  .progress-row .bar-bg{flex-basis:100%;order:2}
-  .progress-row .tiny:last-child{margin-left:auto}
-  .hour-line{grid-template-columns:1fr}
-  table{min-width:960px}
-}
+:root{--bg:#f5f7fa;--panel:#fff;--line:#d9e2ec;--text:#142033;--muted:#627187;--blue:#1f5f9e;--blue2:#e7f0fb;--green:#118466;--green2:#e6f6f1;--amber:#a76516;--amber2:#fff2dc;--red:#b83b48;--red2:#fde8eb;--violet:#6754bd;--violet2:#efecff;--slate:#46566d;--slate2:#eef3f8}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;line-height:1.62}.page{max-width:1180px;margin:0 auto;padding:24px 18px 44px}a{color:var(--blue);font-weight:750;text-decoration:none}a:hover{text-decoration:underline}.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}.brand{font-size:13px;color:var(--muted);font-weight:850}.nav{display:flex;gap:8px;flex-wrap:wrap}.nav a{border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--slate);padding:7px 10px;font-size:13px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:0 8px 24px rgba(21,32,51,.05)}.hero{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:14px}.eyebrow{color:var(--blue);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}h1{font-size:36px;line-height:1.15;margin:8px 0 12px}h2{font-size:22px;margin:28px 0 12px}h3{font-size:16px;margin:0 0 8px}.lead{font-size:16px;color:#40516a}.small{font-size:13px;color:var(--muted)}.tiny{font-size:12px;color:var(--muted)}.badge{display:inline-flex;align-items:center;min-height:26px;padding:3px 9px;border-radius:8px;font-size:12px;font-weight:850;margin:2px 4px 2px 0;white-space:nowrap}.blue{background:var(--blue2);color:var(--blue)}.green{background:var(--green2);color:var(--green)}.amber{background:var(--amber2);color:var(--amber)}.red{background:var(--red2);color:var(--red)}.violet{background:var(--violet2);color:var(--violet)}.slate{background:var(--slate2);color:var(--slate)}.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px}.kpi{background:#f9fbfd;border:1px solid var(--line);border-radius:10px;padding:13px}.kpi strong{display:block;font-size:30px;line-height:1.1}.green-text{color:var(--green)}.red-text{color:var(--red)}.amber-text{color:var(--amber)}.bar-bg{height:9px;border-radius:99px;background:#e8eef5;overflow:hidden}.bar{height:100%;border-radius:99px}.bar.green{background:var(--green)}.bar.red{background:var(--red)}.bar.amber{background:var(--amber)}.bar.violet{background:var(--violet)}.progress-row{display:grid;grid-template-columns:82px 1fr 80px;gap:8px;align-items:center;margin-top:10px}.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:#fff}table{width:100%;border-collapse:collapse;min-width:1040px}th,td{padding:11px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:13px}th{background:#f3f7fb;color:#44546b;font-size:12px;text-transform:uppercase}tr:last-child td{border-bottom:0}.state{font-weight:850}.done{color:var(--green)}.pending{color:var(--amber)}.blocked{color:var(--red)}ul{margin:0;padding-left:20px}.callout{border-left:5px solid var(--amber);background:#fffaf1}.footer{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}@media(max-width:900px){.hero,.grid-2,.grid-3{grid-template-columns:1fr}.kpis{grid-template-columns:1fr}h1{font-size:30px}}
 </style>
 </head>
 <body>
 <main class="page">
-  <header class="topbar">
-    <div class="brand">SIEM / 工時與驗收進度</div>
-    <nav class="nav" aria-label="report navigation">
-      <a href="#hours">工時總覽</a>
-      <a href="#areas">前後台工時</a>
-      <a href="#items">大工項明細</a>
-      <a href="siem_product_map.html?v=8">產品功能地圖</a>
-      <a href="siem_design_reference.html?v=5">設計查閱</a>
-      <a href="siem_transition_record.html?v=1">舊紀錄對照</a>
-    </nav>
+  <header class="top">
+    <div class="brand">DeepXDR / SIEM 開發進度</div>
+    <nav class="nav"><a href="#latest">最新更新</a><a href="#issues">Issue 狀態</a><a href="#modules">模組進度</a><a href="#pmqa">PMQA 缺口</a><a href="siem_product_map.html?v=8">產品功能地圖</a><a href="siem_design_reference.html?v=5">設計查閱</a></nav>
   </header>
 
   <section class="hero">
     <div class="panel">
       <div class="eyebrow">主控看板</div>
-      <h1>SIEM 工時與閉環進度</h1>
-      <p class="lead">這頁只看工時、驗收與剩餘缺口。產品語言與時程分層先拿掉，重點改成：哪些大工項已投入、哪些還沒 PMQA 驗收、前台/後台/訓練各自還差什麼。</p>
-      <span class="badge blue">主 repo: a770131a/SIEM</span>
-      <span class="badge amber">工程完成不等於驗收完成</span>
-      <span class="badge red">目前驗收工時 0h</span>
-      <span class="badge green">issue 已集中</span>
-      <a class="badge green" href="siem_product_map.html?v=8">查看資料到決策主流程 / Mermaid 架構圖</a>
-      <a class="badge blue" href="siem_design_reference.html?v=5">查看資料流程 / 名詞解釋 / OpenSearch / 風險加權設計</a>
-      <a class="badge violet" href="siem_transition_record.html?v=1">查看舊 index + 新 SIEM 對照</a>
-      <div class="kpis" id="hours">
+      <h1>SIEM 工時、Issue 與閉環進度</h1>
+      <p class="lead">這頁同步目前真實狀態：#85 合規中心 MVP 已完成，包含 95 controls seed、ISMS consultant、Tenant Effective Requirement Set 與租戶 unified checklist；但 PMQA 驗收仍未完成。</p>
+      <span class="badge blue">主 repo: a770131a/SIEM</span><span class="badge green">#85 MVP done</span><span class="badge amber">PMQA pending</span><span class="badge red">驗收工時仍未計入</span><span class="badge slate">Updated 2026-05-20</span>
+      <div class="kpis">
         <div class="kpi"><span class="tiny">規劃總工時</span><strong>783h</strong><span class="tiny">8 個產品大項合計</span></div>
-        <div class="kpi"><span class="tiny">完成工時</span><strong class="green-text">367h</strong><span class="tiny">表列 363h + 待歸屬 4h</span></div>
+        <div class="kpi"><span class="tiny">完成工時</span><strong class="green-text">367h+</strong><span class="tiny">367h 基準 + #85 MVP 待歸屬</span></div>
         <div class="kpi"><span class="tiny">驗收工時</span><strong class="red-text">0h</strong><span class="tiny">PMQA / UAT 尚未計入</span></div>
-        <div class="kpi"><span class="tiny">預估剩餘</span><strong class="amber-text">274-416h</strong><span class="tiny">依各大項缺口估算</span></div>
+        <div class="kpi"><span class="tiny">高優先 PMQA</span><strong class="amber-text">#80-#85</strong><span class="tiny">GCB / HR / Finance / Compliance</span></div>
       </div>
     </div>
     <aside class="panel">
       <div class="eyebrow">總體狀態</div>
-      <h3>目前是「工程盤點完成，驗收閉環未完成」</h3>
-      <p class="small">SIEM 目前 open issue 24 個。工項已經集中到一個 repo，但還沒有任何主線 issue closed，因此頁面把進度拆成工程完成、驗收完成、剩餘工時三條線。</p>
-      <div class="progress-row"><span class="tiny">工程完成</span><div class="bar-bg"><div class="bar green" style="width:46.9%"></div></div><span class="tiny">46.9%</span></div>
-      <div class="progress-row"><span class="tiny">驗收完成</span><div class="bar-bg"><div class="bar red" style="width:0%"></div></div><span class="tiny">0%</span></div>
-      <div class="progress-row"><span class="tiny">剩餘區間</span><div class="bar-bg"><div class="bar amber" style="width:44%"></div></div><span class="tiny">274-416h</span></div>
+      <h3>工程已有新完成項，驗收閉環仍待補</h3>
+      <p class="small">#85 已從 implementation_not_started 修正為 implementation_mvp_done / PMQA pending。工時數字先保守保留基準，避免把工程完成誤當產品驗收完成。</p>
+      <div class="progress-row"><span class="tiny">工程</span><div class="bar-bg"><div class="bar green" style="width:52%"></div></div><span class="tiny">46.9%+</span></div>
+      <div class="progress-row"><span class="tiny">驗收</span><div class="bar-bg"><div class="bar red" style="width:0%"></div></div><span class="tiny">0%</span></div>
+      <div class="progress-row"><span class="tiny">#85</span><div class="bar-bg"><div class="bar violet" style="width:85%"></div></div><span class="tiny">MVP done</span></div>
     </aside>
   </section>
 
-  <section id="areas">
-    <div class="section-head">
-      <div>
-        <h2>前後台與訓練工時</h2>
-        <p class="small">這裡用目前 issue label 分群看工時歸屬。比例是管理視角，用來排人力與驗收，不是宣告功能完成。</p>
-      </div>
-    </div>
-    <div class="grid-3">
-      <article class="panel summary-card">
-        <div><span class="badge blue">前台</span><h3>Console / Drawer / Evidence View</h3></div>
-        <p class="small">重點在畫面可讀性、事件狀態、Decision Drawer、PMQA 截圖與客戶可驗收展示。</p>
-        <div class="hour-line"><span class="tiny">規劃</span><div class="bar-bg"><div class="bar blue" style="width:42%"></div></div><span class="num">176h</span></div>
-        <div class="hour-line"><span class="tiny">完成</span><div class="bar-bg"><div class="bar green" style="width:43%"></div></div><span class="num">75h</span></div>
-        <div class="hour-line"><span class="tiny">驗收</span><div class="bar-bg"><div class="bar red" style="width:0%"></div></div><span class="num">0h</span></div>
-        <p class="tiny">主要對應：XDR 事件營運、AI 助理、Governance UI。</p>
-      </article>
-      <article class="panel summary-card">
-        <div><span class="badge green">後台</span><h3>IR / Runtime / Context / Safety</h3></div>
-        <p class="small">重點在資料接入、IR schema、Entity Graph、runtime pipeline、response safety 與 audit closure。</p>
-        <div class="hour-line"><span class="tiny">規劃</span><div class="bar-bg"><div class="bar blue" style="width:62%"></div></div><span class="num">485h</span></div>
-        <div class="hour-line"><span class="tiny">完成</span><div class="bar-bg"><div class="bar green" style="width:50%"></div></div><span class="num">241h</span></div>
-        <div class="hour-line"><span class="tiny">驗收</span><div class="bar-bg"><div class="bar red" style="width:0%"></div></div><span class="num">0h</span></div>
-        <p class="tiny">主要對應：XDR 核心、ITAM、合規、AI 治理、平台營運。</p>
-      </article>
-      <article class="panel summary-card">
-        <div><span class="badge violet">訓練 / PMQA</span><h3>Replay / Exam / Evidence Package</h3></div>
-        <p class="small">重點在 COR、RCA、BND、ERM、ROB、Golden Replay 100、GA Scorecard 與 PMQA evidence package。</p>
-        <div class="hour-line"><span class="tiny">規劃</span><div class="bar-bg"><div class="bar blue" style="width:16%"></div></div><span class="num">122h</span></div>
-        <div class="hour-line"><span class="tiny">完成</span><div class="bar-bg"><div class="bar green" style="width:42%"></div></div><span class="num">51h</span></div>
-        <div class="hour-line"><span class="tiny">驗收</span><div class="bar-bg"><div class="bar red" style="width:0%"></div></div><span class="num">0h</span></div>
-        <p class="tiny">目前最大缺口是把工程成果轉成可重放、可截圖、可評分的 evidence。</p>
-      </article>
-    </div>
-  </section>
-
-  <section id="items">
-    <div class="section-head">
-      <div>
-        <h2>大工項工時明細</h2>
-        <p class="small">這張表是主表。先看驗收工時，再看完成工時；沒有 PMQA evidence 的完成工時仍屬於待驗收。</p>
-      </div>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>大工項</th>
-            <th>分群</th>
-            <th>規劃工時</th>
-            <th>完成工時</th>
-            <th>驗收工時</th>
-            <th>剩餘估算</th>
-            <th>完成率</th>
-            <th>目前判斷</th>
-            <th>下一個要補的證據</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>XDR 核心引擎</b></td>
-            <td><span class="badge green">後台</span></td>
-            <td class="num">205h</td>
-            <td class="num">140h</td>
-            <td class="num">0h</td>
-            <td class="num">40-65h</td>
-            <td class="num">68%</td>
-            <td class="state pending">工程最多，驗收未進</td>
-            <td>IR schema report、replay report、judge output sample</td>
-          </tr>
-          <tr>
-            <td><b>XDR 事件營運閉環</b></td>
-            <td><span class="badge blue">前台</span></td>
-            <td class="num">108h</td>
-            <td class="num">45h</td>
-            <td class="num">0h</td>
-            <td class="num">40-63h</td>
-            <td class="num">42%</td>
-            <td class="state pending">需要前後台一起補</td>
-            <td>Incident timeline、approval queue、action audit 截圖</td>
-          </tr>
-          <tr>
-            <td><b>ITAM 角色閉環</b></td>
-            <td><span class="badge green">後台</span></td>
-            <td class="num">98h</td>
-            <td class="num">42h</td>
-            <td class="num">0h</td>
-            <td class="num">42-56h</td>
-            <td class="num">45%</td>
-            <td class="state pending">基礎已有，角色流程未驗</td>
-            <td>資產、軟體、部門、派工與驗收流程樣本</td>
-          </tr>
-          <tr>
-            <td><b>合規稽核閉環</b></td>
-            <td><span class="badge green">後台</span></td>
-            <td class="num">90h</td>
-            <td class="num">42h</td>
-            <td class="num">0h</td>
-            <td class="num">32-48h</td>
-            <td class="num">45%</td>
-            <td class="state pending">Evidence Center 待補</td>
-            <td>GCB / VANS mapping、gap workflow、audit export</td>
-          </tr>
-          <tr>
-            <td><b>平台營運閉環</b></td>
-            <td><span class="badge green">後台</span></td>
-            <td class="num">80h</td>
-            <td class="num">34h</td>
-            <td class="num">0h</td>
-            <td class="num">28-46h</td>
-            <td class="num">43%</td>
-            <td class="state pending">治理頁與 audit 待驗</td>
-            <td>Tenant、RBAC、audit log、health report</td>
-          </tr>
-          <tr>
-            <td><b>AI 治理閉環</b></td>
-            <td><span class="badge green">後台</span></td>
-            <td class="num">74h</td>
-            <td class="num">22h</td>
-            <td class="num">0h</td>
-            <td class="num">36-52h</td>
-            <td class="num">30%</td>
-            <td class="state blocked">目前最低完成率</td>
-            <td>AI policy、sensitive data decision、exception evidence</td>
-          </tr>
-          <tr>
-            <td><b>Dify 外殼閉環</b></td>
-            <td><span class="badge blue">前台</span><span class="badge green">後台</span></td>
-            <td class="num">60h</td>
-            <td class="num">18h</td>
-            <td class="num">0h</td>
-            <td class="num">28-42h</td>
-            <td class="num">35%</td>
-            <td class="state pending">串接與權限待補</td>
-            <td>Dify workflow、knowledge base、tool audit sample</td>
-          </tr>
-          <tr>
-            <td><b>AI 助理閉環</b></td>
-            <td><span class="badge blue">前台</span></td>
-            <td class="num">68h</td>
-            <td class="num">20h</td>
-            <td class="num">0h</td>
-            <td class="num">32-48h</td>
-            <td class="num">32%</td>
-            <td class="state pending">角色已成形，邊界待驗</td>
-            <td>SOC / ITAM / 合規助理回答邊界與操作留痕</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-head">
-      <div>
-        <h2>驗收缺口</h2>
-        <p class="small">目前最重要不是再增加功能文字，而是把已完成工時轉成可驗收工時。</p>
-      </div>
-    </div>
+  <section id="latest">
+    <h2>最新更新：#85 合規中心 MVP 已同步</h2>
     <div class="grid-2">
-      <article class="panel callout">
-        <div class="eyebrow">最急</div>
-        <h3>PMQA evidence package 還沒形成</h3>
-        <p class="small">目前完成工時已經有量，但驗收工時是 0h。下一步應該先把 `reports/`、replay output、schema report、UI screenshots、API samples 補成固定 evidence package。</p>
+      <article class="panel">
+        <span class="badge green">implementation_mvp_done</span>
+        <h3>#85 Tenant Effective Requirement Set</h3>
+        <ul class="small">
+          <li>95 controls seed 已完成</li>
+          <li>requirement / evidence / action template seed 已完成</li>
+          <li>tenant_effective_requirement_set builder 已完成</li>
+          <li>isms_consultant role 與測試帳號已完成</li>
+          <li>顧問 draft → submit → approve → effective set 流程已完成</li>
+          <li>租戶 unified checklist 已完成</li>
+          <li>manual pass guard 已完成</li>
+          <li>Evidence Pack 帶 effective_requirement_set_version 已完成</li>
+        </ul>
       </article>
       <article class="panel callout">
-        <div class="eyebrow">管理口徑</div>
-        <h3>以驗收工時作為真正完成</h3>
-        <p class="small">工程完成可以保留，但不要拿來當產品完成。之後每個 issue close 前至少要有一個驗收證據：測試報告、截圖、replay JSON、PMQA summary 或 audit trail sample。</p>
+        <span class="badge amber">PMQA pending</span>
+        <h3>#85 還不能 close 的原因</h3>
+        <ul class="small">
+          <li>production consultant invite flow 還不是完整產品流程</li>
+          <li>Advanced Metadata collapsed-by-default UI 需 PMQA 精修確認</li>
+          <li>#78 / #84 的 Evidence Collector / Framework Workbench 深度整合仍可後續接深</li>
+          <li>驗證紀錄：pytest Server/tests/test_unified_control_catalog.py -q → 8 passed</li>
+          <li>驗證紀錄：npm run build → passed</li>
+        </ul>
       </article>
     </div>
   </section>
 
   <section id="issues">
-    <div class="section-head">
-      <div>
-        <h2>SIEM Issue 分群</h2>
-        <p class="small">Issue 用來追任務，工時表用來看投入與驗收。兩者要分開，避免 issue 很多但不知道完成度。</p>
-      </div>
-    </div>
-    <div class="grid-3">
-      <article class="panel">
-        <span class="badge blue">前台</span>
-        <h3>4 issues</h3>
-        <div class="issue-list">
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/4">#4</a><span class="small">Governance Training Center UI + PMQA</span></div>
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/20">#20</a><span class="small">Decision Rationale Drawer</span></div>
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/21">#21</a><span class="small">Layered notification baseline</span></div>
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/23">#23</a><span class="small">GA-XDR PMQA Gates</span></div>
-        </div>
-      </article>
-      <article class="panel">
-        <span class="badge green">後台</span>
-        <h3>11 issues</h3>
-        <div class="issue-list">
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/24">#24</a><span class="small">Detection IR v1.1 + L5 Context Backbone</span></div>
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/22">#22</a><span class="small">ClamAV + Entity Context + Response Audit</span></div>
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/19">#19</a><span class="small">UEBA + Entity Graph</span></div>
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/17">#17</a><span class="small">Smart Collection Policy</span></div>
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/16">#16</a><span class="small">Runtime pipeline soak gate</span></div>
-        </div>
-      </article>
-      <article class="panel">
-        <span class="badge violet">訓練 / PMQA</span>
-        <h3>11 issues</h3>
-        <div class="issue-list">
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/8">#8</a><span class="small">L2-L5 Gate 與五大推理考試</span></div>
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/9">#9</a><span class="small">COR Exam</span></div>
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/10">#10</a><span class="small">RCA Exam</span></div>
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/11">#11</a><span class="small">BND Exam</span></div>
-          <div class="issue-row"><a class="issue-no" href="https://github.com/a770131a/SIEM/issues/14">#14</a><span class="small">Golden Replay 100 E2E Gate</span></div>
-        </div>
-      </article>
+    <h2>核心 Issue 狀態矩陣</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Issue</th><th>模組</th><th>目前狀態</th><th>已完成 / 已調整</th><th>剩餘缺口</th><th>下一步</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/80">#80</a></td><td><b>GCB Baseline</b></td><td><span class="badge green">implementation_done</span><span class="badge amber">PMQA pending</span></td><td>GCB baseline 控制項與合規中心入口已建立。</td><td>PMQA 截圖、修復閉環、Evidence Pack 對照。</td><td>驗收控制項 drawer 與 evidence export。</td></tr>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/81">#81</a></td><td><b>GCB Remediation</b></td><td><span class="badge amber">implementation review</span><span class="badge amber">PMQA pending</span></td><td>回到 GCB 合規，不放治理工作台處理業務。</td><td>修復任務、重新評估、Evidence Pack 仍需確認。</td><td>驗證 failed control → remediation task → re-evaluate。</td></tr>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/82">#82</a></td><td><b>People / HR Governance</b></td><td><span class="badge amber">IA corrected</span><span class="badge amber">PMQA pending</span></td><td>HR 回到人員治理；側邊欄應收斂成總攬、員工主檔、設定。</td><td>員工 360 / 流程 / 對帳 / 授權回收不要重複放主選單。</td><td>PMQA 檢查 IA 與總攬定位。</td></tr>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/83">#83</a></td><td><b>Finance Governance</b></td><td><span class="badge amber">IA corrected</span><span class="badge amber">PMQA pending</span></td><td>財務治理收斂成總攬、資產帳本、設定。</td><td>待補資產帳、折舊 / 保固、授權成本不要拆過多主頁。</td><td>驗收資產帳本、折舊率設定與查詢流程。</td></tr>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/84">#84</a></td><td><b>Compliance Workbench</b></td><td><span class="badge amber">integration pending</span></td><td>定位修正為合規中心 / Framework Workbench。</td><td>仍需 #78、#81-#83、#85 深度對齊。</td><td>整合 requirement checklist、evidence status、gap action、evidence pack。</td></tr>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/85">#85</a></td><td><b>Tenant Effective Requirement Set</b></td><td><span class="badge green">implementation_mvp_done</span><span class="badge amber">PMQA pending</span></td><td>95 controls seed、ISMS consultant、draft/submit/approve、unified checklist、manual pass guard、Evidence Pack versioning。</td><td>production invite flow、Advanced Metadata UI、#78/#84 deeper evidence alignment。</td><td>跑 PMQA：顧問設定、租戶乾淨清單、自動 evidence 判斷、缺口 action。</td></tr>
+          <tr><td><a href="https://github.com/a770131a/SIEM/issues/78">#78</a></td><td><b>Evidence Adapter / Collector</b></td><td><span class="badge amber">follow-up alignment</span></td><td>定位為後端 Evidence Adapter / Collector，不做前台主頁。</td><td>需與 #84/#85 evaluator 與 Evidence Pack 對接。</td><td>建立 source module evidence → evaluator → evidence pack 閉環。</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <footer class="footer">
-    Source repo: <a href="https://github.com/a770131a/SIEM">a770131a/SIEM</a> · Report focus: 工時、驗收、剩餘缺口 · Updated 2026-05-14 Asia/Taipei
-  </footer>
+  <section id="modules">
+    <h2>模組進度總覽</h2>
+    <div class="grid-3">
+      <article class="panel"><span class="badge green">合規中心</span><h3>Framework + Requirement + Evidence</h3><p class="small">#85 已有 MVP，租戶只看 unified checklist；顧問看 95 controls 設定表。</p></article>
+      <article class="panel"><span class="badge blue">人員治理</span><h3>總攬 / 員工主檔 / 設定</h3><p class="small">方向已修正：不要把人員流程、員工 360、設備對帳、授權回收拆成過多側邊欄主功能。</p></article>
+      <article class="panel"><span class="badge violet">財務治理</span><h3>總攬 / 資產帳本 / 設定</h3><p class="small">方向已修正：財務員工 360 不獨立成主功能；折舊率與非主流程放設定。</p></article>
+    </div>
+  </section>
+
+  <section id="pmqa">
+    <h2>PMQA 驗收缺口</h2>
+    <div class="grid-2">
+      <article class="panel callout"><div class="eyebrow">最急</div><h3>#85 PMQA Pack</h3><ul class="small"><li>顧問登入看到 95 controls catalog</li><li>新增 requirement → draft → submit → approve → effective set</li><li>租戶 control drawer 顯示 unified checklist，不顯示 system/custom 分組</li><li>缺 evidence 不能人工改成 pass</li><li>Evidence Pack 包含 effective_requirement_set_version</li></ul></article>
+      <article class="panel callout"><div class="eyebrow">管理口徑</div><h3>以 PMQA evidence 作為真正完成</h3><p class="small">工程完成可以保留，但不要拿來當產品完成。每個 issue close 前至少要有測試報告、截圖、API sample、PMQA summary 或 audit trail sample。</p></article>
+    </div>
+  </section>
+
+  <footer class="footer">Source repo: <a href="https://github.com/a770131a/SIEM">a770131a/SIEM</a> · Progress site repo: <a href="https://github.com/a770131a/html">a770131a/html</a> · Updated 2026-05-20 Asia/Taipei · Cache buster: v24</footer>
 </main>
 </body>
 </html>
